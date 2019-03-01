@@ -1,0 +1,786 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>stores.models &mdash; alomafit-light 1.0 documentation</title>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+
+
+
+
+
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="alomafit-light 1.0 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/>
+
+
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+
+  <div class="wy-grid-for-nav">
+
+
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+
+
+
+            <a href="../../index.html" class="icon icon-home"> alomafit-light
+
+
+
+          </a>
+
+
+
+
+              <div class="version">
+                1.0
+              </div>
+
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+
+
+
+
+
+
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">alomafit-light</a>
+
+      </nav>
+
+
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+
+      <li>stores.models</li>
+
+
+      <li class="wy-breadcrumbs-aside">
+
+
+
+      </li>
+
+  </ul>
+
+
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+
+  <h1>Source code for stores.models</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
+
+<span class="kn">import</span> <span class="nn">dateutil.parser</span>
+<span class="kn">import</span> <span class="nn">shopify</span>
+<span class="kn">from</span> <span class="nn">django.conf</span> <span class="k">import</span> <span class="n">settings</span>
+<span class="kn">from</span> <span class="nn">django.contrib.postgres.fields</span> <span class="k">import</span> <span class="n">ArrayField</span><span class="p">,</span> <span class="n">JSONField</span>
+<span class="kn">from</span> <span class="nn">django.core.exceptions</span> <span class="k">import</span> <span class="n">ValidationError</span>
+<span class="kn">from</span> <span class="nn">django.core.validators</span> <span class="k">import</span> <span class="n">MaxValueValidator</span><span class="p">,</span> <span class="n">MinValueValidator</span>
+<span class="kn">from</span> <span class="nn">django.db</span> <span class="k">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">django.db.models.expressions</span> <span class="k">import</span> <span class="n">RawSQL</span>
+<span class="kn">from</span> <span class="nn">django.template.defaultfilters</span> <span class="k">import</span> <span class="n">slugify</span>
+<span class="kn">from</span> <span class="nn">django.utils</span> <span class="k">import</span> <span class="n">timezone</span>
+<span class="kn">from</span> <span class="nn">django.utils.timezone</span> <span class="k">import</span> <span class="n">utc</span>
+
+<span class="kn">from</span> <span class="nn">customers.models</span> <span class="k">import</span> <span class="p">(</span><span class="n">bodyBottomSizeListFemale</span><span class="p">,</span> <span class="n">bodyBottomSizeListMale</span><span class="p">,</span>
+                              <span class="n">bodyShapeList</span><span class="p">,</span> <span class="n">bodyTopSizeListFemale</span><span class="p">,</span>
+                              <span class="n">bodyTopSizeListMale</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">insights.models</span> <span class="k">import</span> <span class="p">(</span><span class="n">HitProduct</span><span class="p">,</span> <span class="n">Product_Profile_Add_To_Closet</span><span class="p">,</span>
+                             <span class="n">Profile_Try_Product</span><span class="p">,</span> <span class="n">Profile_Visit_Store</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">vfrlight.config</span> <span class="k">import</span> <span class="n">config</span> <span class="k">as</span> <span class="n">cfg</span>
+
+<span class="kn">from</span> <span class="nn">.model_util</span> <span class="k">import</span> <span class="o">*</span>
+
+
+<div class="viewcode-block" id="Merchant"><a class="viewcode-back" href="../../modules/stores.html#stores.models.Merchant">[docs]</a><span class="k">class</span> <span class="nc">Merchant</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        To support Authentication with the store, for any api requires</span>
+<span class="sd">        updating the store&#39;s data, a user account must be bound to the store</span>
+<span class="sd">        Here we are assigning user to merchant via OneToOne relationship</span>
+<span class="sd">        So we could generate token, and use Token Based authentication scheme</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">OneToOneField</span><span class="p">(</span>
+        <span class="n">settings</span><span class="o">.</span><span class="n">AUTH_USER_MODEL</span><span class="p">,</span>
+        <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">,</span>
+        <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;merchant_user&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Store"><a class="viewcode-back" href="../../modules/stores.html#stores.models.Store">[docs]</a><span class="k">class</span> <span class="nc">Store</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        The store model is the corner stone of our app</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="c1"># each store is owned by an owner</span>
+    <span class="n">owner</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">OneToOneField</span><span class="p">(</span>
+        <span class="n">Merchant</span><span class="p">,</span>
+        <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">,</span>
+        <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;merchant_store&#39;</span><span class="p">)</span>
+    <span class="c1"># and has its unique domain name i.e URL</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">unique</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">255</span><span class="p">,</span> <span class="n">editable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="c1"># we slugify the url to use it in routing, please see stores.urls.py</span>
+    <span class="n">slug</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">SlugField</span><span class="p">(</span>
+        <span class="n">unique</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">255</span><span class="p">,</span> <span class="n">editable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        We use the `JWT` implementation, Json Web Token, to authenticate with store API</span>
+<span class="sd">        Hence, any one could access our app must authenticate first with shopify then</span>
+<span class="sd">        we have a merchant accound bounded to the store and from here we generate Token</span>
+<span class="sd">        to let front-end client authenticate with us for any Update operations</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">token</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">max_length</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">editable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;0&quot;</span><span class="p">)</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        each store has some plan to be enabled, if there is not any,</span>
+<span class="sd">        then his fitting room on the store front is locked</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">plans</span> <span class="o">=</span> <span class="n">JSONField</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="p">{</span><span class="n">plan</span><span class="p">:</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">plan</span> <span class="ow">in</span> <span class="n">plans</span><span class="o">.</span><span class="n">listOfChoices</span><span class="p">})</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        we use this boolean field as an indicator whether the store</span>
+<span class="sd">        has registered all the webhooks and script tag</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">webhooks_added</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        just for clarification, we add JavaScript code to the store front on shopify</span>
+<span class="sd">        the purpose of it, is to check if its a product page the inject the fitting room</span>
+<span class="sd">        and add the try-on button</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">scripttag_added</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Those statistics are collected to project them on the dashboard</span>
+<span class="sd">        Hence we have such models [1] specific for saving those values but</span>
+<span class="sd">        we don&#39;t need to run to many querys.</span>
+<span class="sd">        [1] Profile_Visit_Store</span>
+
+<span class="sd">        As for profile: after its values being filled, bodyShape will be evaluated</span>
+<span class="sd">        as well ass top_size and bottom_size.</span>
+<span class="sd">        Instead of quering thoses values from the Profile_Visit_Store `manyTomany`</span>
+<span class="sd">        relationship we saved for each store explicitly</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">bodyShape_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">bodyShape</span><span class="p">:</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">bodyShape</span> <span class="ow">in</span> <span class="n">bodyShapeList</span><span class="p">}</span>
+    <span class="n">male_body_shapes</span> <span class="o">=</span> <span class="n">JSONField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="n">bodyShape_dict</span><span class="p">)</span>
+    <span class="n">female_body_shapes</span> <span class="o">=</span> <span class="n">JSONField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="n">bodyShape_dict</span><span class="p">)</span>
+
+    <span class="n">MaleTopBodySize_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">bodySize</span><span class="p">:</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">bodySize</span> <span class="ow">in</span>
+                            <span class="n">bodyTopSizeListMale</span><span class="p">}</span>
+    <span class="n">MaleBottomBodySize_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">bodySize</span><span class="p">:</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">bodySize</span> <span class="ow">in</span>
+                               <span class="n">bodyBottomSizeListMale</span><span class="p">}</span>
+    <span class="c1"># Although they both derive from the same list but no harm in that</span>
+    <span class="n">FemaleTopBodySize_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">bodySize</span><span class="p">:</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">bodySize</span> <span class="ow">in</span>
+                              <span class="n">bodyTopSizeListFemale</span><span class="p">}</span>
+    <span class="n">FemaleBottomBodySize_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">bodySize</span><span class="p">:</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">bodySize</span> <span class="ow">in</span>
+                                 <span class="n">bodyBottomSizeListFemale</span><span class="p">}</span>
+
+    <span class="n">male_top_sizes</span> <span class="o">=</span> <span class="n">JSONField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="n">MaleTopBodySize_dict</span><span class="p">)</span>
+    <span class="n">male_bottom_sizes</span> <span class="o">=</span> <span class="n">JSONField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="n">MaleBottomBodySize_dict</span><span class="p">)</span>
+
+    <span class="n">female_top_sizes</span> <span class="o">=</span> <span class="n">JSONField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="n">FemaleTopBodySize_dict</span><span class="p">)</span>
+    <span class="n">female_bottom_sizes</span> <span class="o">=</span> <span class="n">JSONField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="n">FemaleTopBodySize_dict</span><span class="p">)</span>
+
+    <span class="n">first_install</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="n">auto_now</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Store.save"><a class="viewcode-back" href="../../modules/stores.html#stores.models.Store.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">slug</span> <span class="o">=</span> <span class="n">slugify</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">            save the time the admin has installed our app for the first time,</span>
+<span class="sd">            it&#39;s actually quite helpful for setting new free trial period in case</span>
+<span class="sd">            of admin reinstalled our app and wants to upgrade to some plan</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">first_install</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Store</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">ordering</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;url&#39;</span><span class="p">,)</span>
+
+<div class="viewcode-block" id="Store.activate_plan"><a class="viewcode-back" href="../../modules/stores.html#stores.models.Store.activate_plan">[docs]</a>    <span class="k">def</span> <span class="nf">activate_plan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plan</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">deactivate_any_plan</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plans</span><span class="p">[</span><span class="n">plan</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Store.deactivate_any_plan"><a class="viewcode-back" href="../../modules/stores.html#stores.models.Store.deactivate_any_plan">[docs]</a>    <span class="k">def</span> <span class="nf">deactivate_any_plan</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">plans</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">plans</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Store.reset_webhooks"><a class="viewcode-back" href="../../modules/stores.html#stores.models.Store.reset_webhooks">[docs]</a>    <span class="k">def</span> <span class="nf">reset_webhooks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">webhooks_added</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Store.reset_scriptTags"><a class="viewcode-back" href="../../modules/stores.html#stores.models.Store.reset_scriptTags">[docs]</a>    <span class="k">def</span> <span class="nf">reset_script_tags</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scripttag_added</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Store.register_webhooks"><a class="viewcode-back" href="../../modules/stores.html#stores.models.Store.register_webhooks">[docs]</a>    <span class="k">def</span> <span class="nf">register_webhooks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">webhooks_added</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Store.register_scriptTags"><a class="viewcode-back" href="../../modules/stores.html#stores.models.Store.register_scriptTags">[docs]</a>    <span class="k">def</span> <span class="nf">register_scriptTags</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scripttag_added</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save</span><span class="p">()</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">average_hit_duration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Just group by product and order their hit durations in a descending order</span>
+        <span class="n">products_store_ids</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">products</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span>
+                                  <span class="n">values_list</span><span class="p">(</span><span class="s1">&#39;shopify_id&#39;</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+
+        <span class="n">average_hit_duration_result</span> <span class="o">=</span> <span class="n">HitProduct</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>\
+            <span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">product__in</span><span class="o">=</span><span class="n">products_store_ids</span><span class="p">)</span>\
+            <span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="s1">&#39;product_id&#39;</span><span class="p">)</span>\
+            <span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="n">average_duration</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">Avg</span><span class="p">(</span><span class="s1">&#39;try_duration_seconds&#39;</span><span class="p">))</span>\
+            <span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s1">&#39;-average_duration&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">average_hit_duration_result</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">most_added_to_closet</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">            just group by product and accumlate how many times each</span>
+<span class="sd">            product has been added to someone closet.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">products_store_ids</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">products</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span>
+                                  <span class="n">values_list</span><span class="p">(</span><span class="s1">&#39;shopify_id&#39;</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+        <span class="n">most_added_to_closet_result</span> <span class="o">=</span> <span class="n">Product_Profile_Add_To_Closet</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>\
+            <span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">product__in</span><span class="o">=</span><span class="n">products_store_ids</span><span class="p">)</span>\
+            <span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="s1">&#39;product_id&#39;</span><span class="p">)</span>\
+            <span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="n">count</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">Count</span><span class="p">(</span><span class="s1">&#39;product_id&#39;</span><span class="p">))</span>\
+            <span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s1">&#39;-count&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">most_added_to_closet_result</span>
+
+<div class="viewcode-block" id="Store.yet_another_visitor"><a class="viewcode-back" href="../../modules/stores.html#stores.models.Store.yet_another_visitor">[docs]</a>    <span class="k">def</span> <span class="nf">yet_another_visitor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">profile</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">            Every time some authenticated/non authenticated profile has tried some product</span>
+<span class="sd">            Visiting action has occured. just save this info</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">profile</span><span class="o">.</span><span class="n">gender</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;m&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_yet_another_male_visitor</span><span class="p">(</span><span class="n">profile</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_yet_another_female_visitor</span><span class="p">(</span><span class="n">profile</span><span class="p">)</span>
+        <span class="n">Profile_Visit_Store</span><span class="o">.</span><span class="n">yet_another_store_visitor</span><span class="p">(</span>
+            <span class="n">store</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">profile</span><span class="o">=</span><span class="n">profile</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save</span><span class="p">()</span></div>
+
+    <span class="c1"># accumlate statistics for male profile</span>
+    <span class="k">def</span> <span class="nf">_yet_another_male_visitor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">profile</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">male_top_sizes</span><span class="p">[</span><span class="n">profile</span><span class="o">.</span><span class="n">top_size</span><span class="p">]</span> <span class="o">=</span> \
+            <span class="bp">self</span><span class="o">.</span><span class="n">male_top_sizes</span><span class="p">[</span><span class="n">profile</span><span class="o">.</span><span class="n">top_size</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">male_bottom_sizes</span><span class="p">[</span><span class="n">profile</span><span class="o">.</span><span class="n">bottom_size</span><span class="p">]</span> <span class="o">=</span> \
+            <span class="bp">self</span><span class="o">.</span><span class="n">male_bottom_sizes</span><span class="p">[</span><span class="n">profile</span><span class="o">.</span><span class="n">bottom_size</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">male_body_shapes</span><span class="p">[</span><span class="n">profile</span><span class="o">.</span><span class="n">body_shape</span><span class="p">]</span> <span class="o">=</span> \
+            <span class="bp">self</span><span class="o">.</span><span class="n">male_body_shapes</span><span class="p">[</span><span class="n">profile</span><span class="o">.</span><span class="n">body_shape</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+
+    <span class="c1"># accumlate statistics for female profile</span>
+    <span class="k">def</span> <span class="nf">_yet_another_female_visitor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">profile</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">female_top_sizes</span><span class="p">[</span><span class="n">profile</span><span class="o">.</span><span class="n">top_size</span><span class="p">]</span> <span class="o">=</span> \
+            <span class="bp">self</span><span class="o">.</span><span class="n">female_top_sizes</span><span class="p">[</span><span class="n">profile</span><span class="o">.</span><span class="n">top_size</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">female_bottom_sizes</span><span class="p">[</span><span class="n">profile</span><span class="o">.</span><span class="n">bottom_size</span><span class="p">]</span> <span class="o">=</span> \
+            <span class="bp">self</span><span class="o">.</span><span class="n">female_bottom_sizes</span><span class="p">[</span><span class="n">profile</span><span class="o">.</span><span class="n">bottom_size</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">female_body_shapes</span><span class="p">[</span><span class="n">profile</span><span class="o">.</span><span class="n">body_shape</span><span class="p">]</span> <span class="o">=</span> \
+            <span class="bp">self</span><span class="o">.</span><span class="n">female_body_shapes</span><span class="p">[</span><span class="n">profile</span><span class="o">.</span><span class="n">body_shape</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        In a scenario where admin has reinstalled our app, compare between</span>
+<span class="sd">        the first time that installed our app to see how many free trial days left</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+<div class="viewcode-block" id="Store.free_trial_left"><a class="viewcode-back" href="../../modules/stores.html#stores.models.Store.free_trial_left">[docs]</a>    <span class="k">def</span> <span class="nf">free_trial_left</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="n">timediff</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">now</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">first_install</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">tzinfo</span><span class="o">=</span><span class="kc">None</span><span class="p">))</span><span class="o">.</span><span class="n">seconds</span> <span class="o">/</span> <span class="p">(</span><span class="mi">3600</span> <span class="o">*</span> <span class="mi">24</span><span class="p">))</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">cfg</span><span class="o">.</span><span class="n">FREE_TRIAL</span> <span class="o">-</span> <span class="n">timediff</span><span class="p">)</span></div></div>
+<span class="c1">#</span>
+<span class="c1"># (Chest ,Waist  , Hips) for male</span>
+<span class="c1"># (Bust , waist  , hips) for female</span>
+<span class="c1"># and weight + height for all</span>
+<span class="c1"># you can use chest and bust as one field</span>
+
+
+<div class="viewcode-block" id="ProductShopifyManager"><a class="viewcode-back" href="../../modules/stores.html#stores.models.ProductShopifyManager">[docs]</a><span class="k">class</span> <span class="nc">ProductShopifyManager</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Manager</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        For Product model we have customer ObjectManage to handle the</span>
+<span class="sd">        update process from shopify, such as vendor,image,update/create date</span>
+<span class="sd">        Hence we pass shopify_product data and we expect to update the model instance</span>
+<span class="sd">        right from it</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+<div class="viewcode-block" id="ProductShopifyManager.assign_values"><a class="viewcode-back" href="../../modules/stores.html#stores.models.ProductShopifyManager.assign_values">[docs]</a>    <span class="k">def</span> <span class="nf">assign_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shopify_product</span><span class="p">):</span>
+        <span class="n">obj_data_</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">obj_data_</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">shopify_product</span><span class="o">.</span><span class="n">title</span>
+        <span class="n">obj_data_</span><span class="p">[</span><span class="s1">&#39;updated_at&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dateutil</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span>
+            <span class="n">shopify_product</span><span class="o">.</span><span class="n">updated_at</span><span class="p">)</span>
+        <span class="n">obj_data_</span><span class="p">[</span><span class="s1">&#39;product_type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">shopify_product</span><span class="o">.</span><span class="n">product_type</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> \
+            <span class="k">if</span> <span class="n">shopify_product</span><span class="o">.</span><span class="n">product_type</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> \
+            <span class="ow">in</span> <span class="n">ProductTypeChoicesList</span> \
+            <span class="k">else</span> <span class="n">ProductTypeChoicesList</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">obj_data_</span><span class="p">[</span><span class="s1">&#39;available_online&#39;</span><span class="p">]</span> <span class="o">=</span>\
+            <span class="kc">True</span> <span class="k">if</span> <span class="n">shopify_product</span><span class="o">.</span><span class="n">published_at</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> \
+            <span class="k">else</span> <span class="kc">False</span>
+        <span class="n">obj_data_</span><span class="p">[</span><span class="s1">&#39;vendor&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">shopify_product</span><span class="o">.</span><span class="n">vendor</span>
+        <span class="n">obj_data_</span><span class="p">[</span><span class="s1">&#39;created_at&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dateutil</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span>
+            <span class="n">shopify_product</span><span class="o">.</span><span class="n">created_at</span><span class="p">)</span>
+        <span class="k">if</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">shopify_product</span><span class="o">.</span><span class="n">images</span><span class="p">)):</span>
+            <span class="n">obj_data_</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">shopify_product</span><span class="o">.</span><span class="n">images</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">src</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">obj_data_</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">]</span> <span class="o">=</span> \
+                <span class="s1">&#39;https://help.shopify.com/assets/shopify-full-color-black.svg&#39;</span>
+        <span class="k">return</span> <span class="n">obj_data_</span></div>
+
+<div class="viewcode-block" id="ProductShopifyManager.create_from_shopify"><a class="viewcode-back" href="../../modules/stores.html#stores.models.ProductShopifyManager.create_from_shopify">[docs]</a>    <span class="k">def</span> <span class="nf">create_from_shopify</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">store</span><span class="p">,</span> <span class="n">shopify_product</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">            Just create a new instance with shopify product data, hence variants data</span>
+<span class="sd">            are embedded inside the product data as nested field</span>
+<span class="sd">            we also assign the store the product comes from.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">obj_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">assign_values</span><span class="p">(</span><span class="n">shopify_product</span><span class="p">)</span>
+        <span class="n">obj_data</span><span class="p">[</span><span class="s1">&#39;store&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">store</span>
+        <span class="n">obj_data</span><span class="p">[</span><span class="s1">&#39;shopify_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">shopify_product</span><span class="o">.</span><span class="n">id</span>
+        <span class="n">product</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="o">**</span><span class="n">obj_data</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">variant</span> <span class="ow">in</span> <span class="n">shopify_product</span><span class="o">.</span><span class="n">variants</span><span class="p">:</span>
+            <span class="n">Variant</span><span class="o">.</span><span class="n">Shopify_objects</span><span class="o">.</span><span class="n">create_from_shopify</span><span class="p">(</span>
+                <span class="n">shopify_variant</span><span class="o">=</span><span class="n">variant</span><span class="p">,</span> <span class="n">product</span><span class="o">=</span><span class="n">product</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">product</span></div>
+
+<div class="viewcode-block" id="ProductShopifyManager.update_from_shopify"><a class="viewcode-back" href="../../modules/stores.html#stores.models.ProductShopifyManager.update_from_shopify">[docs]</a>    <span class="k">def</span> <span class="nf">update_from_shopify</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shopify_product</span><span class="p">):</span>
+        <span class="c1"># update from shopify, just get product shopify_id and update the fileds accordingly</span>
+        <span class="n">obj_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">assign_values</span><span class="p">(</span><span class="n">shopify_product</span><span class="p">)</span>
+        <span class="n">updated_product</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+            <span class="n">pk</span><span class="o">=</span><span class="n">shopify_product</span><span class="o">.</span><span class="n">id</span><span class="p">)</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="o">**</span><span class="n">obj_data</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">variant</span> <span class="ow">in</span> <span class="n">shopify_product</span><span class="o">.</span><span class="n">variants</span><span class="p">:</span>
+            <span class="n">Variant</span><span class="o">.</span><span class="n">Shopify_objects</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+                <span class="n">shopify_variant</span><span class="o">=</span><span class="n">variant</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">updated_product</span></div></div>
+
+
+<div class="viewcode-block" id="Product"><a class="viewcode-back" href="../../modules/stores.html#stores.models.Product">[docs]</a><span class="k">class</span> <span class="nc">Product</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+
+    <span class="c1"># shopify attributes</span>
+    <span class="n">shopify_id</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BigIntegerField</span><span class="p">(</span>
+        <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">editable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="c1"># title of product</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s1">&#39;no title&#39;</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="c1"># Image Url</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">URLField</span><span class="p">()</span>
+    <span class="c1"># name of the comany that made that product</span>
+    <span class="n">vendor</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span>
+    <span class="n">available_online</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">created_at</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="n">auto_now</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">updated_at</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="n">auto_now</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1"># product only belongs to one and only one store</span>
+    <span class="n">store</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span>
+        <span class="s1">&#39;stores.Store&#39;</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">,</span>
+        <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;products&#39;</span><span class="p">,</span> <span class="n">editable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="c1"># for fit algorithm,</span>
+    <span class="n">gender</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">max_length</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="p">((</span><span class="s1">&#39;M&#39;</span><span class="p">,</span> <span class="s1">&#39;Male&#39;</span><span class="p">),</span>
+                 <span class="p">(</span><span class="s1">&#39;F&#39;</span><span class="p">,</span> <span class="s1">&#39;Female&#39;</span><span class="p">)),</span>
+        <span class="n">default</span><span class="o">=</span><span class="s1">&#39;M&#39;</span><span class="p">)</span>
+    <span class="c1"># all the fields below are clarified extensively</span>
+    <span class="n">product_type</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">max_length</span><span class="o">=</span><span class="n">productType</span><span class="o">.</span><span class="n">max_length</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="n">productType</span><span class="o">.</span><span class="n">choices</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="n">productType</span><span class="o">.</span><span class="n">listOfChoices</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">fit_type</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">max_length</span><span class="o">=</span><span class="n">product_fit_Type</span><span class="o">.</span><span class="n">max_length</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="n">product_fit_Type</span><span class="o">.</span><span class="n">choices</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="n">product_fit_Type</span><span class="o">.</span><span class="n">listOfChoices</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">elasticity</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">MaxValueValidator</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span> <span class="n">MinValueValidator</span><span class="p">(</span><span class="mi">1</span><span class="p">)])</span>
+    <span class="n">fabric</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">max_length</span><span class="o">=</span><span class="n">fabricType</span><span class="o">.</span><span class="n">max_length</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="n">fabricType</span><span class="o">.</span><span class="n">choices</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="n">fabricType</span><span class="o">.</span><span class="n">listOfChoices</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="c1"># solely used for insight purposes</span>
+    <span class="n">times_tried</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        since we admins don&#39;t need to fill any non required data specified by</span>
+<span class="sd">        the product type, hence we allow only those fields hips/bust/shoulder/waist</span>
+<span class="sd">        to be filled if and only if those are really required, i.e in case of</span>
+<span class="sd">        jeans product type we don&#39;t needs shoulder value to be filled in any of the</span>
+<span class="sd">        variants of the product</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">_required_attributes</span> <span class="o">=</span> <span class="n">ArrayField</span><span class="p">(</span>
+        <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+            <span class="n">max_length</span><span class="o">=</span><span class="n">body_parts_choiceField</span><span class="o">.</span><span class="n">max_length</span><span class="p">,</span>
+            <span class="n">choices</span><span class="o">=</span><span class="n">body_parts_choiceField</span><span class="o">.</span><span class="n">choices</span><span class="p">,</span>
+            <span class="n">null</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+    <span class="c1"># here we first set objects to be the default manager, Django require that</span>
+    <span class="n">objects</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">Manager</span><span class="p">()</span>
+    <span class="c1"># after that we are setting our customer manager</span>
+    <span class="n">Shopify_objects</span> <span class="o">=</span> <span class="n">ProductShopifyManager</span><span class="p">()</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">ordering</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,)</span>
+
+<div class="viewcode-block" id="Product.save"><a class="viewcode-back" href="../../modules/stores.html#stores.models.Product.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_required_attributes</span> <span class="o">=</span> <span class="n">from_product_type_to_required_body_parts</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">product_type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gender</span><span class="p">)</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">           Since we allow the product type to be changed,</span>
+<span class="sd">           Any required attributes that become non required, all of its variants</span>
+<span class="sd">           values should be set to a None value</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">variant</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">variants</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+            <span class="n">non_required_attributes</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">body_parts_list</span><span class="p">)</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span>
+                <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_required_attributes</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">non_required_attribute</span> <span class="ow">in</span> <span class="n">non_required_attributes</span><span class="p">:</span>
+                <span class="n">variant</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">non_required_attribute</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">variant</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Product</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">title</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">covered_by_the_plan</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">            it&#39;s very straightforward, if product&#39;s gender matches the plan</span>
+<span class="sd">            then it&#39;s covered</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gender</span> <span class="o">==</span> <span class="s1">&#39;M&#39;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">plans</span><span class="p">[</span><span class="s1">&#39;Male&#39;</span><span class="p">]</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">plans</span><span class="p">[</span><span class="s1">&#39;MaleAndFemale&#39;</span><span class="p">])</span>
+        <span class="k">elif</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gender</span> <span class="o">==</span> <span class="s1">&#39;F&#39;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">plans</span><span class="p">[</span><span class="s1">&#39;Female&#39;</span><span class="p">]</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">plans</span><span class="p">[</span><span class="s1">&#39;MaleAndFemale&#39;</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># currently we do not support gender ignostic product</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">ready_to_try</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">            if all of product&#39;s variants are filled completely, i.e each required</span>
+<span class="sd">            attributes has some validated value `Non Null` we are allowing this product</span>
+<span class="sd">            to be tried in the fitting room</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">variant</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">variants</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+            <span class="k">if</span><span class="p">(</span><span class="ow">not</span> <span class="n">variant</span><span class="o">.</span><span class="n">ready_to_try</span><span class="p">()):</span>
+                <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+<div class="viewcode-block" id="Product.yet_another_try"><a class="viewcode-back" href="../../modules/stores.html#stores.models.Product.yet_another_try">[docs]</a>    <span class="k">def</span> <span class="nf">yet_another_try</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">profile</span><span class="p">):</span>
+        <span class="c1"># just accumlate how many time this product has been tried.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">times_tried</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">times_tried</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">Profile_Try_Product</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+            <span class="n">product</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">profile</span><span class="o">=</span><span class="n">profile</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Product.yet_added_to_his_closet"><a class="viewcode-back" href="../../modules/stores.html#stores.models.Product.yet_added_to_his_closet">[docs]</a>    <span class="k">def</span> <span class="nf">yet_added_to_his_closet</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">profile</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Product_Profile_Add_To_Closet</span><span class="o">.</span>\
+            <span class="n">yet_another_added_to_closet_action</span><span class="p">(</span><span class="n">product</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
+                                               <span class="n">profile</span><span class="o">=</span><span class="n">profile</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="VariantShopifyManager"><a class="viewcode-back" href="../../modules/stores.html#stores.models.VariantShopifyManager">[docs]</a><span class="k">class</span> <span class="nc">VariantShopifyManager</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Manager</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        please see ProductShopifyManager, the same logic goes here and there</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+<div class="viewcode-block" id="VariantShopifyManager.assign_values"><a class="viewcode-back" href="../../modules/stores.html#stores.models.VariantShopifyManager.assign_values">[docs]</a>    <span class="k">def</span> <span class="nf">assign_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shopify_variant</span><span class="p">):</span>
+        <span class="n">obj_data_</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">obj_data_</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">shopify_variant</span><span class="o">.</span><span class="n">title</span>
+        <span class="k">return</span> <span class="n">obj_data_</span></div>
+
+<div class="viewcode-block" id="VariantShopifyManager.create_from_shopify"><a class="viewcode-back" href="../../modules/stores.html#stores.models.VariantShopifyManager.create_from_shopify">[docs]</a>    <span class="k">def</span> <span class="nf">create_from_shopify</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">product</span><span class="p">,</span> <span class="n">shopify_variant</span><span class="p">):</span>
+        <span class="n">obj_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">assign_values</span><span class="p">(</span><span class="n">shopify_variant</span><span class="p">)</span>
+        <span class="n">obj_data</span><span class="p">[</span><span class="s1">&#39;product&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">product</span>
+        <span class="n">obj_data</span><span class="p">[</span><span class="s1">&#39;shopify_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">shopify_variant</span><span class="o">.</span><span class="n">id</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="o">**</span><span class="n">obj_data</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="VariantShopifyManager.update"><a class="viewcode-back" href="../../modules/stores.html#stores.models.VariantShopifyManager.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shopify_variant</span><span class="p">):</span>
+        <span class="n">obj_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">assign_values</span><span class="p">(</span><span class="n">shopify_variant</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="n">shopify_variant</span><span class="o">.</span><span class="n">id</span><span class="p">)</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="o">**</span><span class="n">obj_data</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="Variant"><a class="viewcode-back" href="../../modules/stores.html#stores.models.Variant">[docs]</a><span class="k">class</span> <span class="nc">Variant</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        each product could have many variants but, each variant could belong only to</span>
+<span class="sd">        one product, there is some important attributes such as</span>
+<span class="sd">        waist,shoulder,hips, etc...  to be filled by the admin</span>
+<span class="sd">        hence we specify which are required based on the product type</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">shopify_id</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BigIntegerField</span><span class="p">(</span>
+        <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">editable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="c1"># TODO make sure that title on shopify is not above 40 character length</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span>
+
+    <span class="n">product</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span>
+        <span class="s1">&#39;stores.Product&#39;</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;variants&#39;</span><span class="p">,</span> <span class="n">editable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="n">shoulder</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FloatField</span><span class="p">(</span><span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">bust</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FloatField</span><span class="p">(</span><span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">waist</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FloatField</span><span class="p">(</span><span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">hips</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FloatField</span><span class="p">(</span><span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">objects</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">Manager</span><span class="p">()</span>
+    <span class="n">Shopify_objects</span> <span class="o">=</span> <span class="n">VariantShopifyManager</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">title</span>
+
+<div class="viewcode-block" id="Variant.ready_to_try"><a class="viewcode-back" href="../../modules/stores.html#stores.models.Variant.ready_to_try">[docs]</a>    <span class="k">def</span> <span class="nf">ready_to_try</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">            variant is ready to try if the required attributes are completely filled</span>
+<span class="sd">            i.e not null values, put it in another way validated data is saved in the insance</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">attribute</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">product</span><span class="o">.</span><span class="n">_required_attributes</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attribute</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
+                <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="Variant.group_variants"><a class="viewcode-back" href="../../modules/stores.html#stores.models.Variant.group_variants">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">group_variants</span><span class="p">(</span><span class="n">variants</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">            this method is simple enough to be explained</span>
+<span class="sd">            just in the fitalgorithm fit_sys method expect lists forms</span>
+<span class="sd">            variants are just multi size options of the product.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">sizes</span><span class="p">,</span> <span class="n">busts</span><span class="p">,</span> <span class="n">hips</span><span class="p">,</span> <span class="n">shoulders</span><span class="p">,</span> <span class="n">waists</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">variant</span> <span class="ow">in</span> <span class="n">variants</span><span class="p">:</span>
+            <span class="n">sizes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">variant</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
+            <span class="n">busts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">variant</span><span class="o">.</span><span class="n">bust</span><span class="p">)</span>
+            <span class="n">hips</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">variant</span><span class="o">.</span><span class="n">hips</span><span class="p">)</span>
+            <span class="n">shoulders</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">variant</span><span class="o">.</span><span class="n">shoulder</span><span class="p">)</span>
+            <span class="n">waists</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">variant</span><span class="o">.</span><span class="n">waist</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">sizes</span><span class="p">,</span> <span class="n">busts</span><span class="p">,</span> <span class="n">hips</span><span class="p">,</span> <span class="n">shoulders</span><span class="p">,</span> <span class="n">waists</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="Collection"><a class="viewcode-back" href="../../modules/stores.html#stores.models.Collection">[docs]</a><span class="k">class</span> <span class="nc">Collection</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        We fetch the gender info for the product from the collection</span>
+<span class="sd">        resource on shopify, each admin classify his products into collections</span>
+<span class="sd">        Hence we see if there is any Woman/Man names for collections</span>
+<span class="sd">        and assign their products accordingly</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">shopify_id</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BigIntegerField</span><span class="p">(</span>
+        <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">editable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span>
+    <span class="n">gender</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">max_length</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="p">((</span><span class="s1">&#39;M&#39;</span><span class="p">,</span> <span class="s1">&#39;Male&#39;</span><span class="p">),</span>
+                 <span class="p">(</span><span class="s1">&#39;F&#39;</span><span class="p">,</span> <span class="s1">&#39;Female&#39;</span><span class="p">),</span>
+                 <span class="p">(</span><span class="s1">&#39;N&#39;</span><span class="p">,</span> <span class="s1">&#39;None, this collection is not talking about gender&#39;</span><span class="p">)),</span>
+        <span class="n">default</span><span class="o">=</span><span class="s1">&#39;N&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Collection.gender_converter"><a class="viewcode-back" href="../../modules/stores.html#stores.models.Collection.gender_converter">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">gender_converter</span><span class="p">(</span><span class="n">collection_title</span><span class="p">):</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">collection_title</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;women&#39;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="s1">&#39;F&#39;</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">collection_title</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;men&#39;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="s1">&#39;M&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;N&#39;</span></div>
+
+<div class="viewcode-block" id="Collection.save"><a class="viewcode-back" href="../../modules/stores.html#stores.models.Collection.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="n">collection_gender_list</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">gender</span> <span class="o">=</span> <span class="n">Collection</span><span class="o">.</span><span class="n">gender_converter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Collection</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="Collect"><a class="viewcode-back" href="../../modules/stores.html#stores.models.Collect">[docs]</a><span class="k">class</span> <span class="nc">Collect</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        relation between Collection and product is a manyTomany relationship</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">shopify_id</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BigIntegerField</span><span class="p">(</span>
+        <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">editable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">collection</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span>
+        <span class="s1">&#39;stores.Collection&#39;</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">,</span>
+        <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;collect_product&#39;</span><span class="p">,</span> <span class="n">editable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">product</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span>
+        <span class="s1">&#39;stores.Product&#39;</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">,</span>
+        <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;collect_collection&#39;</span><span class="p">,</span> <span class="n">editable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Collect.save"><a class="viewcode-back" href="../../modules/stores.html#stores.models.Collect.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">            notice here we update the product gender if it&#39;s connected to</span>
+<span class="sd">            some collection named with Man/Women</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">collection</span> <span class="o">=</span> <span class="n">Collection</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="n">shopify_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">collection_id</span><span class="p">)</span>
+        <span class="k">if</span><span class="p">(</span><span class="ow">not</span> <span class="n">collection</span><span class="o">.</span><span class="n">gender</span> <span class="o">==</span> <span class="s1">&#39;N&#39;</span><span class="p">):</span>
+            <span class="n">product</span> <span class="o">=</span> <span class="n">Product</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">shopify_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">product_id</span><span class="p">)</span>
+            <span class="n">product</span><span class="o">.</span><span class="n">gender</span> <span class="o">=</span> <span class="n">collection</span><span class="o">.</span><span class="n">gender</span>
+            <span class="n">product</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Collect</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="RecurringCharge"><a class="viewcode-back" href="../../modules/stores.html#stores.models.RecurringCharge">[docs]</a><span class="k">class</span> <span class="nc">RecurringCharge</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        simple model to save the history of billing actions</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">shopify_id</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BigIntegerField</span><span class="p">(</span><span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">max_length</span><span class="o">=</span><span class="n">plan_status</span><span class="o">.</span><span class="n">max_length</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="n">plan_status</span><span class="o">.</span><span class="n">choices</span><span class="p">,</span>
+        <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">plan</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">max_length</span><span class="o">=</span><span class="n">plans</span><span class="o">.</span><span class="n">max_length</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="n">plans</span><span class="o">.</span><span class="n">choices</span><span class="p">,</span>
+        <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">store</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span>
+        <span class="s1">&#39;stores.Store&#39;</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">,</span>
+        <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;recurringCharges&#39;</span><span class="p">,</span> <span class="n">editable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<div class="viewcode-block" id="RecurringCharge.billing_amount"><a class="viewcode-back" href="../../modules/stores.html#stores.models.RecurringCharge.billing_amount">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">billing_amount</span><span class="p">(</span><span class="n">plan</span><span class="p">):</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">plan</span> <span class="ow">in</span> <span class="p">[</span><span class="n">plans</span><span class="o">.</span><span class="n">choices_dict</span><span class="p">[</span><span class="s1">&#39;Male&#39;</span><span class="p">],</span> <span class="n">plans</span><span class="o">.</span><span class="n">choices_dict</span><span class="p">[</span><span class="s1">&#39;Female&#39;</span><span class="p">]]):</span>
+            <span class="k">return</span> <span class="mi">95</span>
+        <span class="k">elif</span><span class="p">(</span><span class="n">plan</span> <span class="o">==</span> <span class="n">plans</span><span class="o">.</span><span class="n">choices_dict</span><span class="p">[</span><span class="s1">&#39;MaleAndFemale&#39;</span><span class="p">]):</span>
+            <span class="k">return</span> <span class="mi">145</span>
+        <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;not supported plan&quot;</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+
+           </div>
+          </div>
+          <footer>
+
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, alomafit.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+
+
+
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+
+
+
+
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+
+
+</body>
+</html>

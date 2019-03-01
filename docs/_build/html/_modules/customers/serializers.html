@@ -1,0 +1,372 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>customers.serializers &mdash; alomafit-light 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="alomafit-light 1.0 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> alomafit-light
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">alomafit-light</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>customers.serializers</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for customers.serializers</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">django.db.models.fields</span> <span class="k">import</span> <span class="n">EmailField</span>
+<span class="kn">from</span> <span class="nn">rest_auth.registration.serializers</span> <span class="k">import</span> <span class="n">RegisterSerializer</span>
+<span class="kn">from</span> <span class="nn">rest_framework</span> <span class="k">import</span> <span class="n">serializers</span><span class="p">,</span> <span class="n">validators</span>
+<span class="kn">from</span> <span class="nn">rest_framework_nested.serializers</span> <span class="k">import</span> <span class="n">NestedHyperlinkedModelSerializer</span>
+<span class="kn">from</span> <span class="nn">rest_auth.serializers</span> <span class="k">import</span> <span class="n">PasswordResetSerializer</span>
+<span class="kn">from</span> <span class="nn">allauth.account.forms</span> <span class="k">import</span> <span class="n">ResetPasswordForm</span>
+<span class="kn">from</span> <span class="nn">insights.models</span> <span class="k">import</span> <span class="n">Product_Profile_Add_To_Closet</span><span class="p">,</span> <span class="n">Profile_Try_Product</span>
+<span class="kn">from</span> <span class="nn">stores.model_util</span> <span class="k">import</span> <span class="n">Variant_Ranges_dict</span><span class="p">,</span> <span class="n">validate_variant_range</span>
+<span class="kn">from</span> <span class="nn">stores.models</span> <span class="k">import</span> <span class="n">Product</span>
+<span class="kn">from</span> <span class="nn">stores.serializers</span> <span class="k">import</span> <span class="n">ProductSerializer</span>
+<span class="kn">from</span> <span class="nn">vfrlight.util</span> <span class="k">import</span> <span class="n">get_or_raise</span>
+
+<span class="kn">from</span> <span class="nn">.models</span> <span class="k">import</span> <span class="o">*</span>
+
+
+<div class="viewcode-block" id="Product_Profile_Add_To_Closet_ProfilePerspectiveSerializer"><a class="viewcode-back" href="../../modules/customers.html#customers.serializers.Product_Profile_Add_To_Closet_ProfilePerspectiveSerializer">[docs]</a><span class="k">class</span> <span class="nc">Product_Profile_Add_To_Closet_ProfilePerspectiveSerializer</span><span class="p">(</span><span class="n">NestedHyperlinkedModelSerializer</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        profile can add many products to its closet, while also product could be added</span>
+<span class="sd">        by many profiles, so we have two options to serialize</span>
+<span class="sd">            1)  when we are on the view of the product data and we want to see who added</span>
+<span class="sd">                this product to its closet</span>
+<span class="sd">            2)  when we are on the view of the profile data and we want to see which</span>
+<span class="sd">                products are added to his closet</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">product_data</span> <span class="o">=</span> <span class="n">ProductSerializer</span><span class="p">(</span><span class="n">read_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">product</span> <span class="o">=</span> <span class="n">serializers</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Product_Profile_Add_To_Closet_ProfilePerspectiveSerializer.validate"><a class="viewcode-back" href="../../modules/customers.html#customers.serializers.Product_Profile_Add_To_Closet_ProfilePerspectiveSerializer.validate">[docs]</a>    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="c1"># first get profile and product</span>
+        <span class="n">product_id</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;product&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">[</span><span class="s1">&#39;profile&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_or_raise</span><span class="p">(</span>
+            <span class="n">Profile</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">[</span><span class="s1">&#39;profile_id&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">[</span><span class="s1">&#39;product&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_or_raise</span><span class="p">(</span>
+            <span class="n">Product</span><span class="p">,</span> <span class="n">shopify_id</span><span class="o">=</span><span class="n">product_id</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># if they are not existed, i.e profile has not added the product,</span>
+            <span class="c1"># to his closet, Validation is True</span>
+            <span class="n">obj</span> <span class="o">=</span> <span class="n">Product_Profile_Add_To_Closet</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                <span class="n">product</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">[</span><span class="s1">&#39;product&#39;</span><span class="p">],</span>
+                <span class="n">customer_profile</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">[</span><span class="s1">&#39;profile&#39;</span><span class="p">])</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">data</span>
+        <span class="c1"># if no exception has fired, that means it&#39;s already existed</span>
+        <span class="k">raise</span> <span class="n">serializers</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> has added </span><span class="si">{}</span><span class="s2"> to his closet&quot;</span><span class="o">.</span>
+                                          <span class="nb">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">[</span><span class="s1">&#39;profile&#39;</span><span class="p">],</span>
+                                                 <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">[</span><span class="s1">&#39;product&#39;</span><span class="p">]))</span></div>
+
+<div class="viewcode-block" id="Product_Profile_Add_To_Closet_ProfilePerspectiveSerializer.create"><a class="viewcode-back" href="../../modules/customers.html#customers.serializers.Product_Profile_Add_To_Closet_ProfilePerspectiveSerializer.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">validated_data</span><span class="p">):</span>
+        <span class="n">Product_Profile_Add_To_Closet</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+            <span class="n">product</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">[</span><span class="s1">&#39;product&#39;</span><span class="p">],</span>
+            <span class="n">customer_profile</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">[</span><span class="s1">&#39;profile&#39;</span><span class="p">])</span></div>
+
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Product_Profile_Add_To_Closet</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;product&#39;</span><span class="p">,</span> <span class="s1">&#39;product_data&#39;</span><span class="p">)</span>
+        <span class="n">read_only_fields</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;product_data&#39;</span><span class="p">,)</span></div>
+
+
+<div class="viewcode-block" id="TriedProductsProfilePerspectiveSerializer"><a class="viewcode-back" href="../../modules/customers.html#customers.serializers.TriedProductsProfilePerspectiveSerializer">[docs]</a><span class="k">class</span> <span class="nc">TriedProductsProfilePerspectiveSerializer</span><span class="p">(</span><span class="n">NestedHyperlinkedModelSerializer</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        This serializer works as information source,</span>
+<span class="sd">        history of the profile actions is neccessary</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">product</span> <span class="o">=</span> <span class="n">serializers</span><span class="o">.</span><span class="n">ReadOnlyField</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="s1">&#39;product.shopify_id&#39;</span><span class="p">)</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Profile_Try_Product</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;product&#39;</span><span class="p">,</span> <span class="s1">&#39;try_date&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ProfileSerializer"><a class="viewcode-back" href="../../modules/customers.html#customers.serializers.ProfileSerializer">[docs]</a><span class="k">class</span> <span class="nc">ProfileSerializer</span><span class="p">(</span><span class="n">NestedHyperlinkedModelSerializer</span><span class="p">):</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Profile</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;height&#39;</span><span class="p">,</span> <span class="s1">&#39;weight&#39;</span><span class="p">,</span> <span class="s1">&#39;bust&#39;</span><span class="p">,</span> <span class="s1">&#39;waist&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;shoulder&#39;</span><span class="p">,</span> <span class="s1">&#39;hips&#39;</span><span class="p">,</span> <span class="s1">&#39;gender&#39;</span><span class="p">,</span> <span class="s1">&#39;metric_length&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;metric_weight&#39;</span><span class="p">,</span> <span class="s1">&#39;body_shape&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;top_size&#39;</span><span class="p">,</span> <span class="s1">&#39;bottom_size&#39;</span><span class="p">,</span> <span class="s1">&#39;skin&#39;</span><span class="p">)</span>
+        <span class="n">read_only_fields</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;body_shape&#39;</span><span class="p">,</span>
+                            <span class="s1">&#39;top_size&#39;</span><span class="p">,</span> <span class="s1">&#39;bottom_size&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ProfileSerializer.validate"><a class="viewcode-back" href="../../modules/customers.html#customers.serializers.ProfileSerializer.validate">[docs]</a>    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="n">errors</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">errors</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">validate_height</span><span class="p">(</span><span class="n">height</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">],</span>
+                                           <span class="n">metric_length</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;metric_length&#39;</span><span class="p">],</span>
+                                           <span class="n">gender</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;gender&#39;</span><span class="p">])</span>
+        <span class="n">errors</span><span class="p">[</span><span class="s1">&#39;weight&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">validate_weight</span><span class="p">(</span><span class="n">weight</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;weight&#39;</span><span class="p">],</span>
+                                           <span class="n">metric_weight</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;metric_weight&#39;</span><span class="p">],</span>
+                                           <span class="n">gender</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;gender&#39;</span><span class="p">])</span>
+        <span class="c1"># validate all the fields of body measurements</span>
+        <span class="n">errors</span><span class="p">[</span><span class="s1">&#39;bust&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">validate_variant_range</span><span class="p">(</span>
+            <span class="n">data</span><span class="p">[</span><span class="s1">&#39;gender&#39;</span><span class="p">],</span> <span class="s1">&#39;bust&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;bust&#39;</span><span class="p">],</span> <span class="n">Variant_Ranges_dict</span><span class="o">.</span><span class="n">ranges</span><span class="p">[</span><span class="s1">&#39;bust&#39;</span><span class="p">],</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="n">errors</span><span class="p">[</span><span class="s1">&#39;waist&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">validate_variant_range</span><span class="p">(</span>
+            <span class="n">data</span><span class="p">[</span><span class="s1">&#39;gender&#39;</span><span class="p">],</span> <span class="s1">&#39;waist&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;waist&#39;</span><span class="p">],</span> <span class="n">Variant_Ranges_dict</span><span class="o">.</span><span class="n">ranges</span><span class="p">[</span><span class="s1">&#39;waist&#39;</span><span class="p">],</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="n">errors</span><span class="p">[</span><span class="s1">&#39;hips&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">validate_variant_range</span><span class="p">(</span>
+            <span class="n">data</span><span class="p">[</span><span class="s1">&#39;gender&#39;</span><span class="p">],</span> <span class="s1">&#39;hips&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;hips&#39;</span><span class="p">],</span> <span class="n">Variant_Ranges_dict</span><span class="o">.</span><span class="n">ranges</span><span class="p">[</span><span class="s1">&#39;hips&#39;</span><span class="p">],</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="n">errors</span><span class="p">[</span><span class="s1">&#39;shoulder&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">validate_variant_range</span><span class="p">(</span>
+            <span class="n">data</span><span class="p">[</span><span class="s1">&#39;gender&#39;</span><span class="p">],</span> <span class="s1">&#39;shoulder&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;shoulder&#39;</span><span class="p">],</span> <span class="n">Variant_Ranges_dict</span><span class="o">.</span><span class="n">ranges</span><span class="p">[</span><span class="s1">&#39;shoulder&#39;</span><span class="p">],</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="c1"># if any error occured, raise a valdation error with json response</span>
+        <span class="n">errors</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">value</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span>
+                  <span class="n">value</span> <span class="ow">in</span> <span class="n">errors</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="ow">not</span><span class="p">(</span><span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)}</span>
+        <span class="k">if</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">errors</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">serializers</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="n">errors</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">data</span></div>
+
+<div class="viewcode-block" id="ProfileSerializer.update"><a class="viewcode-back" href="../../modules/customers.html#customers.serializers.ProfileSerializer.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">validated_data</span><span class="p">,</span> <span class="n">profile</span><span class="p">):</span>
+        <span class="n">profile</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="o">**</span><span class="n">validated_data</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ProfileSerializer.create"><a class="viewcode-back" href="../../modules/customers.html#customers.serializers.ProfileSerializer.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">validated_data</span><span class="p">,</span> <span class="n">customer</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+            <span class="n">customer</span><span class="o">=</span><span class="n">customer</span><span class="p">,</span> <span class="o">**</span><span class="n">validated_data</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ProfileSerializer.run_validators"><a class="viewcode-back" href="../../modules/customers.html#customers.serializers.ProfileSerializer.run_validators">[docs]</a>    <span class="k">def</span> <span class="nf">run_validators</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">            we remove the UniqueTogetherValidator validater for</span>
+<span class="sd">            the sake of populating our database</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">validator</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">validators</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">validator</span><span class="p">,</span> <span class="n">validators</span><span class="o">.</span><span class="n">UniqueTogetherValidator</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">validators</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">validator</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ProfileSerializer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">run_validators</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="CustomerSerializer"><a class="viewcode-back" href="../../modules/customers.html#customers.serializers.CustomerSerializer">[docs]</a><span class="k">class</span> <span class="nc">CustomerSerializer</span><span class="p">(</span><span class="n">serializers</span><span class="o">.</span><span class="n">HyperlinkedModelSerializer</span><span class="p">):</span>
+    <span class="n">queryset</span> <span class="o">=</span> <span class="n">Customer</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+    <span class="n">lookup_field</span> <span class="o">=</span> <span class="s1">&#39;slug&#39;</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">serializers</span><span class="o">.</span><span class="n">ReadOnlyField</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="s1">&#39;user.id&#39;</span><span class="p">)</span>
+    <span class="c1"># here we use nested router to list profile views under specific customer view</span>
+    <span class="n">extra_kwargs</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;slug&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;lookup_field&#39;</span><span class="p">:</span> <span class="s1">&#39;slug&#39;</span><span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Customer</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;slug&#39;</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PasswordSerializer"><a class="viewcode-back" href="../../modules/customers.html#customers.serializers.PasswordSerializer">[docs]</a><span class="k">class</span> <span class="nc">PasswordSerializer</span> <span class="p">(</span><span class="n">PasswordResetSerializer</span><span class="p">):</span>
+    <span class="n">password_reset_form_class</span> <span class="o">=</span> <span class="n">ResetPasswordForm</span></div>
+
+<div class="viewcode-block" id="CustomerRegisterSerializer"><a class="viewcode-back" href="../../modules/customers.html#customers.serializers.CustomerRegisterSerializer">[docs]</a><span class="k">class</span> <span class="nc">CustomerRegisterSerializer</span><span class="p">(</span><span class="n">RegisterSerializer</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        we override the RegisterSerializer, hence we replace it in</span>
+<span class="sd">        the settings file, to create a customer instance and bind it to</span>
+<span class="sd">        the newly created user, the api /registration</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+<div class="viewcode-block" id="CustomerRegisterSerializer.save"><a class="viewcode-back" href="../../modules/customers.html#customers.serializers.CustomerRegisterSerializer.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">CustomerRegisterSerializer</span><span class="p">,</span>
+                     <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">customer</span> <span class="o">=</span> <span class="n">Customer</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">user</span></div></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, alomafit.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

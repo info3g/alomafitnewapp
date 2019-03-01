@@ -1,0 +1,453 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>stores.tests &mdash; alomafit-light 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="alomafit-light 1.0 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> alomafit-light
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">alomafit-light</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>stores.tests</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for stores.tests</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">traceback</span>
+
+<span class="kn">import</span> <span class="nn">factory</span>
+<span class="kn">import</span> <span class="nn">factory.fuzzy</span>
+<span class="kn">import</span> <span class="nn">request</span>
+<span class="kn">import</span> <span class="nn">shopify</span>
+<span class="kn">from</span> <span class="nn">django.template.defaultfilters</span> <span class="k">import</span> <span class="n">slugify</span>
+<span class="kn">from</span> <span class="nn">django.test</span> <span class="k">import</span> <span class="n">TestCase</span>
+<span class="kn">from</span> <span class="nn">django.urls</span> <span class="k">import</span> <span class="n">reverse</span>
+<span class="kn">from</span> <span class="nn">faker</span> <span class="k">import</span> <span class="n">Faker</span>
+<span class="kn">from</span> <span class="nn">rest_framework</span> <span class="k">import</span> <span class="n">status</span>
+<span class="kn">from</span> <span class="nn">rest_framework.test</span> <span class="k">import</span> <span class="n">APIClient</span>
+
+<span class="kn">from</span> <span class="nn">customers.generator</span> <span class="k">import</span> <span class="n">ProductPopulator</span>
+<span class="kn">from</span> <span class="nn">stores.models</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">vfrlight.syncProducts_util</span> <span class="k">import</span> <span class="n">_sync_collections</span><span class="p">,</span> <span class="n">_sync_products</span>
+<span class="kn">from</span> <span class="nn">vfrlight.util</span> <span class="k">import</span> <span class="n">fake_initialize</span>
+
+<span class="kn">from</span> <span class="nn">.generator</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.models</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.serializers</span> <span class="k">import</span> <span class="o">*</span>
+
+
+<div class="viewcode-block" id="init_TestCase"><a class="viewcode-back" href="../../modules/stores.html#stores.tests.init_TestCase">[docs]</a><span class="k">class</span> <span class="nc">init_TestCase</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test suite for the api views.&quot;&quot;&quot;</span>
+
+    <span class="c1"># def _products_on_init_not_ready(self):</span>
+    <span class="c1">#     store = Store.objects.get(slug=slugify(self.shop))</span>
+    <span class="c1">#     for product in store.products.all():</span>
+    <span class="c1">#         self.assertFalse(product.ready_to_try</span>
+
+<div class="viewcode-block" id="init_TestCase.update_product_shopify"><a class="viewcode-back" href="../../modules/stores.html#stores.tests.init_TestCase.update_product_shopify">[docs]</a>    <span class="k">def</span> <span class="nf">update_product_shopify</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">product_shopify</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                               <span class="n">product_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vendor</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="c1"># make a second copy for product&#39;s data that needs to be updated</span>
+        <span class="n">old_title</span> <span class="o">=</span> <span class="n">product_shopify</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="n">title</span><span class="p">)</span>
+        <span class="n">old_product_type</span> <span class="o">=</span> <span class="n">product_shopify</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="s1">&#39;product_type&#39;</span><span class="p">,</span> <span class="n">product_type</span><span class="p">)</span>
+        <span class="n">old_vendor</span> <span class="o">=</span> <span class="n">product_shopify</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="s1">&#39;vendor&#39;</span><span class="p">,</span> <span class="n">vendor</span><span class="p">)</span>
+
+        <span class="n">product_shopify</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">title</span> <span class="k">if</span> <span class="n">title</span> <span class="k">else</span> <span class="n">old_title</span>
+        <span class="n">product_shopify</span><span class="o">.</span><span class="n">product_type</span> <span class="o">=</span> <span class="n">product_type</span> <span class="k">if</span> <span class="n">product_type</span> <span class="k">else</span> <span class="n">old_product_type</span>
+        <span class="n">product_shopify</span><span class="o">.</span><span class="n">vendor</span> <span class="o">=</span> <span class="n">vendor</span> <span class="k">if</span> <span class="n">vendor</span> <span class="k">else</span> <span class="n">old_vendor</span>
+        <span class="n">success</span> <span class="o">=</span> <span class="n">product_shopify</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">success</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">product_shopify</span><span class="p">,</span> <span class="n">old_title</span><span class="p">,</span> <span class="n">old_product_type</span><span class="p">,</span> <span class="n">old_vendor</span></div>
+
+<div class="viewcode-block" id="init_TestCase.sync_with_shopify"><a class="viewcode-back" href="../../modules/stores.html#stores.tests.init_TestCase.sync_with_shopify">[docs]</a>    <span class="k">def</span> <span class="nf">sync_with_shopify</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">_sync_products</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="p">)</span>
+            <span class="n">_sync_collections</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="init_TestCase.update_random_product"><a class="viewcode-back" href="../../modules/stores.html#stores.tests.init_TestCase.update_random_product">[docs]</a>    <span class="k">def</span> <span class="nf">update_random_product</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">_range</span> <span class="o">=</span> <span class="n">Product</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+        <span class="n">product</span> <span class="o">=</span> <span class="n">Product</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()[</span>
+            <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">_range</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)]</span>
+        <span class="n">product_factory_serialized</span> <span class="o">=</span> <span class="n">updateProduct_factory</span><span class="p">(</span><span class="n">product</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">put</span><span class="p">(</span>
+            <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;stores:store-products-detail&#39;</span><span class="p">,</span>
+                    <span class="n">kwargs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;store_slug&#39;</span><span class="p">:</span> <span class="n">slugify</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shop</span><span class="p">),</span>
+                            <span class="s1">&#39;pk&#39;</span><span class="p">:</span> <span class="n">product</span><span class="o">.</span><span class="n">shopify_id</span><span class="p">}),</span>
+            <span class="n">product_factory_serialized</span><span class="p">,</span>
+            <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;json&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">response</span><span class="p">,</span> <span class="n">product</span><span class="p">,</span> <span class="n">product_factory_serialized</span></div>
+
+<div class="viewcode-block" id="init_TestCase.get_random_product_shopify"><a class="viewcode-back" href="../../modules/stores.html#stores.tests.init_TestCase.get_random_product_shopify">[docs]</a>    <span class="k">def</span> <span class="nf">get_random_product_shopify</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">with</span> <span class="n">shopify</span><span class="o">.</span><span class="n">Session</span><span class="o">.</span><span class="n">temp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shop</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">token</span><span class="p">):</span>
+            <span class="c1"># get random product from shopify</span>
+            <span class="n">product_shopify</span> <span class="o">=</span> <span class="n">shopify</span><span class="o">.</span><span class="n">Product</span><span class="o">.</span><span class="n">find</span><span class="p">()[</span>
+                <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">shopify</span><span class="o">.</span><span class="n">Product</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)]</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">product_db</span> <span class="o">=</span> <span class="n">Product</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                    <span class="n">shopify_id</span><span class="o">=</span><span class="n">product_shopify</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
+
+        <span class="k">return</span> <span class="n">product_shopify</span><span class="p">,</span> <span class="n">product_db</span></div>
+
+<div class="viewcode-block" id="init_TestCase.create_collect_shopify"><a class="viewcode-back" href="../../modules/stores.html#stores.tests.init_TestCase.create_collect_shopify">[docs]</a>    <span class="k">def</span> <span class="nf">create_collect_shopify</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">product_id</span><span class="p">,</span> <span class="n">collection_id</span><span class="p">):</span>
+        <span class="n">collect</span> <span class="o">=</span> <span class="n">shopify</span><span class="o">.</span><span class="n">Collect</span><span class="p">({</span><span class="s1">&#39;product_id&#39;</span><span class="p">:</span> <span class="n">product_id</span><span class="p">,</span>
+                                   <span class="s1">&#39;collection_id&#39;</span><span class="p">:</span> <span class="n">collection_id</span><span class="p">})</span>
+        <span class="n">success</span> <span class="o">=</span> <span class="n">collect</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">success</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">collect</span></div>
+
+<div class="viewcode-block" id="init_TestCase.sync_create_product_shopify"><a class="viewcode-back" href="../../modules/stores.html#stores.tests.init_TestCase.sync_create_product_shopify">[docs]</a>    <span class="k">def</span> <span class="nf">sync_create_product_shopify</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">collection</span><span class="o">=</span><span class="s2">&quot;Women&quot;</span><span class="p">,</span>
+                                    <span class="n">title</span><span class="o">=</span><span class="n">Faker</span><span class="p">()</span><span class="o">.</span><span class="n">words</span><span class="p">()[</span><span class="mi">0</span><span class="p">],</span>
+                                    <span class="n">product_type</span><span class="o">=</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span>
+                                        <span class="n">ProductTypeChoicesList</span><span class="p">),</span>
+                                    <span class="n">vendor</span><span class="o">=</span><span class="n">Faker</span><span class="p">()</span><span class="o">.</span><span class="n">company</span><span class="p">()):</span>
+        <span class="k">with</span> <span class="n">shopify</span><span class="o">.</span><span class="n">Session</span><span class="o">.</span><span class="n">temp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shop</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">token</span><span class="p">):</span>
+            <span class="n">collection</span> <span class="o">=</span> <span class="n">shopify</span><span class="o">.</span><span class="n">CustomCollection</span><span class="o">.</span><span class="n">find</span><span class="p">(</span>
+                <span class="n">title</span><span class="o">=</span><span class="n">collection</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">new_product</span> <span class="o">=</span> <span class="n">shopify</span><span class="o">.</span><span class="n">Product</span><span class="p">()</span>
+            <span class="n">new_product</span><span class="p">,</span> <span class="n">old_title</span><span class="p">,</span> <span class="n">old_product_type</span><span class="p">,</span>\
+                <span class="n">old_vendor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_product_shopify</span><span class="p">(</span><span class="n">new_product</span><span class="p">,</span>
+                                                         <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
+                                                         <span class="n">product_type</span><span class="o">=</span><span class="n">product_type</span><span class="p">,</span>
+                                                         <span class="n">vendor</span><span class="o">=</span><span class="n">vendor</span><span class="p">)</span>
+            <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_collect_shopify</span><span class="p">(</span>
+                <span class="n">new_product</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">collection</span><span class="o">.</span><span class="n">attributes</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sync_with_shopify</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">new_product</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">collection</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">product_type</span><span class="p">,</span> <span class="n">vendor</span><span class="p">,</span> <span class="n">new_product</span></div>
+
+<div class="viewcode-block" id="init_TestCase.sync_update_product_from_shopify"><a class="viewcode-back" href="../../modules/stores.html#stores.tests.init_TestCase.sync_update_product_from_shopify">[docs]</a>    <span class="k">def</span> <span class="nf">sync_update_product_from_shopify</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                                         <span class="n">title</span><span class="o">=</span><span class="n">Faker</span><span class="p">()</span><span class="o">.</span><span class="n">words</span><span class="p">()[</span><span class="mi">0</span><span class="p">],</span>
+                                         <span class="n">product_type</span><span class="o">=</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span>
+                                             <span class="n">ProductTypeChoicesList</span><span class="p">),</span>
+                                         <span class="n">vendor</span><span class="o">=</span><span class="n">Faker</span><span class="p">()</span><span class="o">.</span><span class="n">company</span><span class="p">()):</span>
+        <span class="k">with</span> <span class="n">shopify</span><span class="o">.</span><span class="n">Session</span><span class="o">.</span><span class="n">temp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shop</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">token</span><span class="p">):</span>
+            <span class="n">product_shopify</span><span class="p">,</span> <span class="n">product_db</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_random_product_shopify</span><span class="p">()</span>
+            <span class="c1"># update the product</span>
+            <span class="n">product_shopify</span><span class="p">,</span> <span class="n">old_title</span><span class="p">,</span>\
+                <span class="n">old_product_type</span><span class="p">,</span> <span class="n">old_vendor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_product_shopify</span><span class="p">(</span>
+                    <span class="n">product_shopify</span><span class="p">,</span>
+                    <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
+                    <span class="n">product_type</span><span class="o">=</span><span class="n">product_type</span><span class="p">,</span>
+                    <span class="n">vendor</span><span class="o">=</span><span class="n">vendor</span><span class="p">)</span>
+            <span class="c1"># since we deleted all collection that relate to the product as well as updated it&#39;s data</span>
+            <span class="c1"># import pdb; pdb.set_trace()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sync_with_shopify</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">product_shopify</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">old_title</span><span class="p">,</span> <span class="n">old_product_type</span><span class="p">,</span> <span class="n">old_vendor</span></div>
+
+<div class="viewcode-block" id="init_TestCase.ready_to_try_product_locally"><a class="viewcode-back" href="../../modules/stores.html#stores.tests.init_TestCase.ready_to_try_product_locally">[docs]</a>    <span class="k">def</span> <span class="nf">ready_to_try_product_locally</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ignore_variant</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">products_populated_ids</span> <span class="o">=</span> <span class="n">ProductPopulator</span><span class="p">()</span><span class="o">.</span>\
+            <span class="n">populate</span><span class="p">(</span><span class="n">products_count</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">variants_count</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                     <span class="n">ignore_variant</span><span class="o">=</span><span class="n">ignore_variant</span><span class="p">)</span>
+        <span class="n">products</span> <span class="o">=</span> <span class="n">Product</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+            <span class="n">shopify_id__in</span><span class="o">=</span><span class="n">products_populated_ids</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">product</span> <span class="ow">in</span> <span class="n">products</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">product</span><span class="o">.</span><span class="n">ready_to_try</span><span class="p">,</span>
+                             <span class="n">ignore_variant</span> <span class="o">==</span> <span class="kc">False</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="init_TestCase.setUp"><a class="viewcode-back" href="../../modules/stores.html#stores.tests.init_TestCase.setUp">[docs]</a>    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="o">=</span> <span class="n">APIClient</span><span class="p">()</span>
+        <span class="n">fake_initialize</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">store</span> <span class="o">=</span> <span class="n">Store</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shop</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">token</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">token</span></div>
+
+<div class="viewcode-block" id="init_TestCase.test_init"><a class="viewcode-back" href="../../modules/stores.html#stores.tests.init_TestCase.test_init">[docs]</a>    <span class="k">def</span> <span class="nf">test_init</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">Store</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">count</span><span class="p">(),</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertGreater</span><span class="p">(</span><span class="n">Product</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">count</span><span class="p">(),</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertGreater</span><span class="p">(</span><span class="n">Variant</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">count</span><span class="p">(),</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertGreater</span><span class="p">(</span><span class="n">Collection</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">count</span><span class="p">(),</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertGreater</span><span class="p">(</span><span class="n">Collect</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">count</span><span class="p">(),</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">Merchant</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">count</span><span class="p">(),</span> <span class="mi">1</span><span class="p">)</span></div>
+
+    <span class="c1"># def test_product_not_ready(self):</span>
+    <span class="c1">#     self._products_on_init_not_ready()</span>
+
+<div class="viewcode-block" id="init_TestCase.test_product_put"><a class="viewcode-back" href="../../modules/stores.html#stores.tests.init_TestCase.test_product_put">[docs]</a>    <span class="k">def</span> <span class="nf">test_product_put</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">response</span><span class="p">,</span> <span class="n">product</span><span class="p">,</span> <span class="n">product_factory</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_random_product</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">status</span><span class="o">.</span><span class="n">HTTP_200_OK</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="init_TestCase.sync_create_product_shopify_collection_gender_test"><a class="viewcode-back" href="../../modules/stores.html#stores.tests.init_TestCase.sync_create_product_shopify_collection_gender_test">[docs]</a>    <span class="k">def</span> <span class="nf">sync_create_product_shopify_collection_gender_test</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">collection</span><span class="o">=</span><span class="s2">&quot;Women&quot;</span><span class="p">):</span>
+        <span class="n">gender</span> <span class="o">=</span> <span class="n">Collection</span><span class="o">.</span><span class="n">gender_converter</span><span class="p">(</span><span class="n">collection</span><span class="p">)</span>
+        <span class="n">new_product_id</span><span class="p">,</span> <span class="n">collection</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span>\
+            <span class="n">product_type</span><span class="p">,</span> <span class="n">vendor</span><span class="p">,</span> <span class="n">new_product</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sync_create_product_shopify</span><span class="p">(</span>
+                <span class="n">collection</span><span class="o">=</span><span class="n">collection</span><span class="p">)</span>
+        <span class="n">product</span> <span class="o">=</span> <span class="n">Product</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">shopify_id</span><span class="o">=</span><span class="n">new_product_id</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">product</span><span class="o">.</span><span class="n">gender</span><span class="p">,</span> <span class="n">gender</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">product_type</span><span class="p">,</span> <span class="n">product</span><span class="o">.</span><span class="n">product_type</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">shopify</span><span class="o">.</span><span class="n">Session</span><span class="o">.</span><span class="n">temp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shop</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">token</span><span class="p">):</span>
+            <span class="n">new_product</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="init_TestCase.test_product_sync_create_product"><a class="viewcode-back" href="../../modules/stores.html#stores.tests.init_TestCase.test_product_sync_create_product">[docs]</a>    <span class="k">def</span> <span class="nf">test_product_sync_create_product</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sync_create_product_shopify_collection_gender_test</span><span class="p">(</span>
+            <span class="n">collection</span><span class="o">=</span><span class="s2">&quot;Women&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sync_create_product_shopify_collection_gender_test</span><span class="p">(</span>
+            <span class="n">collection</span><span class="o">=</span><span class="s2">&quot;Men&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="init_TestCase.test_product_sync_update_product"><a class="viewcode-back" href="../../modules/stores.html#stores.tests.init_TestCase.test_product_sync_update_product">[docs]</a>    <span class="k">def</span> <span class="nf">test_product_sync_update_product</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">title</span> <span class="o">=</span> <span class="n">Faker</span><span class="p">()</span><span class="o">.</span><span class="n">words</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">product_type</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">ProductTypeChoicesList</span><span class="p">)</span>
+        <span class="n">vendor</span> <span class="o">=</span> <span class="n">Faker</span><span class="p">()</span><span class="o">.</span><span class="n">company</span><span class="p">()</span>
+
+        <span class="n">product_id</span><span class="p">,</span> <span class="n">old_title</span><span class="p">,</span> <span class="n">old_product_type</span><span class="p">,</span>\
+            <span class="n">old_vendor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sync_update_product_from_shopify</span><span class="p">(</span>
+                <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
+                <span class="n">product_type</span><span class="o">=</span><span class="n">product_type</span><span class="p">,</span>
+                <span class="n">vendor</span><span class="o">=</span><span class="n">vendor</span><span class="p">)</span>
+        <span class="n">product_db</span> <span class="o">=</span> <span class="n">Product</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">shopify_id</span><span class="o">=</span><span class="n">product_id</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">product_db</span><span class="o">.</span><span class="n">title</span><span class="p">,</span> <span class="n">title</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">product_db</span><span class="o">.</span><span class="n">product_type</span><span class="p">,</span> <span class="n">product_type</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">product_db</span><span class="o">.</span><span class="n">vendor</span><span class="p">,</span> <span class="n">vendor</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">shopify</span><span class="o">.</span><span class="n">Session</span><span class="o">.</span><span class="n">temp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shop</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">token</span><span class="p">):</span>
+            <span class="n">product_shopify</span> <span class="o">=</span> <span class="n">shopify</span><span class="o">.</span><span class="n">Product</span><span class="o">.</span><span class="n">find</span><span class="p">(</span>
+                <span class="nb">id</span><span class="o">=</span><span class="n">product_db</span><span class="o">.</span><span class="n">shopify_id</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">update_product_shopify</span><span class="p">(</span><span class="n">product_shopify</span><span class="o">=</span><span class="n">product_shopify</span><span class="p">,</span>
+                                        <span class="n">title</span><span class="o">=</span><span class="n">old_title</span><span class="p">,</span>
+                                        <span class="n">product_type</span><span class="o">=</span><span class="n">old_product_type</span><span class="p">,</span>
+                                        <span class="n">vendor</span><span class="o">=</span><span class="n">old_vendor</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sync_with_shopify</span><span class="p">()</span>
+            <span class="n">product_db</span> <span class="o">=</span> <span class="n">Product</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">shopify_id</span><span class="o">=</span><span class="n">product_id</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">product_db</span><span class="o">.</span><span class="n">title</span><span class="p">,</span> <span class="n">old_title</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">product_db</span><span class="o">.</span><span class="n">product_type</span><span class="p">,</span>
+                             <span class="n">old_product_type</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">product_db</span><span class="o">.</span><span class="n">vendor</span><span class="p">,</span> <span class="n">old_vendor</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="init_TestCase.test_product_sync_delete_product"><a class="viewcode-back" href="../../modules/stores.html#stores.tests.init_TestCase.test_product_sync_delete_product">[docs]</a>    <span class="k">def</span> <span class="nf">test_product_sync_delete_product</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">collection</span> <span class="o">=</span> <span class="s2">&quot;Women&quot;</span>
+        <span class="n">gender</span> <span class="o">=</span> <span class="n">Collection</span><span class="o">.</span><span class="n">gender_converter</span><span class="p">(</span><span class="n">collection</span><span class="p">)</span>
+        <span class="n">new_product_id</span><span class="p">,</span> <span class="n">collection</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span>\
+            <span class="n">product_type</span><span class="p">,</span> <span class="n">vendor</span><span class="p">,</span> <span class="n">new_product</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sync_create_product_shopify</span><span class="p">(</span>
+                <span class="n">collection</span><span class="o">=</span><span class="n">collection</span><span class="p">)</span>
+        <span class="n">product</span> <span class="o">=</span> <span class="n">Product</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">shopify_id</span><span class="o">=</span><span class="n">new_product_id</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">product</span><span class="o">.</span><span class="n">gender</span><span class="p">,</span> <span class="n">gender</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">product_type</span><span class="p">,</span> <span class="n">product</span><span class="o">.</span><span class="n">product_type</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">shopify</span><span class="o">.</span><span class="n">Session</span><span class="o">.</span><span class="n">temp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shop</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">token</span><span class="p">):</span>
+            <span class="n">new_product</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">product</span> <span class="o">=</span> <span class="n">Product</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">shopify_id</span><span class="o">=</span><span class="n">new_product_id</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">product</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIsNotNone</span><span class="p">(</span><span class="n">product</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sync_with_shopify</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">product</span> <span class="o">=</span> <span class="n">Product</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">shopify_id</span><span class="o">=</span><span class="n">new_product_id</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">product</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIsNone</span><span class="p">(</span><span class="n">product</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="init_TestCase.test_product_ready_locally"><a class="viewcode-back" href="../../modules/stores.html#stores.tests.init_TestCase.test_product_ready_locally">[docs]</a>    <span class="k">def</span> <span class="nf">test_product_ready_locally</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ready_to_try_product_locally</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="init_TestCase.test_product_not_ready_locally"><a class="viewcode-back" href="../../modules/stores.html#stores.tests.init_TestCase.test_product_not_ready_locally">[docs]</a>    <span class="k">def</span> <span class="nf">test_product_not_ready_locally</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ready_to_try_product_locally</span><span class="p">(</span><span class="n">ignore_variant</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, alomafit.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

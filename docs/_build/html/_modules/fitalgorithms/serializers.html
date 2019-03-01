@@ -1,0 +1,344 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>fitalgorithms.serializers &mdash; alomafit-light 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="alomafit-light 1.0 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> alomafit-light
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">alomafit-light</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>fitalgorithms.serializers</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for fitalgorithms.serializers</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">rest_framework</span> <span class="k">import</span> <span class="n">serializers</span>
+
+<span class="kn">from</span> <span class="nn">customers.model_util</span> <span class="k">import</span> <span class="n">validate_height</span><span class="p">,</span> <span class="n">validate_weight</span>
+<span class="kn">from</span> <span class="nn">customers.serializers</span> <span class="k">import</span> <span class="n">ProfileSerializer</span>
+<span class="kn">from</span> <span class="nn">insights.models</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">stores.models</span> <span class="k">import</span> <span class="n">Product</span><span class="p">,</span> <span class="n">Store</span><span class="p">,</span> <span class="n">Variant</span>
+<span class="kn">from</span> <span class="nn">vfrlight.util</span> <span class="k">import</span> <span class="n">get_or_raise</span>
+
+<span class="kn">from</span> <span class="nn">.algorithms</span> <span class="k">import</span> <span class="n">fit_product</span><span class="p">,</span> <span class="n">full_size</span><span class="p">,</span> <span class="n">size_range</span>
+
+
+<div class="viewcode-block" id="PredictSerializer"><a class="viewcode-back" href="../../modules/fitalgorithms.html#fitalgorithms.serializers.PredictSerializer">[docs]</a><span class="k">class</span> <span class="nc">PredictSerializer</span><span class="p">(</span><span class="n">serializers</span><span class="o">.</span><span class="n">Serializer</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        we could predict the values of the body parts once we have weight and heights</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">height</span> <span class="o">=</span> <span class="n">serializers</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">165</span><span class="p">,)</span>
+    <span class="n">weight</span> <span class="o">=</span> <span class="n">serializers</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">65</span><span class="p">)</span>
+    <span class="n">gender</span> <span class="o">=</span> <span class="n">serializers</span><span class="o">.</span><span class="n">ChoiceField</span><span class="p">([(</span><span class="s1">&#39;Male&#39;</span><span class="p">,</span> <span class="s2">&quot;M&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;Female&quot;</span><span class="p">,</span> <span class="s2">&quot;F&quot;</span><span class="p">)])</span>
+    <span class="n">metric_length</span> <span class="o">=</span> <span class="n">serializers</span><span class="o">.</span><span class="n">ChoiceField</span><span class="p">(</span><span class="n">choices</span><span class="o">=</span><span class="p">((</span><span class="s1">&#39;in&#39;</span><span class="p">,</span> <span class="s1">&#39;in&#39;</span><span class="p">),</span>
+                                                     <span class="p">(</span><span class="s1">&#39;cm&#39;</span><span class="p">,</span> <span class="s1">&#39;cm&#39;</span><span class="p">)),</span>
+                                            <span class="n">default</span><span class="o">=</span><span class="s1">&#39;cm&#39;</span><span class="p">)</span>
+    <span class="n">metric_weight</span> <span class="o">=</span> <span class="n">serializers</span><span class="o">.</span><span class="n">ChoiceField</span><span class="p">(</span><span class="n">choices</span><span class="o">=</span><span class="p">((</span><span class="s1">&#39;kg&#39;</span><span class="p">,</span> <span class="s1">&#39;kg&#39;</span><span class="p">),</span>
+                                                     <span class="p">(</span><span class="s1">&#39;lb&#39;</span><span class="p">,</span> <span class="s1">&#39;lb&#39;</span><span class="p">)),</span>
+                                            <span class="n">default</span><span class="o">=</span><span class="s1">&#39;kg&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="PredictSerializer.validate"><a class="viewcode-back" href="../../modules/fitalgorithms.html#fitalgorithms.serializers.PredictSerializer.validate">[docs]</a>    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="n">errors</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">errors</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">validate_height</span><span class="p">(</span>
+            <span class="n">data</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;metric_length&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;gender&#39;</span><span class="p">])</span>
+        <span class="n">errors</span><span class="p">[</span><span class="s1">&#39;weight&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">validate_weight</span><span class="p">(</span>
+            <span class="n">data</span><span class="p">[</span><span class="s1">&#39;weight&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;metric_weight&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;gender&#39;</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">attribute</span> <span class="ow">in</span> <span class="n">errors</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">errors</span><span class="p">[</span><span class="n">attribute</span><span class="p">]):</span>
+                <span class="k">raise</span> <span class="n">serializers</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="n">errors</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">data</span></div>
+
+<div class="viewcode-block" id="PredictSerializer.create"><a class="viewcode-back" href="../../modules/fitalgorithms.html#fitalgorithms.serializers.PredictSerializer.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">validated_data</span><span class="p">):</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="n">full_size</span><span class="p">(</span><span class="n">validated_data</span><span class="p">[</span><span class="s1">&#39;gender&#39;</span><span class="p">],</span>
+                         <span class="n">validated_data</span><span class="p">[</span><span class="s1">&#39;weight&#39;</span><span class="p">],</span>
+                         <span class="n">validated_data</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">],</span>
+                         <span class="n">validated_data</span><span class="p">[</span><span class="s1">&#39;metric_weight&#39;</span><span class="p">],</span>
+                         <span class="n">validated_data</span><span class="p">[</span><span class="s1">&#39;metric_length&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">get_full_size</span><span class="p">()</span>
+        <span class="n">Size_Range</span> <span class="o">=</span> <span class="n">size_range</span><span class="p">(</span><span class="n">validated_data</span><span class="p">[</span><span class="s1">&#39;gender&#39;</span><span class="p">],</span> <span class="n">size</span><span class="p">,</span>
+                                <span class="n">validated_data</span><span class="p">[</span><span class="s1">&#39;metric_length&#39;</span><span class="p">])</span>
+        <span class="n">Size_Range</span><span class="o">.</span><span class="n">get_range</span><span class="p">()</span>
+        <span class="n">bust</span> <span class="o">=</span> <span class="p">(</span><span class="n">Size_Range</span><span class="o">.</span><span class="n">start_bust_range</span> <span class="o">+</span>
+                <span class="n">Size_Range</span><span class="o">.</span><span class="n">end_bust_range</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
+        <span class="n">shoulder</span> <span class="o">=</span> <span class="p">(</span><span class="n">Size_Range</span><span class="o">.</span><span class="n">start_shoulder_range</span> <span class="o">+</span>
+                    <span class="n">Size_Range</span><span class="o">.</span><span class="n">end_shoulder_range</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
+        <span class="n">hip</span> <span class="o">=</span> <span class="p">(</span><span class="n">Size_Range</span><span class="o">.</span><span class="n">start_hip_range</span> <span class="o">+</span>
+               <span class="n">Size_Range</span><span class="o">.</span><span class="n">end_hip_range</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
+        <span class="n">waist</span> <span class="o">=</span> <span class="p">(</span><span class="n">Size_Range</span><span class="o">.</span><span class="n">start_waist_range</span> <span class="o">+</span>
+                 <span class="n">Size_Range</span><span class="o">.</span><span class="n">end_waist_range</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;shoulder&#39;</span><span class="p">:</span> <span class="n">shoulder</span><span class="p">,</span>
+                <span class="s1">&#39;waist&#39;</span><span class="p">:</span> <span class="n">waist</span><span class="p">,</span>
+                <span class="s1">&#39;hips&#39;</span><span class="p">:</span> <span class="n">hip</span><span class="p">,</span>
+                <span class="s1">&#39;bust&#39;</span><span class="p">:</span> <span class="n">bust</span><span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">data</span></div></div>
+
+
+<span class="k">def</span> <span class="nf">_fit_product</span><span class="p">(</span><span class="n">product_id</span><span class="p">,</span> <span class="n">profile_id</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Whether we have an authenticated profile or not,</span>
+<span class="sd">        fitproduct process needs only profile_id and product_id</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">product</span> <span class="o">=</span> <span class="n">get_or_raise</span><span class="p">(</span><span class="n">Product</span><span class="p">,</span> <span class="n">shopify_id</span><span class="o">=</span><span class="n">product_id</span><span class="p">)</span>
+    <span class="n">profile</span> <span class="o">=</span> <span class="n">get_or_raise</span><span class="p">(</span><span class="n">Profile</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="n">profile_id</span><span class="p">)</span>
+
+    <span class="c1"># CHECK if additional values are added in product&#39;s variants</span>
+    <span class="k">if</span><span class="p">(</span><span class="ow">not</span> <span class="n">product</span><span class="o">.</span><span class="n">ready_to_try</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">serializers</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span>
+            <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> is not ready to try yet :()&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">product</span><span class="o">.</span><span class="n">title</span><span class="p">))</span>
+    <span class="c1"># check if product.gender doesn&#39;t match the plan</span>
+    <span class="k">if</span><span class="p">(</span><span class="ow">not</span> <span class="n">product</span><span class="o">.</span><span class="n">covered_by_the_plan</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">serializers</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span>
+            <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> is not covered by the plan :()&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">product</span><span class="o">.</span><span class="n">title</span><span class="p">))</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        IMPORTANT, we could design a plan scheme,</span>
+<span class="sd">        Each store could only get only limited number of tries</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">fit_product</span><span class="p">(</span><span class="n">product</span><span class="o">=</span><span class="n">product</span><span class="p">,</span> <span class="n">profile</span><span class="o">=</span><span class="n">profile</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">data</span>
+
+
+<div class="viewcode-block" id="Fit_Product_Authenticated_Profile_Serializer"><a class="viewcode-back" href="../../modules/fitalgorithms.html#fitalgorithms.serializers.Fit_Product_Authenticated_Profile_Serializer">[docs]</a><span class="k">class</span> <span class="nc">Fit_Product_Authenticated_Profile_Serializer</span><span class="p">(</span><span class="n">serializers</span><span class="o">.</span><span class="n">Serializer</span><span class="p">):</span>
+
+    <span class="n">product_id</span> <span class="o">=</span> <span class="n">serializers</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">()</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">Model</span> <span class="o">=</span> <span class="n">Profile_Try_Product</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;product_id&#39;</span><span class="p">,)</span>
+
+<div class="viewcode-block" id="Fit_Product_Authenticated_Profile_Serializer.create"><a class="viewcode-back" href="../../modules/fitalgorithms.html#fitalgorithms.serializers.Fit_Product_Authenticated_Profile_Serializer.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">validated_data</span><span class="p">,</span> <span class="n">profile_id</span><span class="p">):</span>
+        <span class="n">product_id</span> <span class="o">=</span> <span class="n">validated_data</span><span class="p">[</span><span class="s1">&#39;product_id&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">_fit_product</span><span class="p">(</span><span class="n">product_id</span><span class="p">,</span> <span class="n">profile_id</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="Fit_Product_Anonymous_Profile_Serializer"><a class="viewcode-back" href="../../modules/fitalgorithms.html#fitalgorithms.serializers.Fit_Product_Anonymous_Profile_Serializer">[docs]</a><span class="k">class</span> <span class="nc">Fit_Product_Anonymous_Profile_Serializer</span><span class="p">(</span><span class="n">serializers</span><span class="o">.</span><span class="n">Serializer</span><span class="p">):</span>
+
+    <span class="n">profile</span> <span class="o">=</span> <span class="n">ProfileSerializer</span><span class="p">()</span>
+    <span class="n">product_id</span> <span class="o">=</span> <span class="n">serializers</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">()</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">Model</span> <span class="o">=</span> <span class="n">Profile_Try_Product</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;profile&#39;</span><span class="p">,</span> <span class="s1">&#39;product_id&#39;</span><span class="p">,)</span>
+
+<div class="viewcode-block" id="Fit_Product_Anonymous_Profile_Serializer.create"><a class="viewcode-back" href="../../modules/fitalgorithms.html#fitalgorithms.serializers.Fit_Product_Anonymous_Profile_Serializer.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">validated_data</span><span class="p">):</span>
+        <span class="c1"># import pdb; pdb.set_trace()</span>
+        <span class="n">product_id</span> <span class="o">=</span> <span class="n">validated_data</span><span class="p">[</span><span class="s1">&#39;product_id&#39;</span><span class="p">]</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">                With anonymous profile, please check UNIQUE contraints</span>
+<span class="sd">                to make sure, there is no duplicated values.</span>
+<span class="sd">            &#39;&#39;&#39;</span>
+            <span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+                <span class="o">**</span><span class="n">validated_data</span><span class="p">[</span><span class="s1">&#39;profile&#39;</span><span class="p">])</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="c1"># if there is duplicated values then do not create, JUST retrieve it</span>
+            <span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="o">**</span><span class="n">validated_data</span><span class="p">[</span><span class="s1">&#39;profile&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">_fit_product</span><span class="p">(</span><span class="n">product_id</span><span class="p">,</span> <span class="n">profile</span><span class="o">.</span><span class="n">id</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, alomafit.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,1158 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>customers package &mdash; alomafit-light 1.0 documentation</title>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+
+
+
+
+
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="alomafit-light 1.0 documentation" href="../index.html"/>
+
+
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+
+  <div class="wy-grid-for-nav">
+
+
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+
+
+
+            <a href="../index.html" class="icon icon-home"> alomafit-light
+
+
+
+          </a>
+
+
+
+
+              <div class="version">
+                1.0
+              </div>
+
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+
+
+
+
+
+
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">customers package</a><ul>
+<li><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-customers.admin">customers.admin module</a></li>
+<li><a class="reference internal" href="#module-customers.apps">customers.apps module</a></li>
+<li><a class="reference internal" href="#module-customers.generator">customers.generator module</a></li>
+<li><a class="reference internal" href="#module-customers.model_util">customers.model_util module</a></li>
+<li><a class="reference internal" href="#module-customers.models">customers.models module</a></li>
+<li><a class="reference internal" href="#module-customers.permissions">customers.permissions module</a></li>
+<li><a class="reference internal" href="#module-customers.serializers">customers.serializers module</a></li>
+<li><a class="reference internal" href="#module-customers.tests">customers.tests module</a></li>
+<li><a class="reference internal" href="#module-customers.urls">customers.urls module</a></li>
+<li><a class="reference internal" href="#module-customers.views">customers.views module</a></li>
+<li><a class="reference internal" href="#module-customers">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">alomafit-light</a>
+
+      </nav>
+
+
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+
+      <li>customers package</li>
+
+
+      <li class="wy-breadcrumbs-aside">
+
+
+            <a href="../_sources/modules/customers.rst.txt" rel="nofollow"> View page source</a>
+
+
+      </li>
+
+  </ul>
+
+
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+
+  <div class="section" id="customers-package">
+<h1>customers package<a class="headerlink" href="#customers-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="customers.migrations.html">customers.migrations package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="customers.migrations.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="customers.migrations.html#module-customers.migrations.0001_initial">customers.migrations.0001_initial module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="customers.migrations.html#module-customers.migrations">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-customers.admin">
+<span id="customers-admin-module"></span><h2>customers.admin module<a class="headerlink" href="#module-customers.admin" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="customers.admin.AdminCustomer">
+<em class="property">class </em><code class="descclassname">customers.admin.</code><code class="descname">AdminCustomer</code><span class="sig-paren">(</span><em>model</em>, <em>admin_site</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/customers/admin.html#AdminCustomer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#customers.admin.AdminCustomer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.contrib.admin.options.ModelAdmin</span></code></p>
+<dl class="attribute">
+<dt id="customers.admin.AdminCustomer.media">
+<code class="descname">media</code><a class="headerlink" href="#customers.admin.AdminCustomer.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="customers.admin.AdminCustomer.readonly_fields">
+<code class="descname">readonly_fields</code><em class="property"> = ['user', 'slug']</em><a class="headerlink" href="#customers.admin.AdminCustomer.readonly_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="customers.admin.AdminProfile">
+<em class="property">class </em><code class="descclassname">customers.admin.</code><code class="descname">AdminProfile</code><span class="sig-paren">(</span><em>model</em>, <em>admin_site</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/customers/admin.html#AdminProfile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#customers.admin.AdminProfile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.contrib.admin.options.ModelAdmin</span></code></p>
+<dl class="attribute">
+<dt id="customers.admin.AdminProfile.media">
+<code class="descname">media</code><a class="headerlink" href="#customers.admin.AdminProfile.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="customers.admin.AdminProfile.readonly_fields">
+<code class="descname">readonly_fields</code><em class="property"> = ['customer', 'id']</em><a class="headerlink" href="#customers.admin.AdminProfile.readonly_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-customers.apps">
+<span id="customers-apps-module"></span><h2>customers.apps module<a class="headerlink" href="#module-customers.apps" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="customers.apps.CustomersConfig">
+<em class="property">class </em><code class="descclassname">customers.apps.</code><code class="descname">CustomersConfig</code><span class="sig-paren">(</span><em>app_name</em>, <em>app_module</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/customers/apps.html#CustomersConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#customers.apps.CustomersConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.apps.config.AppConfig</span></code></p>
+<dl class="attribute">
+<dt id="customers.apps.CustomersConfig.name">
+<code class="descname">name</code><em class="property"> = 'customers'</em><a class="headerlink" href="#customers.apps.CustomersConfig.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-customers.generator">
+<span id="customers-generator-module"></span><h2>customers.generator module<a class="headerlink" href="#module-customers.generator" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="customers.generator.CustomerFactory">
+<em class="property">class </em><code class="descclassname">customers.generator.</code><code class="descname">CustomerFactory</code><a class="reference internal" href="../_modules/customers/generator.html#CustomerFactory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#customers.generator.CustomerFactory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">factory.django.DjangoModelFactory</span></code></p>
+<dl class="attribute">
+<dt id="customers.generator.CustomerFactory.user">
+<code class="descname">user</code><em class="property"> = &lt;factory.declarations.SubFactory object&gt;</em><a class="headerlink" href="#customers.generator.CustomerFactory.user" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="customers.generator.CustomerPopulator">
+<em class="property">class </em><code class="descclassname">customers.generator.</code><code class="descname">CustomerPopulator</code><a class="reference internal" href="../_modules/customers/generator.html#CustomerPopulator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#customers.generator.CustomerPopulator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="customers.generator.CustomerPopulator.populate">
+<code class="descname">populate</code><span class="sig-paren">(</span><em>customers_count=10</em>, <em>profiles_count=2</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/customers/generator.html#CustomerPopulator.populate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#customers.generator.CustomerPopulator.populate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="customers.generator.ProductPopulator">
+<em class="property">class </em><code class="descclassname">customers.generator.</code><code class="descname">ProductPopulator</code><a class="reference internal" href="../_modules/customers/generator.html#ProductPopulator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#customers.generator.ProductPopulator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Since faker could bring the same name twice,
+We need to make sure stores are unique by thier url</p>
+<dl class="method">
+<dt id="customers.generator.ProductPopulator.create_store">
+<code class="descname">create_store</code><span class="sig-paren">(</span><em>owner</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/customers/generator.html#ProductPopulator.create_store"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#customers.generator.ProductPopulator.create_store" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="customers.generator.ProductPopulator.populate">
+<code class="descname">populate</code><span class="sig-paren">(</span><em>store=None</em>, <em>products_count=10</em>, <em>variants_count=2</em>, <em>ignore_variant=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/customers/generator.html#ProductPopulator.populate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#customers.generator.ProductPopulator.populate" title="Permalink to this definition">¶</a></dt>
+<dd><p>populate our database with fake products data</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="customers.generator.ProfileFactory">
+<em class="property">class </em><code class="descclassname">customers.generator.</code><code class="descname">ProfileFactory</code><a class="reference internal" href="../_modules/customers/generator.html#ProfileFactory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#customers.generator.ProfileFactory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">factory.django.DjangoModelFactory</span></code></p>
+<dl class="attribute">
+<dt id="customers.generator.ProfileFactory.bust">
+<code class="descname">bust</code><em class="property"> = &lt;factory.declarations.LazyAttribute object&gt;</em><a class="headerlink" href="#customers.generator.ProfileFactory.bust" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="customers.generator.ProfileFactory.gender">
+<code class="descname">gender</code><em class="property"> = &lt;factory.fuzzy.FuzzyChoice object&gt;</em><a class="headerlink" href="#customers.generator.ProfileFactory.gender" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="customers.generator.ProfileFactory.height">
+<code class="descname">height</code><em class="property"> = &lt;factory.declarations.LazyAttribute object&gt;</em><a class="headerlink" href="#customers.generator.ProfileFactory.height" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="customers.generator.ProfileFactory.hips">
+<code class="descname">hips</code><em class="property"> = &lt;factory.declarations.LazyAttribute object&gt;</em><a class="headerlink" href="#customers.generator.ProfileFactory.hips" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="customers.generator.ProfileFactory.metric_length">
+<code class="descname">metric_length</code><em class="property"> = 'cm'</em><a class="headerlink" href="#customers.generator.ProfileFactory.metric_length" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="customers.generator.ProfileFactory.metric_weight">
+<code class="descname">metric_weight</code><em class="property"> = 'kg'</em><a class="headerlink" href="#customers.generator.ProfileFactory.metric_weight" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="customers.generator.ProfileFactory.name">
+<code class="descname">name</code><em class="property"> = &lt;factory.faker.Faker object&gt;</em><a class="headerlink" href="#customers.generator.ProfileFactory.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="customers.generator.ProfileFactory.shoulder">
+<code class="descname">shoulder</code><em class="property"> = &lt;factory.declarations.LazyAttribute object&gt;</em><a class="headerlink" href="#customers.generator.ProfileFactory.shoulder" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="customers.generator.ProfileFactory.skin">
+<code class="descname">skin</code><em class="property"> = &lt;factory.fuzzy.FuzzyChoice object&gt;</em><a class="headerlink" href="#customers.generator.ProfileFactory.skin" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="customers.generator.ProfileFactory.waist">
+<code class="descname">waist</code><em class="property"> = &lt;factory.declarations.LazyAttribute object&gt;</em><a class="headerlink" href="#customers.generator.ProfileFactory.waist" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="customers.generator.ProfileFactory.weight">
+<code class="descname">weight</code><em class="property"> = &lt;factory.declarations.LazyAttribute object&gt;</em><a class="headerlink" href="#customers.generator.ProfileFactory.weight" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="customers.generator.UserFactory">
+<em class="property">class </em><code class="descclassname">customers.generator.</code><code class="descname">UserFactory</code><a class="reference internal" href="../_modules/customers/generator.html#UserFactory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#customers.generator.UserFactory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">factory.django.DjangoModelFactory</span></code></p>
+<dl class="attribute">
+<dt id="customers.generator.UserFactory.email">
+<code class="descname">email</code><em class="property"> = &lt;factory.declarations.Sequence object&gt;</em><a class="headerlink" href="#customers.generator.UserFactory.email" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="customers.generator.UserFactory.password">
+<code class="descname">password</code><em class="property"> = 'person12345'</em><a class="headerlink" href="#customers.generator.UserFactory.password" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="customers.generator.UserFactory.username">
+<code class="descname">username</code><em class="property"> = &lt;factory.declarations.Sequence object&gt;</em><a class="headerlink" href="#customers.generator.UserFactory.username" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="customers.generator.experiment">
+<em class="property">class </em><code class="descclassname">customers.generator.</code><code class="descname">Experiment</code><a class="reference internal" href="../_modules/customers/generator.html#experiment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#customers.generator.experiment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="customers.generator.experiment.test1">
+<code class="descname">test1</code><span class="sig-paren">(</span><em>customers_count=100</em>, <em>profiles_count=3</em>, <em>products_count=10</em>, <em>variants_count=6</em>, <em>added_to_closet_propability=0.6</em>, <em>store=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/customers/generator.html#experiment.test1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#customers.generator.experiment.test1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-customers.model_util">
+<span id="customers-model-util-module"></span><h2>customers.model_util module<a class="headerlink" href="#module-customers.model_util" title="Permalink to this headline">¶</a></h2>
+<dl class="data">
+<dt id="customers.model_util.bodyTopSizeListMale">
+<code class="descclassname">customers.model_util.</code><code class="descname">bodyTopSizeListMale</code><em class="property"> = ['XXS', 'XS', 'XS', 'S', 'S', 'M', 'M', 'L', 'L', 'XL', 'XL', 'XXL', 'XXL', 'XXL', '3XL', '4XL', '5XL']</em><a class="headerlink" href="#customers.model_util.bodyTopSizeListMale" title="Permalink to this definition">¶</a></dt>
+<dd><p>notice here every time makemigrations is called, django will make migrations again
+since we don’t fix this below field ahead of time, hince it’s generated dynamically
+and it’s used in profile model to act as a result after
+profile’s body measurment has been filled, see save method of the profile model</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="customers.model_util.in_to_cm">
+<code class="descclassname">customers.model_util.</code><code class="descname">in_to_cm</code><span class="sig-paren">(</span><em>height</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/customers/model_util.html#in_to_cm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#customers.model_util.in_to_cm" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="customers.model_util.lb_to_kg">
+<code class="descclassname">customers.model_util.</code><code class="descname">lb_to_kg</code><span class="sig-paren">(</span><em>weight</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/customers/model_util.html#lb_to_kg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#customers.model_util.lb_to_kg" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="customers.model_util.validate_height">
+<code class="descclassname">customers.model_util.</code><code class="descname">validate_height</code><span class="sig-paren">(</span><em>height</em>, <em>metric_length</em>, <em>gender</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/customers/model_util.html#validate_height"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#customers.model_util.validate_height" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="customers.model_util.validate_weight">
+<code class="descclassname">customers.model_util.</code><code class="descname">validate_weight</code><span class="sig-paren">(</span><em>weight</em>, <em>metric_weight</em>, <em>gender</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/customers/model_util.html#validate_weight"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#customers.model_util.validate_weight" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-customers.models">
+<span id="customers-models-module"></span><h2>customers.models module<a class="headerlink" href="#module-customers.models" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="customers.models.Customer">
+<em class="property">class </em><code class="descclassname">customers.models.</code><code class="descname">Customer</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/customers/models.html#Customer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#customers.models.Customer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
+<p>In our app logic we could assign multiple profiles to one customer, and it return
+customer have to be authenticated so a django user has been bound to it with
+a OneToOne relationship</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>user</strong> (OneToOneField to <code class="xref py py-class docutils literal notranslate"><span class="pre">User</span></code>) – User</li>
+<li><strong>slug</strong> (<em>SlugField</em>) – Slug</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="exception">
+<dt id="customers.models.Customer.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#customers.models.Customer.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="customers.models.Customer.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#customers.models.Customer.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="customers.models.Customer.customer_profile">
+<code class="descname">customer_profile</code><a class="headerlink" href="#customers.models.Customer.customer_profile" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id1"><span class="problematic" id="id2">**</span></a><em>Model field</em> – ** customer, accesses the M2M <a class="reference internal" href="#customers.models.Profile" title="customers.models.Profile"><code class="xref py py-class docutils literal notranslate"><span class="pre">Profile</span></code></a> model.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="customers.models.Customer.objects">
+<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#customers.models.Customer.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="customers.models.Customer.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/customers/models.html#Customer.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#customers.models.Customer.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the current instance. Override this in a subclass if you want to
+control the saving process.</p>
+<p>The ‘force_insert’ and ‘force_update’ parameters can be used to insist
+that the “save” must be an SQL insert or update (or equivalent for
+non-SQL backends), respectively. Normally, they should not be set.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="customers.models.Customer.slug">
+<code class="descname">slug</code><a class="headerlink" href="#customers.models.Customer.slug" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id3"><span class="problematic" id="id4">**</span></a><em>Model field</em> – ** slug</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="customers.models.Customer.user">
+<code class="descname">user</code><a class="headerlink" href="#customers.models.Customer.user" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id5"><span class="problematic" id="id6">**</span></a><em>Model field</em> – ** user, accesses the <code class="xref py py-class docutils literal notranslate"><span class="pre">User</span></code> model.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="customers.models.Customer.user_id">
+<code class="descname">user_id</code><a class="headerlink" href="#customers.models.Customer.user_id" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id7"><span class="problematic" id="id8">**</span></a><em>Model field</em> – ** user</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="customers.models.Profile">
+<em class="property">class </em><code class="descclassname">customers.models.</code><code class="descname">Profile</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/customers/models.html#Profile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#customers.models.Profile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
+<p>null=True, this could happen when an anonymous customer wants
+to try product,please notice that editable=False, we want to insure
+that creating new profile is either going through unregistered customer
+or registered one.
+NOTE, if we allow to bound profile to registered customer that was
+previously unregistered, all history data such as <cite>profile try product</cite>,
+<cite>profile visits store</cite> will be bounded to the new registed customer though
+when those activities had occured it was bounded to anonymous customer.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>id</strong> (<em>AutoField</em>) – Id</li>
+<li><strong>customer</strong> (ForeignKey to <a class="reference internal" href="#customers.models.Customer" title="customers.models.Customer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Customer</span></code></a>) – Customer</li>
+<li><strong>name</strong> (<em>TextField</em>) – Name</li>
+<li><strong>height</strong> (<em>FloatField</em>) – Height</li>
+<li><strong>weight</strong> (<em>FloatField</em>) – Weight</li>
+<li><strong>bust</strong> (<em>FloatField</em>) – Bust</li>
+<li><strong>waist</strong> (<em>FloatField</em>) – Waist</li>
+<li><strong>hips</strong> (<em>FloatField</em>) – Hips</li>
+<li><strong>shoulder</strong> (<em>FloatField</em>) – Shoulder</li>
+<li><strong>gender</strong> (<em>CharField</em>) – Gender</li>
+<li><strong>metric_length</strong> (<em>CharField</em>) – Metric length</li>
+<li><strong>metric_weight</strong> (<em>CharField</em>) – Metric weight</li>
+<li><strong>skin</strong> (<em>CharField</em>) – Skin</li>
+<li><strong>body_shape</strong> (<em>CharField</em>) – Body shape</li>
+<li><strong>top_size</strong> (<em>CharField</em>) – Top size</li>
+<li><strong>bottom_size</strong> (<em>CharField</em>) – Bottom size</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="exception">
+<dt id="customers.models.Profile.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#customers.models.Profile.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="customers.models.Profile.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#customers.models.Profile.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="customers.models.Profile.body_shape">
+<code class="descname">body_shape</code><a class="headerlink" href="#customers.models.Profile.body_shape" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id9"><span class="problematic" id="id10">**</span></a><em>Model field</em> – ** body shape</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="customers.models.Profile.bottom_size">
+<code class="descname">bottom_size</code><a class="headerlink" href="#customers.models.Profile.bottom_size" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id11"><span class="problematic" id="id12">**</span></a><em>Model field</em> – ** bottom size</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="customers.models.Profile.bust">
+<code class="descname">bust</code><a class="headerlink" href="#customers.models.Profile.bust" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id13"><span class="problematic" id="id14">**</span></a><em>Model field</em> – ** bust</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="customers.models.Profile.customer">
+<code class="descname">customer</code><a class="headerlink" href="#customers.models.Profile.customer" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id15"><span class="problematic" id="id16">**</span></a><em>Model field</em> – ** customer, accesses the <a class="reference internal" href="#customers.models.Customer" title="customers.models.Customer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Customer</span></code></a> model.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="customers.models.Profile.customer_id">
+<code class="descname">customer_id</code><a class="headerlink" href="#customers.models.Profile.customer_id" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id17"><span class="problematic" id="id18">**</span></a><em>Model field</em> – ** customer</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="customers.models.Profile.gender">
+<code class="descname">gender</code><a class="headerlink" href="#customers.models.Profile.gender" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id19"><span class="problematic" id="id20">**</span></a><em>Model field</em> – ** gender</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="customers.models.Profile.get_body_shape_display">
+<code class="descname">get_body_shape_display</code><span class="sig-paren">(</span><em>*</em>, <em>field=&lt;django.db.models.fields.CharField: body_shape&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#customers.models.Profile.get_body_shape_display" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Autogenerated:</strong> Shows the label of the <a class="reference internal" href="#customers.models.Profile.body_shape" title="customers.models.Profile.body_shape"><code class="xref py py-attr docutils literal notranslate"><span class="pre">body_shape</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="customers.models.Profile.get_bottom_size_display">
+<code class="descname">get_bottom_size_display</code><span class="sig-paren">(</span><em>*</em>, <em>field=&lt;django.db.models.fields.CharField: bottom_size&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#customers.models.Profile.get_bottom_size_display" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Autogenerated:</strong> Shows the label of the <a class="reference internal" href="#customers.models.Profile.bottom_size" title="customers.models.Profile.bottom_size"><code class="xref py py-attr docutils literal notranslate"><span class="pre">bottom_size</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="customers.models.Profile.get_gender_display">
+<code class="descname">get_gender_display</code><span class="sig-paren">(</span><em>*</em>, <em>field=&lt;django.db.models.fields.CharField: gender&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#customers.models.Profile.get_gender_display" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Autogenerated:</strong> Shows the label of the <a class="reference internal" href="#customers.models.Profile.gender" title="customers.models.Profile.gender"><code class="xref py py-attr docutils literal notranslate"><span class="pre">gender</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="customers.models.Profile.get_metric_length_display">
+<code class="descname">get_metric_length_display</code><span class="sig-paren">(</span><em>*</em>, <em>field=&lt;django.db.models.fields.CharField: metric_length&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#customers.models.Profile.get_metric_length_display" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Autogenerated:</strong> Shows the label of the <a class="reference internal" href="#customers.models.Profile.metric_length" title="customers.models.Profile.metric_length"><code class="xref py py-attr docutils literal notranslate"><span class="pre">metric_length</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="customers.models.Profile.get_metric_weight_display">
+<code class="descname">get_metric_weight_display</code><span class="sig-paren">(</span><em>*</em>, <em>field=&lt;django.db.models.fields.CharField: metric_weight&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#customers.models.Profile.get_metric_weight_display" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Autogenerated:</strong> Shows the label of the <a class="reference internal" href="#customers.models.Profile.metric_weight" title="customers.models.Profile.metric_weight"><code class="xref py py-attr docutils literal notranslate"><span class="pre">metric_weight</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="customers.models.Profile.get_skin_display">
+<code class="descname">get_skin_display</code><span class="sig-paren">(</span><em>*</em>, <em>field=&lt;django.db.models.fields.CharField: skin&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#customers.models.Profile.get_skin_display" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Autogenerated:</strong> Shows the label of the <a class="reference internal" href="#customers.models.Profile.skin" title="customers.models.Profile.skin"><code class="xref py py-attr docutils literal notranslate"><span class="pre">skin</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="customers.models.Profile.get_top_size_display">
+<code class="descname">get_top_size_display</code><span class="sig-paren">(</span><em>*</em>, <em>field=&lt;django.db.models.fields.CharField: top_size&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#customers.models.Profile.get_top_size_display" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Autogenerated:</strong> Shows the label of the <a class="reference internal" href="#customers.models.Profile.top_size" title="customers.models.Profile.top_size"><code class="xref py py-attr docutils literal notranslate"><span class="pre">top_size</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="customers.models.Profile.height">
+<code class="descname">height</code><a class="headerlink" href="#customers.models.Profile.height" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id21"><span class="problematic" id="id22">**</span></a><em>Model field</em> – ** height</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="customers.models.Profile.hips">
+<code class="descname">hips</code><a class="headerlink" href="#customers.models.Profile.hips" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id23"><span class="problematic" id="id24">**</span></a><em>Model field</em> – ** hips</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="customers.models.Profile.id">
+<code class="descname">id</code><a class="headerlink" href="#customers.models.Profile.id" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id25"><span class="problematic" id="id26">**</span></a><em>Model field</em> – ** ID</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="customers.models.Profile.metric_length">
+<code class="descname">metric_length</code><a class="headerlink" href="#customers.models.Profile.metric_length" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id27"><span class="problematic" id="id28">**</span></a><em>Model field</em> – ** metric length</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="customers.models.Profile.metric_weight">
+<code class="descname">metric_weight</code><a class="headerlink" href="#customers.models.Profile.metric_weight" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id29"><span class="problematic" id="id30">**</span></a><em>Model field</em> – ** metric weight</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="customers.models.Profile.name">
+<code class="descname">name</code><a class="headerlink" href="#customers.models.Profile.name" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id31"><span class="problematic" id="id32">**</span></a><em>Model field</em> – ** name</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="customers.models.Profile.objects">
+<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#customers.models.Profile.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="customers.models.Profile.profile_add_to_closet">
+<code class="descname">profile_add_to_closet</code><a class="headerlink" href="#customers.models.Profile.profile_add_to_closet" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id33"><span class="problematic" id="id34">**</span></a><em>Model field</em> – ** customer profile, accesses the M2M <a class="reference internal" href="insights.html#insights.models.Product_Profile_Add_To_Closet" title="insights.models.Product_Profile_Add_To_Closet"><code class="xref py py-class docutils literal notranslate"><span class="pre">Product_Profile_Add_To_Closet</span></code></a> model.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="customers.models.Profile.profile_try">
+<code class="descname">profile_try</code><a class="headerlink" href="#customers.models.Profile.profile_try" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id35"><span class="problematic" id="id36">**</span></a><em>Model field</em> – ** profile, accesses the M2M <a class="reference internal" href="insights.html#insights.models.Profile_Try_Product" title="insights.models.Profile_Try_Product"><code class="xref py py-class docutils literal notranslate"><span class="pre">Profile_Try_Product</span></code></a> model.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="customers.models.Profile.profile_visiting">
+<code class="descname">profile_visiting</code><a class="headerlink" href="#customers.models.Profile.profile_visiting" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id37"><span class="problematic" id="id38">**</span></a><em>Model field</em> – ** profile, accesses the M2M <a class="reference internal" href="insights.html#insights.models.Profile_Visit_Store" title="insights.models.Profile_Visit_Store"><code class="xref py py-class docutils literal notranslate"><span class="pre">Profile_Visit_Store</span></code></a> model.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="customers.models.Profile.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/customers/models.html#Profile.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#customers.models.Profile.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Here we get those outputs before commiting the profile isntance data to
+the database since we are making the validation resides on the serializer
+layer, we are pretty sure that all the required attributes are in its
+respective domains</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="customers.models.Profile.shoulder">
+<code class="descname">shoulder</code><a class="headerlink" href="#customers.models.Profile.shoulder" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id39"><span class="problematic" id="id40">**</span></a><em>Model field</em> – ** shoulder</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="customers.models.Profile.skin">
+<code class="descname">skin</code><a class="headerlink" href="#customers.models.Profile.skin" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id41"><span class="problematic" id="id42">**</span></a><em>Model field</em> – ** skin</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="customers.models.Profile.top_size">
+<code class="descname">top_size</code><a class="headerlink" href="#customers.models.Profile.top_size" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id43"><span class="problematic" id="id44">**</span></a><em>Model field</em> – ** top size</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="customers.models.Profile.waist">
+<code class="descname">waist</code><a class="headerlink" href="#customers.models.Profile.waist" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id45"><span class="problematic" id="id46">**</span></a><em>Model field</em> – ** waist</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="customers.models.Profile.weight">
+<code class="descname">weight</code><a class="headerlink" href="#customers.models.Profile.weight" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id47"><span class="problematic" id="id48">**</span></a><em>Model field</em> – ** weight</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-customers.permissions">
+<span id="customers-permissions-module"></span><h2>customers.permissions module<a class="headerlink" href="#module-customers.permissions" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="customers.permissions.IsCustomerProfiles">
+<em class="property">class </em><code class="descclassname">customers.permissions.</code><code class="descname">IsCustomerProfiles</code><a class="reference internal" href="../_modules/customers/permissions.html#IsCustomerProfiles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#customers.permissions.IsCustomerProfiles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.permissions.BasePermission</span></code></p>
+<p>Custom permission to only allow owners of an object to edit it.</p>
+<dl class="method">
+<dt id="customers.permissions.IsCustomerProfiles.has_object_permission">
+<code class="descname">has_object_permission</code><span class="sig-paren">(</span><em>request</em>, <em>view</em>, <em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/customers/permissions.html#IsCustomerProfiles.has_object_permission"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#customers.permissions.IsCustomerProfiles.has_object_permission" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return <cite>True</cite> if permission is granted, <cite>False</cite> otherwise.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-customers.serializers">
+<span id="customers-serializers-module"></span><h2>customers.serializers module<a class="headerlink" href="#module-customers.serializers" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="customers.serializers.CustomerRegisterSerializer">
+<em class="property">class </em><code class="descclassname">customers.serializers.</code><code class="descname">CustomerRegisterSerializer</code><span class="sig-paren">(</span><em>instance=None</em>, <em>data=&lt;class 'rest_framework.fields.empty'&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/customers/serializers.html#CustomerRegisterSerializer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#customers.serializers.CustomerRegisterSerializer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_auth.registration.serializers.RegisterSerializer</span></code></p>
+<p>we override the RegisterSerializer, hence we replace it in
+the settings file, to create a customer instance and bind it to
+the newly created user, the api /registration</p>
+<dl class="method">
+<dt id="customers.serializers.CustomerRegisterSerializer.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/customers/serializers.html#CustomerRegisterSerializer.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#customers.serializers.CustomerRegisterSerializer.save" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="customers.serializers.CustomerSerializer">
+<em class="property">class </em><code class="descclassname">customers.serializers.</code><code class="descname">CustomerSerializer</code><span class="sig-paren">(</span><em>instance=None</em>, <em>data=&lt;class 'rest_framework.fields.empty'&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/customers/serializers.html#CustomerSerializer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#customers.serializers.CustomerSerializer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.serializers.HyperlinkedModelSerializer</span></code></p>
+<dl class="attribute">
+<dt id="customers.serializers.CustomerSerializer.extra_kwargs">
+<code class="descname">extra_kwargs</code><em class="property"> = {'slug': {'lookup_field': 'slug'}}</em><a class="headerlink" href="#customers.serializers.CustomerSerializer.extra_kwargs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="customers.serializers.CustomerSerializer.lookup_field">
+<code class="descname">lookup_field</code><em class="property"> = 'slug'</em><a class="headerlink" href="#customers.serializers.CustomerSerializer.lookup_field" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="customers.serializers.CustomerSerializer.queryset">
+<code class="descname">queryset</code><em class="property"> = QuerySet</em><a class="headerlink" href="#customers.serializers.CustomerSerializer.queryset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="customers.serializers.PasswordSerializer">
+<em class="property">class </em><code class="descclassname">customers.serializers.</code><code class="descname">PasswordSerializer</code><span class="sig-paren">(</span><em>instance=None</em>, <em>data=&lt;class 'rest_framework.fields.empty'&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/customers/serializers.html#PasswordSerializer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#customers.serializers.PasswordSerializer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_auth.serializers.PasswordResetSerializer</span></code></p>
+<dl class="attribute">
+<dt id="customers.serializers.PasswordSerializer.password_reset_form_class">
+<code class="descname">password_reset_form_class</code><a class="headerlink" href="#customers.serializers.PasswordSerializer.password_reset_form_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">allauth.account.forms.ResetPasswordForm</span></code></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="customers.serializers.Product_Profile_Add_To_Closet_ProfilePerspectiveSerializer">
+<em class="property">class </em><code class="descclassname">customers.serializers.</code><code class="descname">Product_Profile_Add_To_Closet_ProfilePerspectiveSerializer</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/customers/serializers.html#Product_Profile_Add_To_Closet_ProfilePerspectiveSerializer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#customers.serializers.Product_Profile_Add_To_Closet_ProfilePerspectiveSerializer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework_nested.serializers.NestedHyperlinkedModelSerializer</span></code></p>
+<p>profile can add many products to its closet, while also product could be added
+by many profiles, so we have two options to serialize</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>when we are on the view of the product data and we want to see who added
+this product to its closet</li>
+<li>when we are on the view of the profile data and we want to see which
+products are added to his closet</li>
+</ol>
+</div></blockquote>
+<dl class="method">
+<dt id="customers.serializers.Product_Profile_Add_To_Closet_ProfilePerspectiveSerializer.create">
+<code class="descname">create</code><span class="sig-paren">(</span><em>validated_data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/customers/serializers.html#Product_Profile_Add_To_Closet_ProfilePerspectiveSerializer.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#customers.serializers.Product_Profile_Add_To_Closet_ProfilePerspectiveSerializer.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>We have a bit of extra checking around this in order to provide
+descriptive messages when something goes wrong, but this method is
+essentially just:</p>
+<blockquote>
+<div>return ExampleModel.objects.create(<a href="#id49"><span class="problematic" id="id50">**</span></a>validated_data)</div></blockquote>
+<p>If there are many to many fields present on the instance then they
+cannot be set until the model is instantiated, in which case the
+implementation is like so:</p>
+<blockquote>
+<div>example_relationship = validated_data.pop(‘example_relationship’)
+instance = ExampleModel.objects.create(<a href="#id51"><span class="problematic" id="id52">**</span></a>validated_data)
+instance.example_relationship = example_relationship
+return instance</div></blockquote>
+<p>The default implementation also does not handle nested relationships.
+If you want to support writable nested relationships you’ll need
+to write an explicit <cite>.create()</cite> method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="customers.serializers.Product_Profile_Add_To_Closet_ProfilePerspectiveSerializer.validate">
+<code class="descname">validate</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/customers/serializers.html#Product_Profile_Add_To_Closet_ProfilePerspectiveSerializer.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#customers.serializers.Product_Profile_Add_To_Closet_ProfilePerspectiveSerializer.validate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="customers.serializers.ProfileSerializer">
+<em class="property">class </em><code class="descclassname">customers.serializers.</code><code class="descname">ProfileSerializer</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/customers/serializers.html#ProfileSerializer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#customers.serializers.ProfileSerializer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework_nested.serializers.NestedHyperlinkedModelSerializer</span></code></p>
+<dl class="method">
+<dt id="customers.serializers.ProfileSerializer.create">
+<code class="descname">create</code><span class="sig-paren">(</span><em>validated_data</em>, <em>customer=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/customers/serializers.html#ProfileSerializer.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#customers.serializers.ProfileSerializer.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>We have a bit of extra checking around this in order to provide
+descriptive messages when something goes wrong, but this method is
+essentially just:</p>
+<blockquote>
+<div>return ExampleModel.objects.create(<a href="#id53"><span class="problematic" id="id54">**</span></a>validated_data)</div></blockquote>
+<p>If there are many to many fields present on the instance then they
+cannot be set until the model is instantiated, in which case the
+implementation is like so:</p>
+<blockquote>
+<div>example_relationship = validated_data.pop(‘example_relationship’)
+instance = ExampleModel.objects.create(<a href="#id55"><span class="problematic" id="id56">**</span></a>validated_data)
+instance.example_relationship = example_relationship
+return instance</div></blockquote>
+<p>The default implementation also does not handle nested relationships.
+If you want to support writable nested relationships you’ll need
+to write an explicit <cite>.create()</cite> method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="customers.serializers.ProfileSerializer.run_validators">
+<code class="descname">run_validators</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/customers/serializers.html#ProfileSerializer.run_validators"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#customers.serializers.ProfileSerializer.run_validators" title="Permalink to this definition">¶</a></dt>
+<dd><p>we remove the UniqueTogetherValidator validater for
+the sake of populating our database</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="customers.serializers.ProfileSerializer.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>validated_data</em>, <em>profile</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/customers/serializers.html#ProfileSerializer.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#customers.serializers.ProfileSerializer.update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="customers.serializers.ProfileSerializer.validate">
+<code class="descname">validate</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/customers/serializers.html#ProfileSerializer.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#customers.serializers.ProfileSerializer.validate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="customers.serializers.TriedProductsProfilePerspectiveSerializer">
+<em class="property">class </em><code class="descclassname">customers.serializers.</code><code class="descname">TriedProductsProfilePerspectiveSerializer</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/customers/serializers.html#TriedProductsProfilePerspectiveSerializer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#customers.serializers.TriedProductsProfilePerspectiveSerializer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework_nested.serializers.NestedHyperlinkedModelSerializer</span></code></p>
+<p>This serializer works as information source,
+history of the profile actions is neccessary</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-customers.tests">
+<span id="customers-tests-module"></span><h2>customers.tests module<a class="headerlink" href="#module-customers.tests" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="customers.tests.RegisteringNewCustomerTestCase">
+<em class="property">class </em><code class="descclassname">customers.tests.</code><code class="descname">RegisteringNewCustomerTestCase</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/customers/tests.html#RegisteringNewCustomerTestCase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#customers.tests.RegisteringNewCustomerTestCase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.test.testcases.TestCase</span></code></p>
+<p>Test suite for the api views.</p>
+<dl class="method">
+<dt id="customers.tests.RegisteringNewCustomerTestCase.add_to_closet">
+<code class="descname">add_to_closet</code><span class="sig-paren">(</span><em>profile</em>, <em>product</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/customers/tests.html#RegisteringNewCustomerTestCase.add_to_closet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#customers.tests.RegisteringNewCustomerTestCase.add_to_closet" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="customers.tests.RegisteringNewCustomerTestCase.register_customer">
+<code class="descname">register_customer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/customers/tests.html#RegisteringNewCustomerTestCase.register_customer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#customers.tests.RegisteringNewCustomerTestCase.register_customer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="customers.tests.RegisteringNewCustomerTestCase.register_customer_profile">
+<code class="descname">register_customer_profile</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/customers/tests.html#RegisteringNewCustomerTestCase.register_customer_profile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#customers.tests.RegisteringNewCustomerTestCase.register_customer_profile" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="customers.tests.RegisteringNewCustomerTestCase.setUp">
+<code class="descname">setUp</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/customers/tests.html#RegisteringNewCustomerTestCase.setUp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#customers.tests.RegisteringNewCustomerTestCase.setUp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hook method for setting up the test fixture before exercising it.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="customers.tests.RegisteringNewCustomerTestCase.test_try_product">
+<code class="descname">test_try_product</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/customers/tests.html#RegisteringNewCustomerTestCase.test_try_product"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#customers.tests.RegisteringNewCustomerTestCase.test_try_product" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-customers.urls">
+<span id="customers-urls-module"></span><h2>customers.urls module<a class="headerlink" href="#module-customers.urls" title="Permalink to this headline">¶</a></h2>
+<dl class="data">
+<dt id="customers.urls.profiles_router">
+<code class="descclassname">customers.urls.</code><code class="descname">profiles_router</code><em class="property"> = &lt;rest_framework_nested.routers.NestedSimpleRouter object&gt;</em><a class="headerlink" href="#customers.urls.profiles_router" title="Permalink to this definition">¶</a></dt>
+<dd><p>when the profile is authenticated i.e there is customer instance related to it
+we only need the product id and the profile id, to run fit algorithms.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-customers.views">
+<span id="customers-views-module"></span><h2>customers.views module<a class="headerlink" href="#module-customers.views" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="customers.views.AddToClosetViewSet">
+<em class="property">class </em><code class="descclassname">customers.views.</code><code class="descname">AddToClosetViewSet</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/customers/views.html#AddToClosetViewSet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#customers.views.AddToClosetViewSet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.viewsets.ModelViewSet</span></code></p>
+<dl class="attribute">
+<dt id="customers.views.AddToClosetViewSet.basename">
+<code class="descname">basename</code><em class="property"> = None</em><a class="headerlink" href="#customers.views.AddToClosetViewSet.basename" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="customers.views.AddToClosetViewSet.create">
+<code class="descname">create</code><span class="sig-paren">(</span><em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/customers/views.html#AddToClosetViewSet.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#customers.views.AddToClosetViewSet.create" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="customers.views.AddToClosetViewSet.get_queryset">
+<code class="descname">get_queryset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/customers/views.html#AddToClosetViewSet.get_queryset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#customers.views.AddToClosetViewSet.get_queryset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the list of items for this view.
+This must be an iterable, and may be a queryset.
+Defaults to using <cite>self.queryset</cite>.</p>
+<p>This method should always be used rather than accessing <cite>self.queryset</cite>
+directly, as <cite>self.queryset</cite> gets evaluated only once, and those results
+are cached for all subsequent requests.</p>
+<p>You may want to override this if you need to provide different
+querysets depending on the incoming request.</p>
+<p>(Eg. return a list of items that is specific to the user)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="customers.views.AddToClosetViewSet.http_method_names">
+<code class="descname">http_method_names</code><em class="property"> = ['get', 'post']</em><a class="headerlink" href="#customers.views.AddToClosetViewSet.http_method_names" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="customers.views.AddToClosetViewSet.serializer_class">
+<code class="descname">serializer_class</code><a class="headerlink" href="#customers.views.AddToClosetViewSet.serializer_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#customers.serializers.Product_Profile_Add_To_Closet_ProfilePerspectiveSerializer" title="customers.serializers.Product_Profile_Add_To_Closet_ProfilePerspectiveSerializer"><code class="xref py py-class docutils literal notranslate"><span class="pre">customers.serializers.Product_Profile_Add_To_Closet_ProfilePerspectiveSerializer</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="customers.views.AddToClosetViewSet.suffix">
+<code class="descname">suffix</code><em class="property"> = None</em><a class="headerlink" href="#customers.views.AddToClosetViewSet.suffix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="customers.views.CustomerViewSet">
+<em class="property">class </em><code class="descclassname">customers.views.</code><code class="descname">CustomerViewSet</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/customers/views.html#CustomerViewSet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#customers.views.CustomerViewSet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.mixins.ListModelMixin</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.mixins.RetrieveModelMixin</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.mixins.DestroyModelMixin</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.viewsets.GenericViewSet</span></code></p>
+<dl class="attribute">
+<dt id="customers.views.CustomerViewSet.basename">
+<code class="descname">basename</code><em class="property"> = None</em><a class="headerlink" href="#customers.views.CustomerViewSet.basename" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="customers.views.CustomerViewSet.lookup_field">
+<code class="descname">lookup_field</code><em class="property"> = 'slug'</em><a class="headerlink" href="#customers.views.CustomerViewSet.lookup_field" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="customers.views.CustomerViewSet.queryset">
+<code class="descname">queryset</code><em class="property"> = QuerySet</em><a class="headerlink" href="#customers.views.CustomerViewSet.queryset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="customers.views.CustomerViewSet.serializer_class">
+<code class="descname">serializer_class</code><a class="headerlink" href="#customers.views.CustomerViewSet.serializer_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#customers.serializers.CustomerSerializer" title="customers.serializers.CustomerSerializer"><code class="xref py py-class docutils literal notranslate"><span class="pre">customers.serializers.CustomerSerializer</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="customers.views.CustomerViewSet.suffix">
+<code class="descname">suffix</code><em class="property"> = None</em><a class="headerlink" href="#customers.views.CustomerViewSet.suffix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="customers.views.ProfileViewSet">
+<em class="property">class </em><code class="descclassname">customers.views.</code><code class="descname">ProfileViewSet</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/customers/views.html#ProfileViewSet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#customers.views.ProfileViewSet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.mixins.CreateModelMixin</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.mixins.ListModelMixin</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.mixins.RetrieveModelMixin</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.mixins.DestroyModelMixin</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.mixins.UpdateModelMixin</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.viewsets.GenericViewSet</span></code></p>
+<dl class="attribute">
+<dt id="customers.views.ProfileViewSet.basename">
+<code class="descname">basename</code><em class="property"> = None</em><a class="headerlink" href="#customers.views.ProfileViewSet.basename" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="customers.views.ProfileViewSet.create">
+<code class="descname">create</code><span class="sig-paren">(</span><em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/customers/views.html#ProfileViewSet.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#customers.views.ProfileViewSet.create" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="customers.views.ProfileViewSet.get_queryset">
+<code class="descname">get_queryset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/customers/views.html#ProfileViewSet.get_queryset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#customers.views.ProfileViewSet.get_queryset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the list of items for this view.
+This must be an iterable, and may be a queryset.
+Defaults to using <cite>self.queryset</cite>.</p>
+<p>This method should always be used rather than accessing <cite>self.queryset</cite>
+directly, as <cite>self.queryset</cite> gets evaluated only once, and those results
+are cached for all subsequent requests.</p>
+<p>You may want to override this if you need to provide different
+querysets depending on the incoming request.</p>
+<p>(Eg. return a list of items that is specific to the user)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="customers.views.ProfileViewSet.queryset">
+<code class="descname">queryset</code><em class="property"> = QuerySet</em><a class="headerlink" href="#customers.views.ProfileViewSet.queryset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="customers.views.ProfileViewSet.serializer_class">
+<code class="descname">serializer_class</code><a class="headerlink" href="#customers.views.ProfileViewSet.serializer_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#customers.serializers.ProfileSerializer" title="customers.serializers.ProfileSerializer"><code class="xref py py-class docutils literal notranslate"><span class="pre">customers.serializers.ProfileSerializer</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="customers.views.ProfileViewSet.suffix">
+<code class="descname">suffix</code><em class="property"> = None</em><a class="headerlink" href="#customers.views.ProfileViewSet.suffix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="customers.views.ProfileViewSet.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/customers/views.html#ProfileViewSet.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#customers.views.ProfileViewSet.update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="customers.views.TriedProductsProfilePerspectiveViewSet">
+<em class="property">class </em><code class="descclassname">customers.views.</code><code class="descname">TriedProductsProfilePerspectiveViewSet</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/customers/views.html#TriedProductsProfilePerspectiveViewSet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#customers.views.TriedProductsProfilePerspectiveViewSet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.viewsets.ModelViewSet</span></code></p>
+<dl class="attribute">
+<dt id="customers.views.TriedProductsProfilePerspectiveViewSet.basename">
+<code class="descname">basename</code><em class="property"> = None</em><a class="headerlink" href="#customers.views.TriedProductsProfilePerspectiveViewSet.basename" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="customers.views.TriedProductsProfilePerspectiveViewSet.get_queryset">
+<code class="descname">get_queryset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/customers/views.html#TriedProductsProfilePerspectiveViewSet.get_queryset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#customers.views.TriedProductsProfilePerspectiveViewSet.get_queryset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the list of items for this view.
+This must be an iterable, and may be a queryset.
+Defaults to using <cite>self.queryset</cite>.</p>
+<p>This method should always be used rather than accessing <cite>self.queryset</cite>
+directly, as <cite>self.queryset</cite> gets evaluated only once, and those results
+are cached for all subsequent requests.</p>
+<p>You may want to override this if you need to provide different
+querysets depending on the incoming request.</p>
+<p>(Eg. return a list of items that is specific to the user)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="customers.views.TriedProductsProfilePerspectiveViewSet.http_method_names">
+<code class="descname">http_method_names</code><em class="property"> = ['get']</em><a class="headerlink" href="#customers.views.TriedProductsProfilePerspectiveViewSet.http_method_names" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="customers.views.TriedProductsProfilePerspectiveViewSet.serializer_class">
+<code class="descname">serializer_class</code><a class="headerlink" href="#customers.views.TriedProductsProfilePerspectiveViewSet.serializer_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#customers.serializers.TriedProductsProfilePerspectiveSerializer" title="customers.serializers.TriedProductsProfilePerspectiveSerializer"><code class="xref py py-class docutils literal notranslate"><span class="pre">customers.serializers.TriedProductsProfilePerspectiveSerializer</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="customers.views.TriedProductsProfilePerspectiveViewSet.suffix">
+<code class="descname">suffix</code><em class="property"> = None</em><a class="headerlink" href="#customers.views.TriedProductsProfilePerspectiveViewSet.suffix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-customers">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-customers" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+
+           </div>
+          </div>
+          <footer>
+
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, alomafit.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+
+
+
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+
+
+
+
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+
+
+</body>
+</html>

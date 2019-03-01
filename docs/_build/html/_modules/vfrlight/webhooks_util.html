@@ -1,0 +1,333 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>vfrlight.webhooks_util &mdash; alomafit-light 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="alomafit-light 1.0 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> alomafit-light
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">alomafit-light</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>vfrlight.webhooks_util</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for vfrlight.webhooks_util</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">json</span>
+
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="kn">from</span> <span class="nn">.config</span> <span class="k">import</span> <span class="n">config</span>
+
+
+<div class="viewcode-block" id="webhooks_registration_problem"><a class="viewcode-back" href="../../modules/vfrlight.html#vfrlight.webhooks_util.webhooks_registration_problem">[docs]</a><span class="k">def</span> <span class="nf">webhooks_registration_problem</span><span class="p">():</span>
+    <span class="c1"># although there are some webhooks that don&#39;t belong to products</span>
+    <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;webhooks_registration_problem&#39;</span><span class="p">)</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="get_webhooks"><a class="viewcode-back" href="../../modules/vfrlight.html#vfrlight.webhooks_util.get_webhooks">[docs]</a><span class="k">def</span> <span class="nf">get_webhooks</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">shop</span><span class="p">):</span>
+    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;X-Shopify-Access-Token&quot;</span><span class="p">:</span> <span class="n">token</span><span class="p">,</span>
+        <span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span>
+    <span class="p">}</span>
+    <span class="n">get_webhooks_response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;https://&quot;</span> <span class="o">+</span> <span class="n">shop</span> <span class="o">+</span>
+                                         <span class="s2">&quot;/admin/webhooks.json&quot;</span><span class="p">,</span>
+                                         <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">get_webhooks_response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">get_webhooks_response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="alreadyRegistered"><a class="viewcode-back" href="../../modules/vfrlight.html#vfrlight.webhooks_util.alreadyRegistered">[docs]</a><span class="k">def</span> <span class="nf">alreadyRegistered</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">shop</span><span class="p">):</span>
+    <span class="n">webhooks</span> <span class="o">=</span> <span class="n">get_webhooks</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">shop</span><span class="p">)</span>
+    <span class="n">webhooks</span> <span class="o">=</span> <span class="p">[</span><span class="n">webhook</span><span class="p">[</span><span class="s1">&#39;topic&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">webhook</span> <span class="ow">in</span> <span class="n">webhooks</span><span class="p">[</span><span class="s1">&#39;webhooks&#39;</span><span class="p">]]</span>
+    <span class="k">if</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">webhooks</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;there is no webhook registered&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">webhooks</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">webhooks</span><span class="o">.</span><span class="n">count</span><span class="p">(</span>
+            <span class="s1">&#39;products/update&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">webhooks</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;products/create&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">result</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">webhooks_registration_problem</span><span class="p">()</span>
+            <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;webhook request could not succeed&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="register_webhooks"><a class="viewcode-back" href="../../modules/vfrlight.html#vfrlight.webhooks_util.register_webhooks">[docs]</a><span class="k">def</span> <span class="nf">register_webhooks</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">shop</span><span class="p">,</span> <span class="n">topic</span><span class="p">,</span> <span class="n">Action</span><span class="p">):</span>
+    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;X-Shopify-Access-Token&quot;</span><span class="p">:</span> <span class="n">token</span><span class="p">,</span>
+        <span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span>
+    <span class="p">}</span>
+    <span class="c1"># host must be something beside localhost</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;webhook&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;topic&quot;</span><span class="p">:</span> <span class="n">topic</span><span class="p">,</span>
+            <span class="s2">&quot;address&quot;</span><span class="p">:</span> <span class="s2">&quot;https://</span><span class="si">{0}</span><span class="s2">/</span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">HOST</span><span class="p">,</span> <span class="n">Action</span><span class="p">),</span>
+            <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="s2">&quot;json&quot;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;https://&quot;</span> <span class="o">+</span> <span class="n">shop</span>
+                             <span class="o">+</span> <span class="s2">&quot;/admin/webhooks.json&quot;</span><span class="p">,</span>
+                             <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">payload</span><span class="p">),</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">201</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> has been registered&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">topic</span><span class="p">))</span></div>
+
+
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    needs to be refactored, use shopify python api instead</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+
+<span class="k">def</span> <span class="nf">_initilize_webhooks</span><span class="p">(</span><span class="n">store</span><span class="p">):</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">store</span><span class="o">.</span><span class="n">webhooks_added</span><span class="p">):</span>
+        <span class="k">return</span>
+    <span class="n">shop</span><span class="p">,</span> <span class="n">token</span> <span class="o">=</span> <span class="n">store</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">store</span><span class="o">.</span><span class="n">token</span>
+    <span class="n">reset_webhooks</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">shop</span><span class="p">)</span>
+    <span class="n">register_webhooks</span><span class="p">(</span>
+        <span class="n">token</span><span class="p">,</span> <span class="n">shop</span><span class="p">,</span> <span class="s2">&quot;products/update&quot;</span><span class="p">,</span> <span class="s2">&quot;updateproduct&quot;</span><span class="p">)</span>
+    <span class="n">register_webhooks</span><span class="p">(</span>
+        <span class="n">token</span><span class="p">,</span> <span class="n">shop</span><span class="p">,</span> <span class="s2">&quot;products/create&quot;</span><span class="p">,</span> <span class="s2">&quot;updateproduct&quot;</span><span class="p">)</span>
+    <span class="n">register_webhooks</span><span class="p">(</span>
+        <span class="n">token</span><span class="p">,</span> <span class="n">shop</span><span class="p">,</span> <span class="s2">&quot;products/delete&quot;</span><span class="p">,</span> <span class="s2">&quot;deleteproduct&quot;</span><span class="p">)</span>
+    <span class="n">register_webhooks</span><span class="p">(</span>
+        <span class="n">token</span><span class="p">,</span> <span class="n">shop</span><span class="p">,</span> <span class="s2">&quot;app/uninstalled&quot;</span><span class="p">,</span> <span class="s2">&quot;uninstalledapp&quot;</span><span class="p">)</span>
+    <span class="n">register_webhooks</span><span class="p">(</span>
+        <span class="n">token</span><span class="p">,</span> <span class="n">shop</span><span class="p">,</span> <span class="s2">&quot;collections/update&quot;</span><span class="p">,</span> <span class="s2">&quot;updatecollection&quot;</span><span class="p">)</span>
+    <span class="n">register_webhooks</span><span class="p">(</span>
+        <span class="n">token</span><span class="p">,</span> <span class="n">shop</span><span class="p">,</span> <span class="s2">&quot;collections/delete&quot;</span><span class="p">,</span> <span class="s2">&quot;updatecollection&quot;</span><span class="p">)</span>
+    <span class="n">register_webhooks</span><span class="p">(</span>
+        <span class="n">token</span><span class="p">,</span> <span class="n">shop</span><span class="p">,</span> <span class="s2">&quot;collections/create&quot;</span><span class="p">,</span> <span class="s2">&quot;updatecollection&quot;</span><span class="p">)</span>
+    <span class="n">store</span><span class="o">.</span><span class="n">register_webhooks</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="reset_webhooks"><a class="viewcode-back" href="../../modules/vfrlight.html#vfrlight.webhooks_util.reset_webhooks">[docs]</a><span class="k">def</span> <span class="nf">reset_webhooks</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">shop</span><span class="p">):</span>
+    <span class="n">webhooks</span> <span class="o">=</span> <span class="n">get_webhooks</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">shop</span><span class="p">)[</span><span class="s1">&#39;webhooks&#39;</span><span class="p">]</span>
+    <span class="n">webhooks_ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">webhook</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">webhook</span> <span class="ow">in</span> <span class="n">webhooks</span><span class="p">]</span>
+    <span class="k">if</span><span class="p">(</span><span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">webhooks_ids</span><span class="p">)):</span>
+        <span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;there is no webhooks available to delete&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">webhooks_id</span> <span class="ow">in</span> <span class="n">webhooks_ids</span><span class="p">:</span>
+        <span class="n">reset_webhook</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">shop</span><span class="p">,</span> <span class="n">webhooks_id</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="reset_webhook"><a class="viewcode-back" href="../../modules/vfrlight.html#vfrlight.webhooks_util.reset_webhook">[docs]</a><span class="k">def</span> <span class="nf">reset_webhook</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">shop</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;X-Shopify-Access-Token&quot;</span><span class="p">:</span> <span class="n">token</span><span class="p">,</span>
+        <span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span>
+    <span class="p">}</span>
+    <span class="n">get_webhooks_response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="s2">&quot;https://&quot;</span> <span class="o">+</span> <span class="n">shop</span> <span class="o">+</span>
+                                            <span class="s2">&quot;/admin/webhooks/</span><span class="si">{}</span><span class="s2">.json&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                                                <span class="nb">id</span><span class="p">),</span>
+                                            <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">get_webhooks_response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+        <span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;webhook is deleted </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">id</span><span class="p">))</span></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, alomafit.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

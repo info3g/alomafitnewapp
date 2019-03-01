@@ -1,0 +1,1898 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>stores package &mdash; alomafit-light 1.0 documentation</title>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+
+
+
+
+
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="alomafit-light 1.0 documentation" href="../index.html"/>
+
+
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+
+  <div class="wy-grid-for-nav">
+
+
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+
+
+
+            <a href="../index.html" class="icon icon-home"> alomafit-light
+
+
+
+          </a>
+
+
+
+
+              <div class="version">
+                1.0
+              </div>
+
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+
+
+
+
+
+
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">stores package</a><ul>
+<li><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-stores.admin">stores.admin module</a></li>
+<li><a class="reference internal" href="#module-stores.apps">stores.apps module</a></li>
+<li><a class="reference internal" href="#module-stores.generator">stores.generator module</a></li>
+<li><a class="reference internal" href="#module-stores.model_util">stores.model_util module</a></li>
+<li><a class="reference internal" href="#module-stores.model_webhook_util">stores.model_webhook_util module</a></li>
+<li><a class="reference internal" href="#module-stores.models">stores.models module</a></li>
+<li><a class="reference internal" href="#module-stores.permissions">stores.permissions module</a></li>
+<li><a class="reference internal" href="#module-stores.serializers">stores.serializers module</a></li>
+<li><a class="reference internal" href="#module-stores.tests">stores.tests module</a></li>
+<li><a class="reference internal" href="#module-stores.urls">stores.urls module</a></li>
+<li><a class="reference internal" href="#module-stores.views">stores.views module</a></li>
+<li><a class="reference internal" href="#module-stores">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">alomafit-light</a>
+
+      </nav>
+
+
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+
+      <li>stores package</li>
+
+
+      <li class="wy-breadcrumbs-aside">
+
+
+            <a href="../_sources/modules/stores.rst.txt" rel="nofollow"> View page source</a>
+
+
+      </li>
+
+  </ul>
+
+
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+
+  <div class="section" id="stores-package">
+<h1>stores package<a class="headerlink" href="#stores-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="stores.migrations.html">stores.migrations package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="stores.migrations.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stores.migrations.html#module-stores.migrations.0001_initial">stores.migrations.0001_initial module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stores.migrations.html#module-stores.migrations">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-stores.admin">
+<span id="stores-admin-module"></span><h2>stores.admin module<a class="headerlink" href="#module-stores.admin" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="stores.admin.AdminProduct">
+<em class="property">class </em><code class="descclassname">stores.admin.</code><code class="descname">AdminProduct</code><span class="sig-paren">(</span><em>model</em>, <em>admin_site</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/admin.html#AdminProduct"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.admin.AdminProduct" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.contrib.admin.options.ModelAdmin</span></code></p>
+<dl class="attribute">
+<dt id="stores.admin.AdminProduct.media">
+<code class="descname">media</code><a class="headerlink" href="#stores.admin.AdminProduct.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="stores.admin.AdminProduct.readonly_fields">
+<code class="descname">readonly_fields</code><em class="property"> = ['shopify_id', 'title', 'image', 'updated_at', 'available_online', 'created_at', 'vendor']</em><a class="headerlink" href="#stores.admin.AdminProduct.readonly_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="stores.admin.AdminStore">
+<em class="property">class </em><code class="descclassname">stores.admin.</code><code class="descname">AdminStore</code><span class="sig-paren">(</span><em>model</em>, <em>admin_site</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/admin.html#AdminStore"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.admin.AdminStore" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.contrib.admin.options.ModelAdmin</span></code></p>
+<dl class="attribute">
+<dt id="stores.admin.AdminStore.media">
+<code class="descname">media</code><a class="headerlink" href="#stores.admin.AdminStore.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="stores.admin.AdminStore.readonly_fields">
+<code class="descname">readonly_fields</code><em class="property"> = ['url', 'token', 'slug', 'owner']</em><a class="headerlink" href="#stores.admin.AdminStore.readonly_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="stores.admin.AdminVariant">
+<em class="property">class </em><code class="descclassname">stores.admin.</code><code class="descname">AdminVariant</code><span class="sig-paren">(</span><em>model</em>, <em>admin_site</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/admin.html#AdminVariant"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.admin.AdminVariant" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.contrib.admin.options.ModelAdmin</span></code></p>
+<dl class="attribute">
+<dt id="stores.admin.AdminVariant.media">
+<code class="descname">media</code><a class="headerlink" href="#stores.admin.AdminVariant.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="stores.admin.AdminVariant.readonly_fields">
+<code class="descname">readonly_fields</code><em class="property"> = ['shopify_id', 'product']</em><a class="headerlink" href="#stores.admin.AdminVariant.readonly_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-stores.apps">
+<span id="stores-apps-module"></span><h2>stores.apps module<a class="headerlink" href="#module-stores.apps" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="stores.apps.StoresConfig">
+<em class="property">class </em><code class="descclassname">stores.apps.</code><code class="descname">StoresConfig</code><span class="sig-paren">(</span><em>app_name</em>, <em>app_module</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/apps.html#StoresConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.apps.StoresConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.apps.config.AppConfig</span></code></p>
+<dl class="attribute">
+<dt id="stores.apps.StoresConfig.name">
+<code class="descname">name</code><em class="property"> = 'stores'</em><a class="headerlink" href="#stores.apps.StoresConfig.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-stores.generator">
+<span id="stores-generator-module"></span><h2>stores.generator module<a class="headerlink" href="#module-stores.generator" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="stores.generator.updateProduct_factory">
+<code class="descclassname">stores.generator.</code><code class="descname">updateProduct_factory</code><span class="sig-paren">(</span><em>product</em>, <em>ignore_variant=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/generator.html#updateProduct_factory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.generator.updateProduct_factory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Here we assume that product is partially filled as if its instantiated
+when syncing with shopify.
+it updates all product’s variants with dummy validated values
+and returns ProductSerializer data</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-stores.model_util">
+<span id="stores-model-util-module"></span><h2>stores.model_util module<a class="headerlink" href="#module-stores.model_util" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="stores.model_util.FieldChoice">
+<em class="property">class </em><code class="descclassname">stores.model_util.</code><code class="descname">FieldChoice</code><span class="sig-paren">(</span><em>listOfChoices</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/model_util.html#FieldChoice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.model_util.FieldChoice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>this as a wrapper for all hardcoded values that needs to be set in
+our database as a choice constraint.</p>
+<dl class="method">
+<dt id="stores.model_util.FieldChoice.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>listOfChoices</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/model_util.html#FieldChoice.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.model_util.FieldChoice.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="data">
+<dt id="stores.model_util.FittingTypeChoicesList">
+<code class="descclassname">stores.model_util.</code><code class="descname">FittingTypeChoicesList</code><em class="property"> = ['closefit', 'fitted', 'semifit', 'loose fit', 'Oversized']</em><a class="headerlink" href="#stores.model_util.FittingTypeChoicesList" title="Permalink to this definition">¶</a></dt>
+<dd><p>here we define two possible values for fabric while
+the actual algorithm implementation needs value in the range [0,50]
+currently we are throwing random values [0,25] (- stretch and [25,50] (- nonestretch</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="stores.model_util.PlanChoiceList">
+<code class="descclassname">stores.model_util.</code><code class="descname">PlanChoiceList</code><em class="property"> = ['Male', 'Female', 'MaleAndFemale']</em><a class="headerlink" href="#stores.model_util.PlanChoiceList" title="Permalink to this definition">¶</a></dt>
+<dd><p>when we are creating a new recurring charge to be confirmed by the admin
+the charge follow these states.
+first it gets in pending mode then if he confirms or declines
+it gets accepted/declined respectively, and finally once we have an
+accepted plan we could easily activated.
+please note that there is many scenarios I could clarify right here</p>
+<blockquote>
+<div><ol class="arabic">
+<li><p class="first">If Admin declines a charge nothing happens</p>
+</li>
+<li><p class="first">If Admin accepted some plan and we activated, and after that he
+wants to upgrade i.e (Male/Female)-&gt;(MaleAndFemale)</p>
+<blockquote>
+<div><p>or downgrade i.e (MaleAndFemale)-&gt;(Male/Female)</p>
+</div></blockquote>
+<p>we create new charge and we activate it if it gets accepted by the admin
+WHAT THAT MEANS?</p>
+<blockquote>
+<div><p>it means we don’t cancel the previous charge explicitly, we let shopify
+handle that.</p>
+</div></blockquote>
+<dl class="docutils">
+<dt>OK BUT WHY?</dt>
+<dd><p class="first">because if we cancel it by ourselves, it means the admin
+have to FULLY pay for the billing amount specified each month
+even if there is many days to the end of the month.
+BUT if shopify handle the cancel operation, then shopify calculate only
+how many days spent and charge him appropriately and the new charge will
+be set starting from the current date.</p>
+<p class="last">see <a class="reference external" href="https://help.shopify.com/api/charging-for-your-app/faq">https://help.shopify.com/api/charging-for-your-app/faq</a></p>
+</dd>
+</dl>
+</li>
+</ol>
+</div></blockquote>
+</dd></dl>
+
+<dl class="class">
+<dt id="stores.model_util.Variant_Ranges_dict">
+<em class="property">class </em><code class="descclassname">stores.model_util.</code><code class="descname">Variant_Ranges_dict</code><a class="reference internal" href="../_modules/stores/model_util.html#Variant_Ranges_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.model_util.Variant_Ranges_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>validation ranges for F:Female and M:Males
+notice that we unified the names for males and females
+such as seat for male is considered to be hips
+and chest is also bust, notice that all values are compared in cm metric
+so variable with inch is converted first then we apply this validation thing</p>
+<dl class="attribute">
+<dt id="stores.model_util.Variant_Ranges_dict.ranges">
+<code class="descname">ranges</code><em class="property"> = {'bust': {'F': (81, 143), 'M': (78, 154)}, 'hips': {'F': (85, 132), 'M': (86, 155)}, 'shoulder': {'F': (35, 51), 'M': (42, 58)}, 'waist': {'F': (61, 110), 'M': (70, 151)}}</em><a class="headerlink" href="#stores.model_util.Variant_Ranges_dict.ranges" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="data">
+<dt id="stores.model_util.fabricTypeChoicesList">
+<code class="descclassname">stores.model_util.</code><code class="descname">fabricTypeChoicesList</code><em class="property"> = ['stretch', 'nonestretch']</em><a class="headerlink" href="#stores.model_util.fabricTypeChoicesList" title="Permalink to this definition">¶</a></dt>
+<dd><p>we could be more flexible when it comes to collection
+defined by admin on their stores, such flexiblity could be
+adapted when it comes to different language other than english</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="stores.model_util.from_product_type_to_required_body_parts">
+<code class="descclassname">stores.model_util.</code><code class="descname">from_product_type_to_required_body_parts</code><span class="sig-paren">(</span><em>variant_productType</em>, <em>gender</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/model_util.html#from_product_type_to_required_body_parts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.model_util.from_product_type_to_required_body_parts" title="Permalink to this definition">¶</a></dt>
+<dd><p>we design dictionary <cite>switcher</cite> to be more flexible once we have more
+product’s type added in the future.
+it’s used to impose a required_attributes constraint on variants of products
+since we have the product type we mostly need not all attributes to be filled
+by the merchant, i.e for jeans as a product type why do we have to fill shoulder measure</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="stores.model_util.validate_variant_range">
+<code class="descclassname">stores.model_util.</code><code class="descname">validate_variant_range</code><span class="sig-paren">(</span><em>gender</em>, <em>body_part</em>, <em>value</em>, <em>Variant_Ranges</em>, <em>is_person=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/model_util.html#validate_variant_range"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.model_util.validate_variant_range" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-stores.model_webhook_util">
+<span id="stores-model-webhook-util-module"></span><h2>stores.model_webhook_util module<a class="headerlink" href="#module-stores.model_webhook_util" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="stores.model_webhook_util.delete_product">
+<code class="descclassname">stores.model_webhook_util.</code><code class="descname">delete_product</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/model_webhook_util.html#delete_product"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.model_webhook_util.delete_product" title="Permalink to this definition">¶</a></dt>
+<dd><p>here we assume a webhook has been requested from shopify to
+delete some product, hence we verify the source via HMAC</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="stores.model_webhook_util.get_or_none">
+<code class="descclassname">stores.model_webhook_util.</code><code class="descname">get_or_none</code><span class="sig-paren">(</span><em>model</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/model_webhook_util.html#get_or_none"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.model_webhook_util.get_or_none" title="Permalink to this definition">¶</a></dt>
+<dd><p>a utility method, return None just in case kwargs i.e some attributes
+shopify_id, title etc…. not found in model data</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="stores.model_webhook_util.uninstalled_store">
+<code class="descclassname">stores.model_webhook_util.</code><code class="descname">uninstalled_store</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/model_webhook_util.html#uninstalled_store"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.model_webhook_util.uninstalled_store" title="Permalink to this definition">¶</a></dt>
+<dd><p>Once an admin has uninstalled our app, we resest plan to be null.
+Shopify delete any registered webhooks/script_tags from its side so
+we have to do the same as well :)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="stores.model_webhook_util.update_or_create_product">
+<code class="descclassname">stores.model_webhook_util.</code><code class="descname">update_or_create_product</code><span class="sig-paren">(</span><em>p</em>, <em>store</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/model_webhook_util.html#update_or_create_product"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.model_webhook_util.update_or_create_product" title="Permalink to this definition">¶</a></dt>
+<dd><p>currently we fetch image url, title</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="stores.model_webhook_util.update_or_create_product_variant">
+<code class="descclassname">stores.model_webhook_util.</code><code class="descname">update_or_create_product_variant</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/model_webhook_util.html#update_or_create_product_variant"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.model_webhook_util.update_or_create_product_variant" title="Permalink to this definition">¶</a></dt>
+<dd><p>Here we assume the request has been verified that it’s from shopify by the hmac
+we update the product data as well as its variants, hence in shopify the variants
+data get embedded in the product data</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="stores.model_webhook_util.update_or_create_variants">
+<code class="descclassname">stores.model_webhook_util.</code><code class="descname">update_or_create_variants</code><span class="sig-paren">(</span><em>product</em>, <em>variants</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/model_webhook_util.html#update_or_create_variants"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.model_webhook_util.update_or_create_variants" title="Permalink to this definition">¶</a></dt>
+<dd><p>Notice here variants data are embedded inside product data
+we fetch only title of the variant</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-stores.models">
+<span id="stores-models-module"></span><h2>stores.models module<a class="headerlink" href="#module-stores.models" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="stores.models.Collect">
+<em class="property">class </em><code class="descclassname">stores.models.</code><code class="descname">Collect</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/models.html#Collect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.models.Collect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
+<p>relation between Collection and product is a manyTomany relationship</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>shopify_id</strong> (<em>BigIntegerField</em>) – Shopify id</li>
+<li><strong>collection</strong> (ForeignKey to <a class="reference internal" href="#stores.models.Collection" title="stores.models.Collection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Collection</span></code></a>) – Collection</li>
+<li><strong>product</strong> (ForeignKey to <a class="reference internal" href="#stores.models.Product" title="stores.models.Product"><code class="xref py py-class docutils literal notranslate"><span class="pre">Product</span></code></a>) – Product</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="exception">
+<dt id="stores.models.Collect.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#stores.models.Collect.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="stores.models.Collect.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#stores.models.Collect.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Collect.collection">
+<code class="descname">collection</code><a class="headerlink" href="#stores.models.Collect.collection" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id1"><span class="problematic" id="id2">**</span></a><em>Model field</em> – ** collection, accesses the <a class="reference internal" href="#stores.models.Collection" title="stores.models.Collection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Collection</span></code></a> model.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Collect.collection_id">
+<code class="descname">collection_id</code><a class="headerlink" href="#stores.models.Collect.collection_id" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id3"><span class="problematic" id="id4">**</span></a><em>Model field</em> – ** collection</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Collect.objects">
+<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#stores.models.Collect.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Collect.product">
+<code class="descname">product</code><a class="headerlink" href="#stores.models.Collect.product" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id5"><span class="problematic" id="id6">**</span></a><em>Model field</em> – ** product, accesses the <a class="reference internal" href="#stores.models.Product" title="stores.models.Product"><code class="xref py py-class docutils literal notranslate"><span class="pre">Product</span></code></a> model.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Collect.product_id">
+<code class="descname">product_id</code><a class="headerlink" href="#stores.models.Collect.product_id" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id7"><span class="problematic" id="id8">**</span></a><em>Model field</em> – ** product</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="stores.models.Collect.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/models.html#Collect.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.models.Collect.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>notice here we update the product gender if it’s connected to
+some collection named with Man/Women</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Collect.shopify_id">
+<code class="descname">shopify_id</code><a class="headerlink" href="#stores.models.Collect.shopify_id" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id9"><span class="problematic" id="id10">**</span></a><em>Model field</em> – ** shopify id</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="stores.models.Collection">
+<em class="property">class </em><code class="descclassname">stores.models.</code><code class="descname">Collection</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/models.html#Collection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.models.Collection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
+<p>We fetch the gender info for the product from the collection
+resource on shopify, each admin classify his products into collections
+Hence we see if there is any Woman/Man names for collections
+and assign their products accordingly</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>shopify_id</strong> (<em>BigIntegerField</em>) – Shopify id</li>
+<li><strong>title</strong> (<em>CharField</em>) – Title</li>
+<li><strong>gender</strong> (<em>CharField</em>) – Gender</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="exception">
+<dt id="stores.models.Collection.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#stores.models.Collection.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="stores.models.Collection.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#stores.models.Collection.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Collection.collect_product">
+<code class="descname">collect_product</code><a class="headerlink" href="#stores.models.Collection.collect_product" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id11"><span class="problematic" id="id12">**</span></a><em>Model field</em> – ** collection, accesses the M2M <a class="reference internal" href="#stores.models.Collect" title="stores.models.Collect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Collect</span></code></a> model.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Collection.gender">
+<code class="descname">gender</code><a class="headerlink" href="#stores.models.Collection.gender" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id13"><span class="problematic" id="id14">**</span></a><em>Model field</em> – ** gender</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="stores.models.Collection.gender_converter">
+<em class="property">static </em><code class="descname">gender_converter</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/models.html#Collection.gender_converter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.models.Collection.gender_converter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="stores.models.Collection.get_gender_display">
+<code class="descname">get_gender_display</code><span class="sig-paren">(</span><em>*</em>, <em>field=&lt;django.db.models.fields.CharField: gender&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#stores.models.Collection.get_gender_display" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Autogenerated:</strong> Shows the label of the <a class="reference internal" href="#stores.models.Collection.gender" title="stores.models.Collection.gender"><code class="xref py py-attr docutils literal notranslate"><span class="pre">gender</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Collection.objects">
+<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#stores.models.Collection.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="stores.models.Collection.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/models.html#Collection.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.models.Collection.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the current instance. Override this in a subclass if you want to
+control the saving process.</p>
+<p>The ‘force_insert’ and ‘force_update’ parameters can be used to insist
+that the “save” must be an SQL insert or update (or equivalent for
+non-SQL backends), respectively. Normally, they should not be set.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Collection.shopify_id">
+<code class="descname">shopify_id</code><a class="headerlink" href="#stores.models.Collection.shopify_id" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id15"><span class="problematic" id="id16">**</span></a><em>Model field</em> – ** shopify id</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Collection.title">
+<code class="descname">title</code><a class="headerlink" href="#stores.models.Collection.title" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id17"><span class="problematic" id="id18">**</span></a><em>Model field</em> – ** title</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="stores.models.Merchant">
+<em class="property">class </em><code class="descclassname">stores.models.</code><code class="descname">Merchant</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/models.html#Merchant"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.models.Merchant" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
+<p>To support Authentication with the store, for any api requires
+updating the store’s data, a user account must be bound to the store
+Here we are assigning user to merchant via OneToOne relationship
+So we could generate token, and use Token Based authentication scheme</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>user</strong> (OneToOneField to <code class="xref py py-class docutils literal notranslate"><span class="pre">User</span></code>) – User</td>
+</tr>
+</tbody>
+</table>
+<dl class="exception">
+<dt id="stores.models.Merchant.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#stores.models.Merchant.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="stores.models.Merchant.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#stores.models.Merchant.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Merchant.merchant_store">
+<code class="descname">merchant_store</code><a class="headerlink" href="#stores.models.Merchant.merchant_store" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id19"><span class="problematic" id="id20">**</span></a><em>Model field</em> – ** owner, accesses the <a class="reference internal" href="#stores.models.Store" title="stores.models.Store"><code class="xref py py-class docutils literal notranslate"><span class="pre">Store</span></code></a> model.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Merchant.objects">
+<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#stores.models.Merchant.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Merchant.user">
+<code class="descname">user</code><a class="headerlink" href="#stores.models.Merchant.user" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id21"><span class="problematic" id="id22">**</span></a><em>Model field</em> – ** user, accesses the <code class="xref py py-class docutils literal notranslate"><span class="pre">User</span></code> model.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Merchant.user_id">
+<code class="descname">user_id</code><a class="headerlink" href="#stores.models.Merchant.user_id" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id23"><span class="problematic" id="id24">**</span></a><em>Model field</em> – ** user</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="stores.models.Product">
+<em class="property">class </em><code class="descclassname">stores.models.</code><code class="descname">Product</code><span class="sig-paren">(</span><em>shopify_id</em>, <em>title</em>, <em>image</em>, <em>vendor</em>, <em>available_online</em>, <em>created_at</em>, <em>updated_at</em>, <em>store</em>, <em>gender</em>, <em>product_type</em>, <em>fit_type</em>, <em>elasticity</em>, <em>fabric</em>, <em>times_tried</em>, <em>_required_attributes</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/models.html#Product"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.models.Product" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>shopify_id</strong> (<em>BigIntegerField</em>) – Shopify id</li>
+<li><strong>title</strong> (<em>TextField</em>) – Title</li>
+<li><strong>image</strong> (<em>URLField</em>) – Image</li>
+<li><strong>vendor</strong> (<em>CharField</em>) – Vendor</li>
+<li><strong>available_online</strong> (<em>BooleanField</em>) – Available online</li>
+<li><strong>created_at</strong> (<em>DateTimeField</em>) – Created at</li>
+<li><strong>updated_at</strong> (<em>DateTimeField</em>) – Updated at</li>
+<li><strong>store</strong> (ForeignKey to <a class="reference internal" href="#stores.models.Store" title="stores.models.Store"><code class="xref py py-class docutils literal notranslate"><span class="pre">Store</span></code></a>) – Store</li>
+<li><strong>gender</strong> (<em>CharField</em>) – Gender</li>
+<li><strong>product_type</strong> (<em>CharField</em>) – Product type</li>
+<li><strong>fit_type</strong> (<em>CharField</em>) – Fit type</li>
+<li><strong>elasticity</strong> (<em>IntegerField</em>) – Elasticity</li>
+<li><strong>fabric</strong> (<em>CharField</em>) – Fabric</li>
+<li><strong>times_tried</strong> (<em>IntegerField</em>) – Times tried</li>
+<li><strong>_required_attributes</strong> (<em>ArrayField</em>) – required attributes</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="exception">
+<dt id="stores.models.Product.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#stores.models.Product.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="stores.models.Product.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#stores.models.Product.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Product.Shopify_objects">
+<code class="descname">Shopify_objects</code><em class="property"> = &lt;stores.models.ProductShopifyManager object&gt;</em><a class="headerlink" href="#stores.models.Product.Shopify_objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Product.available_online">
+<code class="descname">available_online</code><a class="headerlink" href="#stores.models.Product.available_online" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id25"><span class="problematic" id="id26">**</span></a><em>Model field</em> – ** available online</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Product.collect_collection">
+<code class="descname">collect_collection</code><a class="headerlink" href="#stores.models.Product.collect_collection" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id27"><span class="problematic" id="id28">**</span></a><em>Model field</em> – ** product, accesses the M2M <a class="reference internal" href="#stores.models.Collect" title="stores.models.Collect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Collect</span></code></a> model.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Product.covered_by_the_plan">
+<code class="descname">covered_by_the_plan</code><a class="headerlink" href="#stores.models.Product.covered_by_the_plan" title="Permalink to this definition">¶</a></dt>
+<dd><p>it’s very straightforward, if product’s gender matches the plan
+then it’s covered</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Product.created_at">
+<code class="descname">created_at</code><a class="headerlink" href="#stores.models.Product.created_at" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id29"><span class="problematic" id="id30">**</span></a><em>Model field</em> – ** created at</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Product.elasticity">
+<code class="descname">elasticity</code><a class="headerlink" href="#stores.models.Product.elasticity" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id31"><span class="problematic" id="id32">**</span></a><em>Model field</em> – ** elasticity</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Product.fabric">
+<code class="descname">fabric</code><a class="headerlink" href="#stores.models.Product.fabric" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id33"><span class="problematic" id="id34">**</span></a><em>Model field</em> – ** fabric</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Product.fit_type">
+<code class="descname">fit_type</code><a class="headerlink" href="#stores.models.Product.fit_type" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id35"><span class="problematic" id="id36">**</span></a><em>Model field</em> – ** fit type</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Product.gender">
+<code class="descname">gender</code><a class="headerlink" href="#stores.models.Product.gender" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id37"><span class="problematic" id="id38">**</span></a><em>Model field</em> – ** gender</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="stores.models.Product.get_fabric_display">
+<code class="descname">get_fabric_display</code><span class="sig-paren">(</span><em>*</em>, <em>field=&lt;django.db.models.fields.CharField: fabric&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#stores.models.Product.get_fabric_display" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Autogenerated:</strong> Shows the label of the <a class="reference internal" href="#stores.models.Product.fabric" title="stores.models.Product.fabric"><code class="xref py py-attr docutils literal notranslate"><span class="pre">fabric</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="stores.models.Product.get_fit_type_display">
+<code class="descname">get_fit_type_display</code><span class="sig-paren">(</span><em>*</em>, <em>field=&lt;django.db.models.fields.CharField: fit_type&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#stores.models.Product.get_fit_type_display" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Autogenerated:</strong> Shows the label of the <a class="reference internal" href="#stores.models.Product.fit_type" title="stores.models.Product.fit_type"><code class="xref py py-attr docutils literal notranslate"><span class="pre">fit_type</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="stores.models.Product.get_gender_display">
+<code class="descname">get_gender_display</code><span class="sig-paren">(</span><em>*</em>, <em>field=&lt;django.db.models.fields.CharField: gender&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#stores.models.Product.get_gender_display" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Autogenerated:</strong> Shows the label of the <a class="reference internal" href="#stores.models.Product.gender" title="stores.models.Product.gender"><code class="xref py py-attr docutils literal notranslate"><span class="pre">gender</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="stores.models.Product.get_next_by_created_at">
+<code class="descname">get_next_by_created_at</code><span class="sig-paren">(</span><em>*</em>, <em>field=&lt;django.db.models.fields.DateTimeField: created_at&gt;</em>, <em>is_next=True</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#stores.models.Product.get_next_by_created_at" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Autogenerated:</strong> Finds next instance based on <a class="reference internal" href="#stores.models.Product.created_at" title="stores.models.Product.created_at"><code class="xref py py-attr docutils literal notranslate"><span class="pre">created_at</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="stores.models.Product.get_next_by_updated_at">
+<code class="descname">get_next_by_updated_at</code><span class="sig-paren">(</span><em>*</em>, <em>field=&lt;django.db.models.fields.DateTimeField: updated_at&gt;</em>, <em>is_next=True</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#stores.models.Product.get_next_by_updated_at" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Autogenerated:</strong> Finds next instance based on <a class="reference internal" href="#stores.models.Product.updated_at" title="stores.models.Product.updated_at"><code class="xref py py-attr docutils literal notranslate"><span class="pre">updated_at</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="stores.models.Product.get_previous_by_created_at">
+<code class="descname">get_previous_by_created_at</code><span class="sig-paren">(</span><em>*</em>, <em>field=&lt;django.db.models.fields.DateTimeField: created_at&gt;</em>, <em>is_next=False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#stores.models.Product.get_previous_by_created_at" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Autogenerated:</strong> Finds previous instance based on <a class="reference internal" href="#stores.models.Product.created_at" title="stores.models.Product.created_at"><code class="xref py py-attr docutils literal notranslate"><span class="pre">created_at</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="stores.models.Product.get_previous_by_updated_at">
+<code class="descname">get_previous_by_updated_at</code><span class="sig-paren">(</span><em>*</em>, <em>field=&lt;django.db.models.fields.DateTimeField: updated_at&gt;</em>, <em>is_next=False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#stores.models.Product.get_previous_by_updated_at" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Autogenerated:</strong> Finds previous instance based on <a class="reference internal" href="#stores.models.Product.updated_at" title="stores.models.Product.updated_at"><code class="xref py py-attr docutils literal notranslate"><span class="pre">updated_at</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="stores.models.Product.get_product_type_display">
+<code class="descname">get_product_type_display</code><span class="sig-paren">(</span><em>*</em>, <em>field=&lt;django.db.models.fields.CharField: product_type&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#stores.models.Product.get_product_type_display" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Autogenerated:</strong> Shows the label of the <a class="reference internal" href="#stores.models.Product.product_type" title="stores.models.Product.product_type"><code class="xref py py-attr docutils literal notranslate"><span class="pre">product_type</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Product.image">
+<code class="descname">image</code><a class="headerlink" href="#stores.models.Product.image" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id39"><span class="problematic" id="id40">**</span></a><em>Model field</em> – ** image</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Product.objects">
+<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#stores.models.Product.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Product.product_added_to_closet">
+<code class="descname">product_added_to_closet</code><a class="headerlink" href="#stores.models.Product.product_added_to_closet" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id41"><span class="problematic" id="id42">**</span></a><em>Model field</em> – ** product, accesses the M2M <a class="reference internal" href="insights.html#insights.models.Product_Profile_Add_To_Closet" title="insights.models.Product_Profile_Add_To_Closet"><code class="xref py py-class docutils literal notranslate"><span class="pre">Product_Profile_Add_To_Closet</span></code></a> model.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Product.product_hit">
+<code class="descname">product_hit</code><a class="headerlink" href="#stores.models.Product.product_hit" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id43"><span class="problematic" id="id44">**</span></a><em>Model field</em> – ** product, accesses the M2M <a class="reference internal" href="insights.html#insights.models.HitProduct" title="insights.models.HitProduct"><code class="xref py py-class docutils literal notranslate"><span class="pre">HitProduct</span></code></a> model.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Product.product_tried">
+<code class="descname">product_tried</code><a class="headerlink" href="#stores.models.Product.product_tried" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id45"><span class="problematic" id="id46">**</span></a><em>Model field</em> – ** product, accesses the M2M <a class="reference internal" href="insights.html#insights.models.Profile_Try_Product" title="insights.models.Profile_Try_Product"><code class="xref py py-class docutils literal notranslate"><span class="pre">Profile_Try_Product</span></code></a> model.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Product.product_type">
+<code class="descname">product_type</code><a class="headerlink" href="#stores.models.Product.product_type" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id47"><span class="problematic" id="id48">**</span></a><em>Model field</em> – ** product type</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Product.ready_to_try">
+<code class="descname">ready_to_try</code><a class="headerlink" href="#stores.models.Product.ready_to_try" title="Permalink to this definition">¶</a></dt>
+<dd><p>if all of product’s variants are filled completely, i.e each required
+attributes has some validated value <cite>Non Null</cite> we are allowing this product
+to be tried in the fitting room</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="stores.models.Product.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/models.html#Product.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.models.Product.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the current instance. Override this in a subclass if you want to
+control the saving process.</p>
+<p>The ‘force_insert’ and ‘force_update’ parameters can be used to insist
+that the “save” must be an SQL insert or update (or equivalent for
+non-SQL backends), respectively. Normally, they should not be set.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Product.shopify_id">
+<code class="descname">shopify_id</code><a class="headerlink" href="#stores.models.Product.shopify_id" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id49"><span class="problematic" id="id50">**</span></a><em>Model field</em> – ** shopify id</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Product.store">
+<code class="descname">store</code><a class="headerlink" href="#stores.models.Product.store" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id51"><span class="problematic" id="id52">**</span></a><em>Model field</em> – ** store, accesses the <a class="reference internal" href="#stores.models.Store" title="stores.models.Store"><code class="xref py py-class docutils literal notranslate"><span class="pre">Store</span></code></a> model.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Product.store_id">
+<code class="descname">store_id</code><a class="headerlink" href="#stores.models.Product.store_id" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id53"><span class="problematic" id="id54">**</span></a><em>Model field</em> – ** store</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Product.times_tried">
+<code class="descname">times_tried</code><a class="headerlink" href="#stores.models.Product.times_tried" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id55"><span class="problematic" id="id56">**</span></a><em>Model field</em> – ** times tried</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Product.title">
+<code class="descname">title</code><a class="headerlink" href="#stores.models.Product.title" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id57"><span class="problematic" id="id58">**</span></a><em>Model field</em> – ** title</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Product.updated_at">
+<code class="descname">updated_at</code><a class="headerlink" href="#stores.models.Product.updated_at" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id59"><span class="problematic" id="id60">**</span></a><em>Model field</em> – ** updated at</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Product.variants">
+<code class="descname">variants</code><a class="headerlink" href="#stores.models.Product.variants" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id61"><span class="problematic" id="id62">**</span></a><em>Model field</em> – ** product, accesses the M2M <a class="reference internal" href="#stores.models.Variant" title="stores.models.Variant"><code class="xref py py-class docutils literal notranslate"><span class="pre">Variant</span></code></a> model.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Product.vendor">
+<code class="descname">vendor</code><a class="headerlink" href="#stores.models.Product.vendor" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id63"><span class="problematic" id="id64">**</span></a><em>Model field</em> – ** vendor</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="stores.models.Product.yet_added_to_his_closet">
+<code class="descname">yet_added_to_his_closet</code><span class="sig-paren">(</span><em>profile</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/models.html#Product.yet_added_to_his_closet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.models.Product.yet_added_to_his_closet" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="stores.models.Product.yet_another_try">
+<code class="descname">yet_another_try</code><span class="sig-paren">(</span><em>profile</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/models.html#Product.yet_another_try"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.models.Product.yet_another_try" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="stores.models.ProductShopifyManager">
+<em class="property">class </em><code class="descclassname">stores.models.</code><code class="descname">ProductShopifyManager</code><a class="reference internal" href="../_modules/stores/models.html#ProductShopifyManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.models.ProductShopifyManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.manager.Manager</span></code></p>
+<p>For Product model we have customer ObjectManage to handle the
+update process from shopify, such as vendor,image,update/create date
+Hence we pass shopify_product data and we expect to update the model instance
+right from it</p>
+<dl class="method">
+<dt id="stores.models.ProductShopifyManager.assign_values">
+<code class="descname">assign_values</code><span class="sig-paren">(</span><em>shopify_product</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/models.html#ProductShopifyManager.assign_values"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.models.ProductShopifyManager.assign_values" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="stores.models.ProductShopifyManager.create_from_shopify">
+<code class="descname">create_from_shopify</code><span class="sig-paren">(</span><em>store</em>, <em>shopify_product</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/models.html#ProductShopifyManager.create_from_shopify"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.models.ProductShopifyManager.create_from_shopify" title="Permalink to this definition">¶</a></dt>
+<dd><p>Just create a new instance with shopify product data, hence variants data
+are embedded inside the product data as nested field
+we also assign the store the product comes from.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="stores.models.ProductShopifyManager.update_from_shopify">
+<code class="descname">update_from_shopify</code><span class="sig-paren">(</span><em>shopify_product</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/models.html#ProductShopifyManager.update_from_shopify"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.models.ProductShopifyManager.update_from_shopify" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="stores.models.RecurringCharge">
+<em class="property">class </em><code class="descclassname">stores.models.</code><code class="descname">RecurringCharge</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/models.html#RecurringCharge"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.models.RecurringCharge" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
+<p>simple model to save the history of billing actions</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>id</strong> (<em>AutoField</em>) – Id</li>
+<li><strong>shopify_id</strong> (<em>BigIntegerField</em>) – Shopify id</li>
+<li><strong>status</strong> (<em>CharField</em>) – Status</li>
+<li><strong>plan</strong> (<em>CharField</em>) – Plan</li>
+<li><strong>store</strong> (ForeignKey to <a class="reference internal" href="#stores.models.Store" title="stores.models.Store"><code class="xref py py-class docutils literal notranslate"><span class="pre">Store</span></code></a>) – Store</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="exception">
+<dt id="stores.models.RecurringCharge.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#stores.models.RecurringCharge.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="stores.models.RecurringCharge.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#stores.models.RecurringCharge.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="stores.models.RecurringCharge.billing_amount">
+<em class="property">static </em><code class="descname">billing_amount</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/models.html#RecurringCharge.billing_amount"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.models.RecurringCharge.billing_amount" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="stores.models.RecurringCharge.get_plan_display">
+<code class="descname">get_plan_display</code><span class="sig-paren">(</span><em>*</em>, <em>field=&lt;django.db.models.fields.CharField: plan&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#stores.models.RecurringCharge.get_plan_display" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Autogenerated:</strong> Shows the label of the <a class="reference internal" href="#stores.models.RecurringCharge.plan" title="stores.models.RecurringCharge.plan"><code class="xref py py-attr docutils literal notranslate"><span class="pre">plan</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="stores.models.RecurringCharge.get_status_display">
+<code class="descname">get_status_display</code><span class="sig-paren">(</span><em>*</em>, <em>field=&lt;django.db.models.fields.CharField: status&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#stores.models.RecurringCharge.get_status_display" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Autogenerated:</strong> Shows the label of the <a class="reference internal" href="#stores.models.RecurringCharge.status" title="stores.models.RecurringCharge.status"><code class="xref py py-attr docutils literal notranslate"><span class="pre">status</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.RecurringCharge.id">
+<code class="descname">id</code><a class="headerlink" href="#stores.models.RecurringCharge.id" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id65"><span class="problematic" id="id66">**</span></a><em>Model field</em> – ** ID</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.RecurringCharge.objects">
+<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#stores.models.RecurringCharge.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.RecurringCharge.plan">
+<code class="descname">plan</code><a class="headerlink" href="#stores.models.RecurringCharge.plan" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id67"><span class="problematic" id="id68">**</span></a><em>Model field</em> – ** plan</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.RecurringCharge.shopify_id">
+<code class="descname">shopify_id</code><a class="headerlink" href="#stores.models.RecurringCharge.shopify_id" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id69"><span class="problematic" id="id70">**</span></a><em>Model field</em> – ** shopify id</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.RecurringCharge.status">
+<code class="descname">status</code><a class="headerlink" href="#stores.models.RecurringCharge.status" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id71"><span class="problematic" id="id72">**</span></a><em>Model field</em> – ** status</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.RecurringCharge.store">
+<code class="descname">store</code><a class="headerlink" href="#stores.models.RecurringCharge.store" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id73"><span class="problematic" id="id74">**</span></a><em>Model field</em> – ** store, accesses the <a class="reference internal" href="#stores.models.Store" title="stores.models.Store"><code class="xref py py-class docutils literal notranslate"><span class="pre">Store</span></code></a> model.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.RecurringCharge.store_id">
+<code class="descname">store_id</code><a class="headerlink" href="#stores.models.RecurringCharge.store_id" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id75"><span class="problematic" id="id76">**</span></a><em>Model field</em> – ** store</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="stores.models.Store">
+<em class="property">class </em><code class="descclassname">stores.models.</code><code class="descname">Store</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/models.html#Store"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.models.Store" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
+<p>The store model is the corner stone of our app</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>owner</strong> (OneToOneField to <a class="reference internal" href="#stores.models.Merchant" title="stores.models.Merchant"><code class="xref py py-class docutils literal notranslate"><span class="pre">Merchant</span></code></a>) – Owner</li>
+<li><strong>url</strong> (<em>CharField</em>) – Url</li>
+<li><strong>slug</strong> (<em>SlugField</em>) – Slug</li>
+<li><strong>token</strong> (<em>CharField</em>) – Token</li>
+<li><strong>plans</strong> (<em>JSONField</em>) – Plans</li>
+<li><strong>webhooks_added</strong> (<em>BooleanField</em>) – Webhooks added</li>
+<li><strong>scripttag_added</strong> (<em>BooleanField</em>) – Scripttag added</li>
+<li><strong>male_body_shapes</strong> (<em>JSONField</em>) – Male body shapes</li>
+<li><strong>female_body_shapes</strong> (<em>JSONField</em>) – Female body shapes</li>
+<li><strong>male_top_sizes</strong> (<em>JSONField</em>) – Male top sizes</li>
+<li><strong>male_bottom_sizes</strong> (<em>JSONField</em>) – Male bottom sizes</li>
+<li><strong>female_top_sizes</strong> (<em>JSONField</em>) – Female top sizes</li>
+<li><strong>female_bottom_sizes</strong> (<em>JSONField</em>) – Female bottom sizes</li>
+<li><strong>first_install</strong> (<em>DateTimeField</em>) – First install</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="exception">
+<dt id="stores.models.Store.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#stores.models.Store.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Store.FemaleBottomBodySize_dict">
+<code class="descname">FemaleBottomBodySize_dict</code><em class="property"> = {'2X - 16 US - 20 UK': 0, '3X - 18 US - 22 UK': 0, '4X - 20 US - 24 UK': 0, '5X - 22 US - 26 UK': 0, 'L - 10 US - 14 UK': 0, 'L - 12 US - 16 UK ': 0, 'M - 6 US - 10 UK': 0, 'M - 8 US - 12 UK': 0, 'S - 2 US - 6 UK': 0, 'S - 4 US - 8 UK': 0, 'XL - 14 US - 18 UK': 0, 'XS - 0 US - 4 UK': 0, 'XXS - 00 US': 0}</em><a class="headerlink" href="#stores.models.Store.FemaleBottomBodySize_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Store.FemaleTopBodySize_dict">
+<code class="descname">FemaleTopBodySize_dict</code><em class="property"> = {'2X - 16 US - 20 UK': 0, '3X - 18 US - 22 UK': 0, '4X - 20 US - 24 UK': 0, '5X - 22 US - 26 UK': 0, 'L - 10 US - 14 UK': 0, 'L - 12 US - 16 UK ': 0, 'M - 6 US - 10 UK': 0, 'M - 8 US - 12 UK': 0, 'S - 2 US - 6 UK': 0, 'S - 4 US - 8 UK': 0, 'XL - 14 US - 18 UK': 0, 'XS - 0 US - 4 UK': 0, 'XXS - 00 US': 0}</em><a class="headerlink" href="#stores.models.Store.FemaleTopBodySize_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Store.MaleBottomBodySize_dict">
+<code class="descname">MaleBottomBodySize_dict</code><em class="property"> = {'3Xl 56': 0, '4Xl 58': 0, '5Xl 60': 0, 'L 46': 0, 'L 48': 0, 'M 42': 0, 'M 44': 0, 'S 38': 0, 'S 40': 0, 'XL 50': 0, 'XS - 34': 0, 'XS - 36': 0, 'XXl 54': 0, 'Xl 52': 0}</em><a class="headerlink" href="#stores.models.Store.MaleBottomBodySize_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Store.MaleTopBodySize_dict">
+<code class="descname">MaleTopBodySize_dict</code><em class="property"> = {'3XL': 0, '4XL': 0, '5XL': 0, 'L': 0, 'M': 0, 'S': 0, 'XL': 0, 'XS': 0, 'XXL': 0, 'XXS': 0}</em><a class="headerlink" href="#stores.models.Store.MaleTopBodySize_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="exception">
+<dt id="stores.models.Store.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#stores.models.Store.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="stores.models.Store.activate_plan">
+<code class="descname">activate_plan</code><span class="sig-paren">(</span><em>plan</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/models.html#Store.activate_plan"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.models.Store.activate_plan" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Store.average_hit_duration">
+<code class="descname">average_hit_duration</code><a class="headerlink" href="#stores.models.Store.average_hit_duration" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Store.bodyShape_dict">
+<code class="descname">bodyShape_dict</code><em class="property"> = {'Hourglass body shape': 0, 'Oval Body shape': 0, 'Pear body shape with a bit tummy fat.': 0, 'Rectangle Body shape': 0, 'Rectangle Body shape with a bit tummy fat.': 0, 'inverted triangle Body shape': 0, 'inverted triangle Body shape with a bit tummy fat.': 0, 'inverted triangle body shape with a bit tummy fat.': 0, 'pear Body shape': 0, 'trapazod': 0, 'triangle Body shape': 0, 'triangle body shape with a bit tummy fat.': 0}</em><a class="headerlink" href="#stores.models.Store.bodyShape_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="stores.models.Store.deactivate_any_plan">
+<code class="descname">deactivate_any_plan</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/models.html#Store.deactivate_any_plan"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.models.Store.deactivate_any_plan" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Store.female_body_shapes">
+<code class="descname">female_body_shapes</code><a class="headerlink" href="#stores.models.Store.female_body_shapes" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id77"><span class="problematic" id="id78">**</span></a><em>Model field</em> – ** female body shapes</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Store.female_bottom_sizes">
+<code class="descname">female_bottom_sizes</code><a class="headerlink" href="#stores.models.Store.female_bottom_sizes" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id79"><span class="problematic" id="id80">**</span></a><em>Model field</em> – ** female bottom sizes</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Store.female_top_sizes">
+<code class="descname">female_top_sizes</code><a class="headerlink" href="#stores.models.Store.female_top_sizes" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id81"><span class="problematic" id="id82">**</span></a><em>Model field</em> – ** female top sizes</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Store.first_install">
+<code class="descname">first_install</code><a class="headerlink" href="#stores.models.Store.first_install" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id83"><span class="problematic" id="id84">**</span></a><em>Model field</em> – ** first install</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="stores.models.Store.free_trial_left">
+<code class="descname">free_trial_left</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/models.html#Store.free_trial_left"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.models.Store.free_trial_left" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="stores.models.Store.get_next_by_first_install">
+<code class="descname">get_next_by_first_install</code><span class="sig-paren">(</span><em>*</em>, <em>field=&lt;django.db.models.fields.DateTimeField: first_install&gt;</em>, <em>is_next=True</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#stores.models.Store.get_next_by_first_install" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Autogenerated:</strong> Finds next instance based on <a class="reference internal" href="#stores.models.Store.first_install" title="stores.models.Store.first_install"><code class="xref py py-attr docutils literal notranslate"><span class="pre">first_install</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="stores.models.Store.get_previous_by_first_install">
+<code class="descname">get_previous_by_first_install</code><span class="sig-paren">(</span><em>*</em>, <em>field=&lt;django.db.models.fields.DateTimeField: first_install&gt;</em>, <em>is_next=False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#stores.models.Store.get_previous_by_first_install" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Autogenerated:</strong> Finds previous instance based on <a class="reference internal" href="#stores.models.Store.first_install" title="stores.models.Store.first_install"><code class="xref py py-attr docutils literal notranslate"><span class="pre">first_install</span></code></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Store.male_body_shapes">
+<code class="descname">male_body_shapes</code><a class="headerlink" href="#stores.models.Store.male_body_shapes" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id85"><span class="problematic" id="id86">**</span></a><em>Model field</em> – ** male body shapes</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Store.male_bottom_sizes">
+<code class="descname">male_bottom_sizes</code><a class="headerlink" href="#stores.models.Store.male_bottom_sizes" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id87"><span class="problematic" id="id88">**</span></a><em>Model field</em> – ** male bottom sizes</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Store.male_top_sizes">
+<code class="descname">male_top_sizes</code><a class="headerlink" href="#stores.models.Store.male_top_sizes" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id89"><span class="problematic" id="id90">**</span></a><em>Model field</em> – ** male top sizes</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Store.most_added_to_closet">
+<code class="descname">most_added_to_closet</code><a class="headerlink" href="#stores.models.Store.most_added_to_closet" title="Permalink to this definition">¶</a></dt>
+<dd><p>just group by product and accumlate how many times each
+product has been added to someone closet.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Store.objects">
+<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#stores.models.Store.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Store.owner">
+<code class="descname">owner</code><a class="headerlink" href="#stores.models.Store.owner" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id91"><span class="problematic" id="id92">**</span></a><em>Model field</em> – ** owner, accesses the <a class="reference internal" href="#stores.models.Merchant" title="stores.models.Merchant"><code class="xref py py-class docutils literal notranslate"><span class="pre">Merchant</span></code></a> model.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Store.owner_id">
+<code class="descname">owner_id</code><a class="headerlink" href="#stores.models.Store.owner_id" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id93"><span class="problematic" id="id94">**</span></a><em>Model field</em> – ** owner</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Store.plans">
+<code class="descname">plans</code><a class="headerlink" href="#stores.models.Store.plans" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id95"><span class="problematic" id="id96">**</span></a><em>Model field</em> – ** plans</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Store.products">
+<code class="descname">products</code><a class="headerlink" href="#stores.models.Store.products" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id97"><span class="problematic" id="id98">**</span></a><em>Model field</em> – ** store, accesses the M2M <a class="reference internal" href="#stores.models.Product" title="stores.models.Product"><code class="xref py py-class docutils literal notranslate"><span class="pre">Product</span></code></a> model.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Store.recurringCharges">
+<code class="descname">recurringCharges</code><a class="headerlink" href="#stores.models.Store.recurringCharges" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id99"><span class="problematic" id="id100">**</span></a><em>Model field</em> – ** store, accesses the M2M <a class="reference internal" href="#stores.models.RecurringCharge" title="stores.models.RecurringCharge"><code class="xref py py-class docutils literal notranslate"><span class="pre">RecurringCharge</span></code></a> model.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="stores.models.Store.register_scriptTags">
+<code class="descname">register_scriptTags</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/models.html#Store.register_scriptTags"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.models.Store.register_scriptTags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="stores.models.Store.register_webhooks">
+<code class="descname">register_webhooks</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/models.html#Store.register_webhooks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.models.Store.register_webhooks" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="stores.models.Store.reset_scriptTags">
+<code class="descname">reset_script_tags</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/models.html#Store.reset_scriptTags"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.models.Store.reset_scriptTags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="stores.models.Store.reset_webhooks">
+<code class="descname">reset_webhooks</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/models.html#Store.reset_webhooks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.models.Store.reset_webhooks" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="stores.models.Store.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/models.html#Store.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.models.Store.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the current instance. Override this in a subclass if you want to
+control the saving process.</p>
+<p>The ‘force_insert’ and ‘force_update’ parameters can be used to insist
+that the “save” must be an SQL insert or update (or equivalent for
+non-SQL backends), respectively. Normally, they should not be set.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Store.scripttag_added">
+<code class="descname">scripttag_added</code><a class="headerlink" href="#stores.models.Store.scripttag_added" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id101"><span class="problematic" id="id102">**</span></a><em>Model field</em> – ** scripttag added</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Store.slug">
+<code class="descname">slug</code><a class="headerlink" href="#stores.models.Store.slug" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id103"><span class="problematic" id="id104">**</span></a><em>Model field</em> – ** slug</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Store.store_visitors">
+<code class="descname">store_visitors</code><a class="headerlink" href="#stores.models.Store.store_visitors" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id105"><span class="problematic" id="id106">**</span></a><em>Model field</em> – ** store, accesses the M2M <a class="reference internal" href="insights.html#insights.models.Profile_Visit_Store" title="insights.models.Profile_Visit_Store"><code class="xref py py-class docutils literal notranslate"><span class="pre">Profile_Visit_Store</span></code></a> model.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Store.token">
+<code class="descname">token</code><a class="headerlink" href="#stores.models.Store.token" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id107"><span class="problematic" id="id108">**</span></a><em>Model field</em> – ** token</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Store.url">
+<code class="descname">url</code><a class="headerlink" href="#stores.models.Store.url" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id109"><span class="problematic" id="id110">**</span></a><em>Model field</em> – ** url</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Store.webhooks_added">
+<code class="descname">webhooks_added</code><a class="headerlink" href="#stores.models.Store.webhooks_added" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id111"><span class="problematic" id="id112">**</span></a><em>Model field</em> – ** webhooks added</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="stores.models.Store.yet_another_visitor">
+<code class="descname">yet_another_visitor</code><span class="sig-paren">(</span><em>profile</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/models.html#Store.yet_another_visitor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.models.Store.yet_another_visitor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Every time some authenticated/non authenticated profile has tried some product
+Visiting action has occured. just save this info</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="stores.models.Variant">
+<em class="property">class </em><code class="descclassname">stores.models.</code><code class="descname">Variant</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/models.html#Variant"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.models.Variant" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
+<p>each product could have many variants but, each variant could belong only to
+one product, there is some important attributes such as
+waist,shoulder,hips, etc…  to be filled by the admin
+hence we specify which are required based on the product type</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>shopify_id</strong> (<em>BigIntegerField</em>) – Shopify id</li>
+<li><strong>title</strong> (<em>CharField</em>) – Title</li>
+<li><strong>product</strong> (ForeignKey to <a class="reference internal" href="#stores.models.Product" title="stores.models.Product"><code class="xref py py-class docutils literal notranslate"><span class="pre">Product</span></code></a>) – Product</li>
+<li><strong>shoulder</strong> (<em>FloatField</em>) – Shoulder</li>
+<li><strong>bust</strong> (<em>FloatField</em>) – Bust</li>
+<li><strong>waist</strong> (<em>FloatField</em>) – Waist</li>
+<li><strong>hips</strong> (<em>FloatField</em>) – Hips</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="exception">
+<dt id="stores.models.Variant.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#stores.models.Variant.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="stores.models.Variant.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#stores.models.Variant.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Variant.Shopify_objects">
+<code class="descname">Shopify_objects</code><em class="property"> = &lt;stores.models.VariantShopifyManager object&gt;</em><a class="headerlink" href="#stores.models.Variant.Shopify_objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Variant.bust">
+<code class="descname">bust</code><a class="headerlink" href="#stores.models.Variant.bust" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id113"><span class="problematic" id="id114">**</span></a><em>Model field</em> – ** bust</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="stores.models.Variant.group_variants">
+<em class="property">static </em><code class="descname">group_variants</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/models.html#Variant.group_variants"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.models.Variant.group_variants" title="Permalink to this definition">¶</a></dt>
+<dd><p>this method is simple enough to be explained
+just in the fitalgorithm fit_sys method expect lists forms
+variants are just multi size options of the product.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Variant.hips">
+<code class="descname">hips</code><a class="headerlink" href="#stores.models.Variant.hips" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id115"><span class="problematic" id="id116">**</span></a><em>Model field</em> – ** hips</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Variant.objects">
+<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#stores.models.Variant.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Variant.product">
+<code class="descname">product</code><a class="headerlink" href="#stores.models.Variant.product" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id117"><span class="problematic" id="id118">**</span></a><em>Model field</em> – ** product, accesses the <a class="reference internal" href="#stores.models.Product" title="stores.models.Product"><code class="xref py py-class docutils literal notranslate"><span class="pre">Product</span></code></a> model.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Variant.product_id">
+<code class="descname">product_id</code><a class="headerlink" href="#stores.models.Variant.product_id" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id119"><span class="problematic" id="id120">**</span></a><em>Model field</em> – ** product</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="stores.models.Variant.ready_to_try">
+<code class="descname">ready_to_try</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/models.html#Variant.ready_to_try"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.models.Variant.ready_to_try" title="Permalink to this definition">¶</a></dt>
+<dd><p>variant is ready to try if the required attributes are completely filled
+i.e not null values, put it in another way validated data is saved in the insance</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Variant.shopify_id">
+<code class="descname">shopify_id</code><a class="headerlink" href="#stores.models.Variant.shopify_id" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id121"><span class="problematic" id="id122">**</span></a><em>Model field</em> – ** shopify id</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Variant.shoulder">
+<code class="descname">shoulder</code><a class="headerlink" href="#stores.models.Variant.shoulder" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id123"><span class="problematic" id="id124">**</span></a><em>Model field</em> – ** shoulder</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Variant.title">
+<code class="descname">title</code><a class="headerlink" href="#stores.models.Variant.title" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id125"><span class="problematic" id="id126">**</span></a><em>Model field</em> – ** title</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.models.Variant.waist">
+<code class="descname">waist</code><a class="headerlink" href="#stores.models.Variant.waist" title="Permalink to this definition">¶</a></dt>
+<dd><p><a href="#id127"><span class="problematic" id="id128">**</span></a><em>Model field</em> – ** waist</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="stores.models.VariantShopifyManager">
+<em class="property">class </em><code class="descclassname">stores.models.</code><code class="descname">VariantShopifyManager</code><a class="reference internal" href="../_modules/stores/models.html#VariantShopifyManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.models.VariantShopifyManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.manager.Manager</span></code></p>
+<p>please see ProductShopifyManager, the same logic goes here and there</p>
+<dl class="method">
+<dt id="stores.models.VariantShopifyManager.assign_values">
+<code class="descname">assign_values</code><span class="sig-paren">(</span><em>shopify_variant</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/models.html#VariantShopifyManager.assign_values"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.models.VariantShopifyManager.assign_values" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="stores.models.VariantShopifyManager.create_from_shopify">
+<code class="descname">create_from_shopify</code><span class="sig-paren">(</span><em>product</em>, <em>shopify_variant</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/models.html#VariantShopifyManager.create_from_shopify"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.models.VariantShopifyManager.create_from_shopify" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="stores.models.VariantShopifyManager.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>shopify_variant</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/models.html#VariantShopifyManager.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.models.VariantShopifyManager.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update all elements in the current QuerySet, setting all the given
+fields to the appropriate values.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-stores.permissions">
+<span id="stores-permissions-module"></span><h2>stores.permissions module<a class="headerlink" href="#module-stores.permissions" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="stores.permissions.IsOwnerProducts">
+<em class="property">class </em><code class="descclassname">stores.permissions.</code><code class="descname">IsOwnerProducts</code><a class="reference internal" href="../_modules/stores/permissions.html#IsOwnerProducts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.permissions.IsOwnerProducts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.permissions.BasePermission</span></code></p>
+<p>Custom permission to only allow owners of an object to edit it.</p>
+<dl class="method">
+<dt id="stores.permissions.IsOwnerProducts.has_object_permission">
+<code class="descname">has_object_permission</code><span class="sig-paren">(</span><em>request</em>, <em>view</em>, <em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/permissions.html#IsOwnerProducts.has_object_permission"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.permissions.IsOwnerProducts.has_object_permission" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return <cite>True</cite> if permission is granted, <cite>False</cite> otherwise.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="stores.permissions.IsOwnerStores">
+<em class="property">class </em><code class="descclassname">stores.permissions.</code><code class="descname">IsOwnerStores</code><a class="reference internal" href="../_modules/stores/permissions.html#IsOwnerStores"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.permissions.IsOwnerStores" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.permissions.BasePermission</span></code></p>
+<p>Custom permission to only allow owners of an object to edit it.</p>
+<dl class="method">
+<dt id="stores.permissions.IsOwnerStores.has_object_permission">
+<code class="descname">has_object_permission</code><span class="sig-paren">(</span><em>request</em>, <em>view</em>, <em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/permissions.html#IsOwnerStores.has_object_permission"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.permissions.IsOwnerStores.has_object_permission" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return <cite>True</cite> if permission is granted, <cite>False</cite> otherwise.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-stores.serializers">
+<span id="stores-serializers-module"></span><h2>stores.serializers module<a class="headerlink" href="#module-stores.serializers" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="stores.serializers.ActivatePlanSerializer">
+<em class="property">class </em><code class="descclassname">stores.serializers.</code><code class="descname">ActivatePlanSerializer</code><span class="sig-paren">(</span><em>instance=None</em>, <em>data=&lt;class 'rest_framework.fields.empty'&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/serializers.html#ActivatePlanSerializer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.serializers.ActivatePlanSerializer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.serializers.Serializer</span></code></p>
+<dl class="method">
+<dt id="stores.serializers.ActivatePlanSerializer.create">
+<code class="descname">create</code><span class="sig-paren">(</span><em>validated_data</em>, <em>store</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/serializers.html#ActivatePlanSerializer.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.serializers.ActivatePlanSerializer.create" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="stores.serializers.MerchantSerializer">
+<em class="property">class </em><code class="descclassname">stores.serializers.</code><code class="descname">MerchantSerializer</code><span class="sig-paren">(</span><em>instance=None</em>, <em>data=&lt;class 'rest_framework.fields.empty'&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/serializers.html#MerchantSerializer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.serializers.MerchantSerializer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.serializers.ModelSerializer</span></code></p>
+<dl class="attribute">
+<dt id="stores.serializers.MerchantSerializer.queryset">
+<code class="descname">queryset</code><em class="property"> = QuerySet</em><a class="headerlink" href="#stores.serializers.MerchantSerializer.queryset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="stores.serializers.NonAuthenticatedGetProduct">
+<em class="property">class </em><code class="descclassname">stores.serializers.</code><code class="descname">NonAuthenticatedGetProduct</code><span class="sig-paren">(</span><em>instance=None</em>, <em>data=&lt;class 'rest_framework.fields.empty'&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/serializers.html#NonAuthenticatedGetProduct"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.serializers.NonAuthenticatedGetProduct" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.serializers.Serializer</span></code></p>
+<dl class="method">
+<dt id="stores.serializers.NonAuthenticatedGetProduct.validate">
+<code class="descname">validate</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/serializers.html#NonAuthenticatedGetProduct.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.serializers.NonAuthenticatedGetProduct.validate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="stores.serializers.ProductSerializer">
+<em class="property">class </em><code class="descclassname">stores.serializers.</code><code class="descname">ProductSerializer</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/serializers.html#ProductSerializer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.serializers.ProductSerializer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework_nested.serializers.NestedHyperlinkedModelSerializer</span></code></p>
+<dl class="attribute">
+<dt id="stores.serializers.ProductSerializer.parent_lookup_kwargs">
+<code class="descname">parent_lookup_kwargs</code><em class="property"> = {'url': 'url'}</em><a class="headerlink" href="#stores.serializers.ProductSerializer.parent_lookup_kwargs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="stores.serializers.ProductSerializer.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>instance</em>, <em>validated_data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/serializers.html#ProductSerializer.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.serializers.ProductSerializer.update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="stores.serializers.ProductSerializer.validate">
+<code class="descname">validate</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/serializers.html#ProductSerializer.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.serializers.ProductSerializer.validate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="stores.serializers.StoreSerializer">
+<em class="property">class </em><code class="descclassname">stores.serializers.</code><code class="descname">StoreSerializer</code><span class="sig-paren">(</span><em>instance=None</em>, <em>data=&lt;class 'rest_framework.fields.empty'&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/serializers.html#StoreSerializer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.serializers.StoreSerializer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.serializers.HyperlinkedModelSerializer</span></code></p>
+<dl class="attribute">
+<dt id="stores.serializers.StoreSerializer.extra_kwargs">
+<code class="descname">extra_kwargs</code><em class="property"> = {'slug': {'lookup_field': 'slug'}}</em><a class="headerlink" href="#stores.serializers.StoreSerializer.extra_kwargs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="stores.serializers.StoreSerializer.lookup_field">
+<code class="descname">lookup_field</code><em class="property"> = 'slug'</em><a class="headerlink" href="#stores.serializers.StoreSerializer.lookup_field" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="stores.serializers.SyncSerializer">
+<em class="property">class </em><code class="descclassname">stores.serializers.</code><code class="descname">SyncSerializer</code><span class="sig-paren">(</span><em>instance=None</em>, <em>data=&lt;class 'rest_framework.fields.empty'&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/serializers.html#SyncSerializer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.serializers.SyncSerializer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.serializers.Serializer</span></code></p>
+<dl class="method">
+<dt id="stores.serializers.SyncSerializer.create">
+<code class="descname">create</code><span class="sig-paren">(</span><em>validated_data</em>, <em>store</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/serializers.html#SyncSerializer.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.serializers.SyncSerializer.create" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="stores.serializers.VariantSerializer">
+<em class="property">class </em><code class="descclassname">stores.serializers.</code><code class="descname">VariantSerializer</code><span class="sig-paren">(</span><em>instance=None</em>, <em>data=&lt;class 'rest_framework.fields.empty'&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/serializers.html#VariantSerializer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.serializers.VariantSerializer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.serializers.HyperlinkedModelSerializer</span></code></p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-stores.tests">
+<span id="stores-tests-module"></span><h2>stores.tests module<a class="headerlink" href="#module-stores.tests" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="stores.tests.init_TestCase">
+<em class="property">class </em><code class="descclassname">stores.tests.</code><code class="descname">init_TestCase</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/tests.html#init_TestCase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.tests.init_TestCase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.test.testcases.TestCase</span></code></p>
+<p>Test suite for the api views.</p>
+<dl class="method">
+<dt id="stores.tests.init_TestCase.create_collect_shopify">
+<code class="descname">create_collect_shopify</code><span class="sig-paren">(</span><em>product_id</em>, <em>collection_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/tests.html#init_TestCase.create_collect_shopify"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.tests.init_TestCase.create_collect_shopify" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="stores.tests.init_TestCase.get_random_product_shopify">
+<code class="descname">get_random_product_shopify</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/tests.html#init_TestCase.get_random_product_shopify"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.tests.init_TestCase.get_random_product_shopify" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="stores.tests.init_TestCase.ready_to_try_product_locally">
+<code class="descname">ready_to_try_product_locally</code><span class="sig-paren">(</span><em>ignore_variant=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/tests.html#init_TestCase.ready_to_try_product_locally"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.tests.init_TestCase.ready_to_try_product_locally" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="stores.tests.init_TestCase.setUp">
+<code class="descname">setUp</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/tests.html#init_TestCase.setUp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.tests.init_TestCase.setUp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hook method for setting up the test fixture before exercising it.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="stores.tests.init_TestCase.sync_create_product_shopify">
+<code class="descname">sync_create_product_shopify</code><span class="sig-paren">(</span><em>collection='Women'</em>, <em>title='letter'</em>, <em>product_type='shirts'</em>, <em>vendor='Chandler-Villa'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/tests.html#init_TestCase.sync_create_product_shopify"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.tests.init_TestCase.sync_create_product_shopify" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="stores.tests.init_TestCase.sync_create_product_shopify_collection_gender_test">
+<code class="descname">sync_create_product_shopify_collection_gender_test</code><span class="sig-paren">(</span><em>collection='Women'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/tests.html#init_TestCase.sync_create_product_shopify_collection_gender_test"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.tests.init_TestCase.sync_create_product_shopify_collection_gender_test" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="stores.tests.init_TestCase.sync_update_product_from_shopify">
+<code class="descname">sync_update_product_from_shopify</code><span class="sig-paren">(</span><em>title='page'</em>, <em>product_type='shirts'</em>, <em>vendor='Nixon-Poole'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/tests.html#init_TestCase.sync_update_product_from_shopify"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.tests.init_TestCase.sync_update_product_from_shopify" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="stores.tests.init_TestCase.sync_with_shopify">
+<code class="descname">sync_with_shopify</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/tests.html#init_TestCase.sync_with_shopify"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.tests.init_TestCase.sync_with_shopify" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="stores.tests.init_TestCase.test_init">
+<code class="descname">test_init</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/tests.html#init_TestCase.test_init"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.tests.init_TestCase.test_init" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="stores.tests.init_TestCase.test_product_not_ready_locally">
+<code class="descname">test_product_not_ready_locally</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/tests.html#init_TestCase.test_product_not_ready_locally"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.tests.init_TestCase.test_product_not_ready_locally" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="stores.tests.init_TestCase.test_product_put">
+<code class="descname">test_product_put</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/tests.html#init_TestCase.test_product_put"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.tests.init_TestCase.test_product_put" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="stores.tests.init_TestCase.test_product_ready_locally">
+<code class="descname">test_product_ready_locally</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/tests.html#init_TestCase.test_product_ready_locally"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.tests.init_TestCase.test_product_ready_locally" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="stores.tests.init_TestCase.test_product_sync_create_product">
+<code class="descname">test_product_sync_create_product</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/tests.html#init_TestCase.test_product_sync_create_product"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.tests.init_TestCase.test_product_sync_create_product" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="stores.tests.init_TestCase.test_product_sync_delete_product">
+<code class="descname">test_product_sync_delete_product</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/tests.html#init_TestCase.test_product_sync_delete_product"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.tests.init_TestCase.test_product_sync_delete_product" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="stores.tests.init_TestCase.test_product_sync_update_product">
+<code class="descname">test_product_sync_update_product</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/tests.html#init_TestCase.test_product_sync_update_product"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.tests.init_TestCase.test_product_sync_update_product" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="stores.tests.init_TestCase.update_product_shopify">
+<code class="descname">update_product_shopify</code><span class="sig-paren">(</span><em>product_shopify</em>, <em>title=None</em>, <em>product_type=None</em>, <em>vendor=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/tests.html#init_TestCase.update_product_shopify"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.tests.init_TestCase.update_product_shopify" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="stores.tests.init_TestCase.update_random_product">
+<code class="descname">update_random_product</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/tests.html#init_TestCase.update_random_product"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.tests.init_TestCase.update_random_product" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-stores.urls">
+<span id="stores-urls-module"></span><h2>stores.urls module<a class="headerlink" href="#module-stores.urls" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-stores.views">
+<span id="stores-views-module"></span><h2>stores.views module<a class="headerlink" href="#module-stores.views" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="stores.views.ActivatePlanViewSet">
+<em class="property">class </em><code class="descclassname">stores.views.</code><code class="descname">ActivatePlanViewSet</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/views.html#ActivatePlanViewSet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.views.ActivatePlanViewSet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.viewsets.ViewSet</span></code></p>
+<dl class="docutils">
+<dt>{</dt>
+<dd>‘plan’ = ‘Male’</dd>
+</dl>
+<p>}
+plan values could be [‘Male’, ‘Female’, ‘MaleAndFemale’]
+Errors: if plan is activated, <cite>you are already activated the plan</cite></p>
+<p>AFTER admin confirm on the charge the response will be
+{“data”: “plan:Male with status:activated”}</p>
+<dl class="attribute">
+<dt id="stores.views.ActivatePlanViewSet.basename">
+<code class="descname">basename</code><em class="property"> = None</em><a class="headerlink" href="#stores.views.ActivatePlanViewSet.basename" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="stores.views.ActivatePlanViewSet.create">
+<code class="descname">create</code><span class="sig-paren">(</span><em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/views.html#ActivatePlanViewSet.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.views.ActivatePlanViewSet.create" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="stores.views.ActivatePlanViewSet.http_method_names">
+<code class="descname">http_method_names</code><em class="property"> = ['post', 'options']</em><a class="headerlink" href="#stores.views.ActivatePlanViewSet.http_method_names" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="stores.views.ActivatePlanViewSet.serializer_class">
+<code class="descname">serializer_class</code><a class="headerlink" href="#stores.views.ActivatePlanViewSet.serializer_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#stores.serializers.ActivatePlanSerializer" title="stores.serializers.ActivatePlanSerializer"><code class="xref py py-class docutils literal notranslate"><span class="pre">stores.serializers.ActivatePlanSerializer</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.views.ActivatePlanViewSet.suffix">
+<code class="descname">suffix</code><em class="property"> = None</em><a class="headerlink" href="#stores.views.ActivatePlanViewSet.suffix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="stores.views.NonAuthenticatedGetProductViewSet">
+<em class="property">class </em><code class="descclassname">stores.views.</code><code class="descname">NonAuthenticatedGetProductViewSet</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/views.html#NonAuthenticatedGetProductViewSet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.views.NonAuthenticatedGetProductViewSet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.viewsets.ViewSet</span></code></p>
+<p>it’s used in the store front when we eant to get the gender,
+covered by the plan and is ready to try, since we dont have any credentials
+there we allow only get request</p>
+<dl class="attribute">
+<dt id="stores.views.NonAuthenticatedGetProductViewSet.basename">
+<code class="descname">basename</code><em class="property"> = None</em><a class="headerlink" href="#stores.views.NonAuthenticatedGetProductViewSet.basename" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="stores.views.NonAuthenticatedGetProductViewSet.http_method_names">
+<code class="descname">http_method_names</code><em class="property"> = ['get', 'options']</em><a class="headerlink" href="#stores.views.NonAuthenticatedGetProductViewSet.http_method_names" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="stores.views.NonAuthenticatedGetProductViewSet.queryset">
+<code class="descname">queryset</code><em class="property"> = []</em><a class="headerlink" href="#stores.views.NonAuthenticatedGetProductViewSet.queryset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="stores.views.NonAuthenticatedGetProductViewSet.retrieve">
+<code class="descname">retrieve</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/views.html#NonAuthenticatedGetProductViewSet.retrieve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.views.NonAuthenticatedGetProductViewSet.retrieve" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="stores.views.NonAuthenticatedGetProductViewSet.serializer_class">
+<code class="descname">serializer_class</code><a class="headerlink" href="#stores.views.NonAuthenticatedGetProductViewSet.serializer_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#stores.serializers.NonAuthenticatedGetProduct" title="stores.serializers.NonAuthenticatedGetProduct"><code class="xref py py-class docutils literal notranslate"><span class="pre">stores.serializers.NonAuthenticatedGetProduct</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.views.NonAuthenticatedGetProductViewSet.suffix">
+<code class="descname">suffix</code><em class="property"> = None</em><a class="headerlink" href="#stores.views.NonAuthenticatedGetProductViewSet.suffix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="stores.views.ProductViewSet">
+<em class="property">class </em><code class="descclassname">stores.views.</code><code class="descname">ProductViewSet</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/views.html#ProductViewSet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.views.ProductViewSet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.viewsets.ModelViewSet</span></code></p>
+<dl class="attribute">
+<dt id="stores.views.ProductViewSet.basename">
+<code class="descname">basename</code><em class="property"> = None</em><a class="headerlink" href="#stores.views.ProductViewSet.basename" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="stores.views.ProductViewSet.filter_backends">
+<code class="descname">filter_backends</code><em class="property"> = (&lt;class 'rest_framework.filters.OrderingFilter'&gt;, &lt;class 'django_filters.rest_framework.backends.DjangoFilterBackend'&gt;)</em><a class="headerlink" href="#stores.views.ProductViewSet.filter_backends" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="stores.views.ProductViewSet.filter_fields">
+<code class="descname">filter_fields</code><em class="property"> = ('gender', 'product_type')</em><a class="headerlink" href="#stores.views.ProductViewSet.filter_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="stores.views.ProductViewSet.get_queryset">
+<code class="descname">get_queryset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/views.html#ProductViewSet.get_queryset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.views.ProductViewSet.get_queryset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the list of items for this view.
+This must be an iterable, and may be a queryset.
+Defaults to using <cite>self.queryset</cite>.</p>
+<p>This method should always be used rather than accessing <cite>self.queryset</cite>
+directly, as <cite>self.queryset</cite> gets evaluated only once, and those results
+are cached for all subsequent requests.</p>
+<p>You may want to override this if you need to provide different
+querysets depending on the incoming request.</p>
+<p>(Eg. return a list of items that is specific to the user)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.views.ProductViewSet.http_method_names">
+<code class="descname">http_method_names</code><em class="property"> = ['get', 'put', 'option']</em><a class="headerlink" href="#stores.views.ProductViewSet.http_method_names" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="stores.views.ProductViewSet.ordering_fields">
+<code class="descname">ordering_fields</code><em class="property"> = ('title', 'updated_at', 'created_at')</em><a class="headerlink" href="#stores.views.ProductViewSet.ordering_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="stores.views.ProductViewSet.serializer_class">
+<code class="descname">serializer_class</code><a class="headerlink" href="#stores.views.ProductViewSet.serializer_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#stores.serializers.ProductSerializer" title="stores.serializers.ProductSerializer"><code class="xref py py-class docutils literal notranslate"><span class="pre">stores.serializers.ProductSerializer</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.views.ProductViewSet.suffix">
+<code class="descname">suffix</code><em class="property"> = None</em><a class="headerlink" href="#stores.views.ProductViewSet.suffix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="stores.views.StoreViewSet">
+<em class="property">class </em><code class="descclassname">stores.views.</code><code class="descname">StoreViewSet</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/views.html#StoreViewSet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.views.StoreViewSet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.mixins.ListModelMixin</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.mixins.RetrieveModelMixin</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.viewsets.GenericViewSet</span></code></p>
+<dl class="attribute">
+<dt id="stores.views.StoreViewSet.basename">
+<code class="descname">basename</code><em class="property"> = None</em><a class="headerlink" href="#stores.views.StoreViewSet.basename" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="stores.views.StoreViewSet.lookup_field">
+<code class="descname">lookup_field</code><em class="property"> = 'slug'</em><a class="headerlink" href="#stores.views.StoreViewSet.lookup_field" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="stores.views.StoreViewSet.queryset">
+<code class="descname">queryset</code><em class="property"> = QuerySet</em><a class="headerlink" href="#stores.views.StoreViewSet.queryset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="stores.views.StoreViewSet.retrieve">
+<code class="descname">retrieve</code><span class="sig-paren">(</span><em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/views.html#StoreViewSet.retrieve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.views.StoreViewSet.retrieve" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="stores.views.StoreViewSet.serializer_class">
+<code class="descname">serializer_class</code><a class="headerlink" href="#stores.views.StoreViewSet.serializer_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#stores.serializers.StoreSerializer" title="stores.serializers.StoreSerializer"><code class="xref py py-class docutils literal notranslate"><span class="pre">stores.serializers.StoreSerializer</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.views.StoreViewSet.suffix">
+<code class="descname">suffix</code><em class="property"> = None</em><a class="headerlink" href="#stores.views.StoreViewSet.suffix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="stores.views.SyncViewSet">
+<em class="property">class </em><code class="descclassname">stores.views.</code><code class="descname">SyncViewSet</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/views.html#SyncViewSet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.views.SyncViewSet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rest_framework.viewsets.ViewSet</span></code></p>
+<p>empty post request, with authentication header, to sync store’s data</p>
+<dl class="attribute">
+<dt id="stores.views.SyncViewSet.basename">
+<code class="descname">basename</code><em class="property"> = None</em><a class="headerlink" href="#stores.views.SyncViewSet.basename" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="stores.views.SyncViewSet.create">
+<code class="descname">create</code><span class="sig-paren">(</span><em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/stores/views.html#SyncViewSet.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stores.views.SyncViewSet.create" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="stores.views.SyncViewSet.http_method_names">
+<code class="descname">http_method_names</code><em class="property"> = ['post', 'options']</em><a class="headerlink" href="#stores.views.SyncViewSet.http_method_names" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="stores.views.SyncViewSet.serializer_class">
+<code class="descname">serializer_class</code><a class="headerlink" href="#stores.views.SyncViewSet.serializer_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#stores.serializers.SyncSerializer" title="stores.serializers.SyncSerializer"><code class="xref py py-class docutils literal notranslate"><span class="pre">stores.serializers.SyncSerializer</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="stores.views.SyncViewSet.suffix">
+<code class="descname">suffix</code><em class="property"> = None</em><a class="headerlink" href="#stores.views.SyncViewSet.suffix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-stores">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-stores" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+
+           </div>
+          </div>
+          <footer>
+
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, alomafit.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+
+
+
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+
+
+
+
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+
+
+</body>
+</html>

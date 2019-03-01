@@ -1,0 +1,813 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>allauth.account.forms &mdash; alomafit-light 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="alomafit-light 1.0 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> alomafit-light
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">alomafit-light</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>allauth.account.forms</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for allauth.account.forms</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
+
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">importlib</span> <span class="k">import</span> <span class="n">import_module</span>
+
+<span class="kn">from</span> <span class="nn">django</span> <span class="k">import</span> <span class="n">forms</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth.tokens</span> <span class="k">import</span> <span class="n">PasswordResetTokenGenerator</span>
+<span class="kn">from</span> <span class="nn">django.contrib.sites.shortcuts</span> <span class="k">import</span> <span class="n">get_current_site</span>
+<span class="kn">from</span> <span class="nn">django.core</span> <span class="k">import</span> <span class="n">exceptions</span><span class="p">,</span> <span class="n">validators</span>
+<span class="kn">from</span> <span class="nn">django.urls</span> <span class="k">import</span> <span class="n">reverse</span>
+<span class="kn">from</span> <span class="nn">django.utils.translation</span> <span class="k">import</span> <span class="n">pgettext</span><span class="p">,</span> <span class="n">ugettext</span><span class="p">,</span> <span class="n">ugettext_lazy</span> <span class="k">as</span> <span class="n">_</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">app_settings</span>
+<span class="kn">from</span> <span class="nn">..utils</span> <span class="k">import</span> <span class="p">(</span>
+    <span class="n">build_absolute_uri</span><span class="p">,</span>
+    <span class="n">get_username_max_length</span><span class="p">,</span>
+    <span class="n">set_form_field_order</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">.adapter</span> <span class="k">import</span> <span class="n">get_adapter</span>
+<span class="kn">from</span> <span class="nn">.app_settings</span> <span class="k">import</span> <span class="n">AuthenticationMethod</span>
+<span class="kn">from</span> <span class="nn">.models</span> <span class="k">import</span> <span class="n">EmailAddress</span>
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="k">import</span> <span class="p">(</span>
+    <span class="n">filter_users_by_email</span><span class="p">,</span>
+    <span class="n">get_user_model</span><span class="p">,</span>
+    <span class="n">perform_login</span><span class="p">,</span>
+    <span class="n">setup_user_email</span><span class="p">,</span>
+    <span class="n">sync_user_email_addresses</span><span class="p">,</span>
+    <span class="n">url_str_to_user_pk</span><span class="p">,</span>
+    <span class="n">user_email</span><span class="p">,</span>
+    <span class="n">user_pk_to_url_str</span><span class="p">,</span>
+    <span class="n">user_username</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">EmailAwarePasswordResetTokenGenerator</span><span class="p">(</span><span class="n">PasswordResetTokenGenerator</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">_make_hash_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">):</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span>
+            <span class="n">EmailAwarePasswordResetTokenGenerator</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">_make_hash_value</span><span class="p">(</span>
+                <span class="n">user</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">)</span>
+        <span class="n">sync_user_email_addresses</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+        <span class="n">emails</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="n">user</span><span class="o">.</span><span class="n">email</span><span class="p">])</span>
+        <span class="n">emails</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+            <span class="n">EmailAddress</span><span class="o">.</span><span class="n">objects</span>
+            <span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">values_list</span><span class="p">(</span><span class="s1">&#39;email&#39;</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+        <span class="n">ret</span> <span class="o">+=</span> <span class="s1">&#39;|&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">emails</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">ret</span>
+
+
+<span class="n">default_token_generator</span> <span class="o">=</span> <span class="n">EmailAwarePasswordResetTokenGenerator</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">PasswordVerificationMixin</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">cleaned_data</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">PasswordVerificationMixin</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">clean</span><span class="p">()</span>
+        <span class="n">password1</span> <span class="o">=</span> <span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;password1&#39;</span><span class="p">)</span>
+        <span class="n">password2</span> <span class="o">=</span> <span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;password2&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">password1</span> <span class="ow">and</span> <span class="n">password2</span><span class="p">)</span> <span class="ow">and</span> <span class="n">password1</span> <span class="o">!=</span> <span class="n">password2</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span>
+                <span class="s1">&#39;password2&#39;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;You must type the same password each time.&quot;</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">cleaned_data</span>
+
+
+<span class="k">class</span> <span class="nc">PasswordField</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">render_value</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;render_value&#39;</span><span class="p">,</span>
+                                  <span class="n">app_settings</span><span class="o">.</span><span class="n">PASSWORD_INPUT_RENDER_VALUE</span><span class="p">)</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;widget&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">PasswordInput</span><span class="p">(</span><span class="n">render_value</span><span class="o">=</span><span class="n">render_value</span><span class="p">,</span>
+                                               <span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;placeholder&#39;</span><span class="p">:</span>
+                                                      <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;label&quot;</span><span class="p">)})</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">PasswordField</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">SetPasswordField</span><span class="p">(</span><span class="n">PasswordField</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SetPasswordField</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">SetPasswordField</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">clean</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">get_adapter</span><span class="p">()</span><span class="o">.</span><span class="n">clean_password</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">value</span>
+
+
+<span class="k">class</span> <span class="nc">LoginForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">Form</span><span class="p">):</span>
+
+    <span class="n">password</span> <span class="o">=</span> <span class="n">PasswordField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Password&quot;</span><span class="p">))</span>
+    <span class="n">remember</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Remember Me&quot;</span><span class="p">),</span>
+                                  <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="n">user</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">error_messages</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;account_inactive&#39;</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">(</span><span class="s2">&quot;This account is currently inactive.&quot;</span><span class="p">),</span>
+
+        <span class="s1">&#39;email_password_mismatch&#39;</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">(</span><span class="s2">&quot;The e-mail address and/or password you specified are not correct.&quot;</span><span class="p">),</span>
+
+        <span class="s1">&#39;username_password_mismatch&#39;</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">(</span><span class="s2">&quot;The username and/or password you specified are not correct.&quot;</span><span class="p">),</span>
+    <span class="p">}</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">request</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;request&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">LoginForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">app_settings</span><span class="o">.</span><span class="n">AUTHENTICATION_METHOD</span> <span class="o">==</span> <span class="n">AuthenticationMethod</span><span class="o">.</span><span class="n">EMAIL</span><span class="p">:</span>
+            <span class="n">login_widget</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">TextInput</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;email&#39;</span><span class="p">,</span>
+                                                  <span class="s1">&#39;placeholder&#39;</span><span class="p">:</span>
+                                                  <span class="n">_</span><span class="p">(</span><span class="s1">&#39;E-mail address&#39;</span><span class="p">),</span>
+                                                  <span class="s1">&#39;autofocus&#39;</span><span class="p">:</span> <span class="s1">&#39;autofocus&#39;</span><span class="p">})</span>
+            <span class="n">login_field</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">EmailField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;E-mail&quot;</span><span class="p">),</span>
+                                           <span class="n">widget</span><span class="o">=</span><span class="n">login_widget</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">app_settings</span><span class="o">.</span><span class="n">AUTHENTICATION_METHOD</span> \
+                <span class="o">==</span> <span class="n">AuthenticationMethod</span><span class="o">.</span><span class="n">USERNAME</span><span class="p">:</span>
+            <span class="n">login_widget</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">TextInput</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;placeholder&#39;</span><span class="p">:</span>
+                                                  <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Username&#39;</span><span class="p">),</span>
+                                                  <span class="s1">&#39;autofocus&#39;</span><span class="p">:</span> <span class="s1">&#39;autofocus&#39;</span><span class="p">})</span>
+            <span class="n">login_field</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+                <span class="n">label</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Username&quot;</span><span class="p">),</span>
+                <span class="n">widget</span><span class="o">=</span><span class="n">login_widget</span><span class="p">,</span>
+                <span class="n">max_length</span><span class="o">=</span><span class="n">get_username_max_length</span><span class="p">())</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="n">app_settings</span><span class="o">.</span><span class="n">AUTHENTICATION_METHOD</span> \
+                <span class="o">==</span> <span class="n">AuthenticationMethod</span><span class="o">.</span><span class="n">USERNAME_EMAIL</span>
+            <span class="n">login_widget</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">TextInput</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;placeholder&#39;</span><span class="p">:</span>
+                                                  <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Username or e-mail&#39;</span><span class="p">),</span>
+                                                  <span class="s1">&#39;autofocus&#39;</span><span class="p">:</span> <span class="s1">&#39;autofocus&#39;</span><span class="p">})</span>
+            <span class="n">login_field</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">pgettext</span><span class="p">(</span><span class="s2">&quot;field label&quot;</span><span class="p">,</span>
+                                                         <span class="s2">&quot;Login&quot;</span><span class="p">),</span>
+                                          <span class="n">widget</span><span class="o">=</span><span class="n">login_widget</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;login&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">login_field</span>
+        <span class="n">set_form_field_order</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;login&quot;</span><span class="p">,</span> <span class="s2">&quot;password&quot;</span><span class="p">,</span> <span class="s2">&quot;remember&quot;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">app_settings</span><span class="o">.</span><span class="n">SESSION_REMEMBER</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;remember&#39;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">user_credentials</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Provides the credentials required to authenticate the user for</span>
+<span class="sd">        login.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">credentials</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">login</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s2">&quot;login&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">app_settings</span><span class="o">.</span><span class="n">AUTHENTICATION_METHOD</span> <span class="o">==</span> <span class="n">AuthenticationMethod</span><span class="o">.</span><span class="n">EMAIL</span><span class="p">:</span>
+            <span class="n">credentials</span><span class="p">[</span><span class="s2">&quot;email&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">login</span>
+        <span class="k">elif</span> <span class="p">(</span>
+                <span class="n">app_settings</span><span class="o">.</span><span class="n">AUTHENTICATION_METHOD</span> <span class="o">==</span>
+                <span class="n">AuthenticationMethod</span><span class="o">.</span><span class="n">USERNAME</span><span class="p">):</span>
+            <span class="n">credentials</span><span class="p">[</span><span class="s2">&quot;username&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">login</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_login_email</span><span class="p">(</span><span class="n">login</span><span class="p">):</span>
+                <span class="n">credentials</span><span class="p">[</span><span class="s2">&quot;email&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">login</span>
+            <span class="n">credentials</span><span class="p">[</span><span class="s2">&quot;username&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">login</span>
+        <span class="n">credentials</span><span class="p">[</span><span class="s2">&quot;password&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s2">&quot;password&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">credentials</span>
+
+    <span class="k">def</span> <span class="nf">clean_login</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">login</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;login&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">login</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_is_login_email</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">login</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">validators</span><span class="o">.</span><span class="n">validate_email</span><span class="p">(</span><span class="n">login</span><span class="p">)</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">except</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="n">ret</span>
+
+    <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">LoginForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">clean</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_errors</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="n">credentials</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_credentials</span><span class="p">()</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">get_adapter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="p">)</span><span class="o">.</span><span class="n">authenticate</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">credentials</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">user</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="n">user</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">auth_method</span> <span class="o">=</span> <span class="n">app_settings</span><span class="o">.</span><span class="n">AUTHENTICATION_METHOD</span>
+            <span class="k">if</span> <span class="n">auth_method</span> <span class="o">==</span> <span class="n">app_settings</span><span class="o">.</span><span class="n">AuthenticationMethod</span><span class="o">.</span><span class="n">USERNAME_EMAIL</span><span class="p">:</span>
+                <span class="n">login</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;login&#39;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_login_email</span><span class="p">(</span><span class="n">login</span><span class="p">):</span>
+                    <span class="n">auth_method</span> <span class="o">=</span> <span class="n">app_settings</span><span class="o">.</span><span class="n">AuthenticationMethod</span><span class="o">.</span><span class="n">EMAIL</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">auth_method</span> <span class="o">=</span> <span class="n">app_settings</span><span class="o">.</span><span class="n">AuthenticationMethod</span><span class="o">.</span><span class="n">USERNAME</span>
+            <span class="k">raise</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">error_messages</span><span class="p">[</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">_password_mismatch&#39;</span> <span class="o">%</span> <span class="n">auth_method</span><span class="p">])</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span>
+
+    <span class="k">def</span> <span class="nf">login</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">redirect_url</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">perform_login</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">,</span>
+                            <span class="n">email_verification</span><span class="o">=</span><span class="n">app_settings</span><span class="o">.</span><span class="n">EMAIL_VERIFICATION</span><span class="p">,</span>
+                            <span class="n">redirect_url</span><span class="o">=</span><span class="n">redirect_url</span><span class="p">)</span>
+        <span class="n">remember</span> <span class="o">=</span> <span class="n">app_settings</span><span class="o">.</span><span class="n">SESSION_REMEMBER</span>
+        <span class="k">if</span> <span class="n">remember</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">remember</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;remember&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">remember</span><span class="p">:</span>
+            <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">set_expiry</span><span class="p">(</span><span class="n">app_settings</span><span class="o">.</span><span class="n">SESSION_COOKIE_AGE</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">set_expiry</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ret</span>
+
+
+<span class="k">class</span> <span class="nc">_DummyCustomSignupForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">Form</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">signup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Invoked at signup time to complete the signup of the user.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+
+<span class="k">def</span> <span class="nf">_base_signup_form_class</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Currently, we inherit from the custom form, if any. This is all</span>
+<span class="sd">    not very elegant, though it serves a purpose:</span>
+
+<span class="sd">    - There are two signup forms: one for local accounts, and one for</span>
+<span class="sd">      social accounts</span>
+<span class="sd">    - Both share a common base (BaseSignupForm)</span>
+
+<span class="sd">    - Given the above, how to put in a custom signup form? Which form</span>
+<span class="sd">      would your custom form derive from, the local or the social one?</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">app_settings</span><span class="o">.</span><span class="n">SIGNUP_FORM_CLASS</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_DummyCustomSignupForm</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">fc_module</span><span class="p">,</span> <span class="n">fc_classname</span> <span class="o">=</span> <span class="n">app_settings</span><span class="o">.</span><span class="n">SIGNUP_FORM_CLASS</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">ImproperlyConfigured</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> does not point to a form&#39;</span>
+                                              <span class="s1">&#39; class&#39;</span>
+                                              <span class="o">%</span> <span class="n">app_settings</span><span class="o">.</span><span class="n">SIGNUP_FORM_CLASS</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">mod</span> <span class="o">=</span> <span class="n">import_module</span><span class="p">(</span><span class="n">fc_module</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">ImproperlyConfigured</span><span class="p">(</span><span class="s1">&#39;Error importing form class </span><span class="si">%s</span><span class="s1">:&#39;</span>
+                                              <span class="s1">&#39; &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">fc_module</span><span class="p">,</span> <span class="n">e</span><span class="p">))</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">fc_class</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span> <span class="n">fc_classname</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">ImproperlyConfigured</span><span class="p">(</span><span class="s1">&#39;Module &quot;</span><span class="si">%s</span><span class="s1">&quot; does not define a&#39;</span>
+                                              <span class="s1">&#39; &quot;</span><span class="si">%s</span><span class="s1">&quot; class&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">fc_module</span><span class="p">,</span>
+                                                               <span class="n">fc_classname</span><span class="p">))</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">fc_class</span><span class="p">,</span> <span class="s1">&#39;signup&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">fc_class</span><span class="p">,</span> <span class="s1">&#39;save&#39;</span><span class="p">):</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;The custom signup form must offer&quot;</span>
+                          <span class="s2">&quot; a `def signup(self, request, user)` method&quot;</span><span class="p">,</span>
+                          <span class="ne">DeprecationWarning</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">ImproperlyConfigured</span><span class="p">(</span>
+                <span class="s1">&#39;The custom signup form must implement a &quot;signup&quot; method&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">fc_class</span>
+
+
+<span class="k">class</span> <span class="nc">BaseSignupForm</span><span class="p">(</span><span class="n">_base_signup_form_class</span><span class="p">()):</span>
+    <span class="n">username</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Username&quot;</span><span class="p">),</span>
+                               <span class="n">min_length</span><span class="o">=</span><span class="n">app_settings</span><span class="o">.</span><span class="n">USERNAME_MIN_LENGTH</span><span class="p">,</span>
+                               <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">TextInput</span><span class="p">(</span>
+                                   <span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;placeholder&#39;</span><span class="p">:</span>
+                                          <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Username&#39;</span><span class="p">),</span>
+                                          <span class="s1">&#39;autofocus&#39;</span><span class="p">:</span> <span class="s1">&#39;autofocus&#39;</span><span class="p">}))</span>
+    <span class="n">email</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">EmailField</span><span class="p">(</span><span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">TextInput</span><span class="p">(</span>
+        <span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;email&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;placeholder&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;E-mail address&#39;</span><span class="p">)}))</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">email_required</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;email_required&#39;</span><span class="p">,</span>
+                                    <span class="n">app_settings</span><span class="o">.</span><span class="n">EMAIL_REQUIRED</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">username_required</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;username_required&#39;</span><span class="p">,</span>
+                                            <span class="n">app_settings</span><span class="o">.</span><span class="n">USERNAME_REQUIRED</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">BaseSignupForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">username_field</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">]</span>
+        <span class="n">username_field</span><span class="o">.</span><span class="n">max_length</span> <span class="o">=</span> <span class="n">get_username_max_length</span><span class="p">()</span>
+        <span class="n">username_field</span><span class="o">.</span><span class="n">validators</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">validators</span><span class="o">.</span><span class="n">MaxLengthValidator</span><span class="p">(</span><span class="n">username_field</span><span class="o">.</span><span class="n">max_length</span><span class="p">))</span>
+        <span class="n">username_field</span><span class="o">.</span><span class="n">widget</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;maxlength&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span>
+            <span class="n">username_field</span><span class="o">.</span><span class="n">max_length</span><span class="p">)</span>
+
+        <span class="n">default_field_order</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s1">&#39;email&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;email2&#39;</span><span class="p">,</span>  <span class="c1"># ignored when not present</span>
+            <span class="s1">&#39;username&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;password1&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;password2&#39;</span>  <span class="c1"># ignored when not present</span>
+        <span class="p">]</span>
+        <span class="k">if</span> <span class="n">app_settings</span><span class="o">.</span><span class="n">SIGNUP_EMAIL_ENTER_TWICE</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;email2&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">EmailField</span><span class="p">(</span>
+                <span class="n">label</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;E-mail (again)&quot;</span><span class="p">),</span>
+                <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">TextInput</span><span class="p">(</span>
+                    <span class="n">attrs</span><span class="o">=</span><span class="p">{</span>
+                        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;email&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;placeholder&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;E-mail address confirmation&#39;</span><span class="p">)</span>
+                    <span class="p">}</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">email_required</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">ugettext</span><span class="p">(</span><span class="s2">&quot;E-mail&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">required</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">ugettext</span><span class="p">(</span><span class="s2">&quot;E-mail (optional)&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">required</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">widget</span><span class="o">.</span><span class="n">is_required</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">username_required</span><span class="p">:</span>
+                <span class="n">default_field_order</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="s1">&#39;username&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;email&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;email2&#39;</span><span class="p">,</span>  <span class="c1"># ignored when not present</span>
+                    <span class="s1">&#39;password1&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;password2&#39;</span>  <span class="c1"># ignored when not present</span>
+                <span class="p">]</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">username_required</span><span class="p">:</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;username&quot;</span><span class="p">]</span>
+
+        <span class="n">set_form_field_order</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;field_order&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">or</span> <span class="n">default_field_order</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">clean_username</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s2">&quot;username&quot;</span><span class="p">]</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">get_adapter</span><span class="p">()</span><span class="o">.</span><span class="n">clean_username</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">value</span>
+
+    <span class="k">def</span> <span class="nf">clean_email</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">]</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">get_adapter</span><span class="p">()</span><span class="o">.</span><span class="n">clean_email</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">and</span> <span class="n">app_settings</span><span class="o">.</span><span class="n">UNIQUE_EMAIL</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">validate_unique_email</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">value</span>
+
+    <span class="k">def</span> <span class="nf">validate_unique_email</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">get_adapter</span><span class="p">()</span><span class="o">.</span><span class="n">validate_unique_email</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">cleaned_data</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">BaseSignupForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">clean</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">app_settings</span><span class="o">.</span><span class="n">SIGNUP_EMAIL_ENTER_TWICE</span><span class="p">:</span>
+            <span class="n">email</span> <span class="o">=</span> <span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;email&#39;</span><span class="p">)</span>
+            <span class="n">email2</span> <span class="o">=</span> <span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;email2&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">email</span> <span class="ow">and</span> <span class="n">email2</span><span class="p">)</span> <span class="ow">and</span> <span class="n">email</span> <span class="o">!=</span> <span class="n">email2</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span>
+                    <span class="s1">&#39;email2&#39;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;You must type the same email each time.&quot;</span><span class="p">)</span>
+                <span class="p">)</span>
+        <span class="k">return</span> <span class="n">cleaned_data</span>
+
+    <span class="k">def</span> <span class="nf">custom_signup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+        <span class="n">custom_form</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">BaseSignupForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">custom_form</span><span class="p">,</span> <span class="s1">&#39;signup&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">callable</span><span class="p">(</span><span class="n">custom_form</span><span class="o">.</span><span class="n">signup</span><span class="p">):</span>
+            <span class="n">custom_form</span><span class="o">.</span><span class="n">signup</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">user</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;The custom signup form must offer&quot;</span>
+                          <span class="s2">&quot; a `def signup(self, request, user)` method&quot;</span><span class="p">,</span>
+                          <span class="ne">DeprecationWarning</span><span class="p">)</span>
+            <span class="c1"># Historically, it was called .save, but this is confusing</span>
+            <span class="c1"># in case of ModelForm</span>
+            <span class="n">custom_form</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">SignupForm</span><span class="p">(</span><span class="n">BaseSignupForm</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SignupForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;password1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">PasswordField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Password&quot;</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">app_settings</span><span class="o">.</span><span class="n">SIGNUP_PASSWORD_ENTER_TWICE</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;password2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">PasswordField</span><span class="p">(</span>
+                <span class="n">label</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Password (again)&quot;</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;field_order&#39;</span><span class="p">):</span>
+            <span class="n">set_form_field_order</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">field_order</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SignupForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">clean</span><span class="p">()</span>
+
+        <span class="c1"># `password` cannot be of type `SetPasswordField`, as we don&#39;t</span>
+        <span class="c1"># have a `User` yet. So, let&#39;s populate a dummy user to be used</span>
+        <span class="c1"># for password validaton.</span>
+        <span class="n">dummy_user</span> <span class="o">=</span> <span class="n">get_user_model</span><span class="p">()</span>
+        <span class="n">user_username</span><span class="p">(</span><span class="n">dummy_user</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;username&quot;</span><span class="p">))</span>
+        <span class="n">user_email</span><span class="p">(</span><span class="n">dummy_user</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;email&quot;</span><span class="p">))</span>
+        <span class="n">password</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;password1&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">password</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">get_adapter</span><span class="p">()</span><span class="o">.</span><span class="n">clean_password</span><span class="p">(</span>
+                    <span class="n">password</span><span class="p">,</span>
+                    <span class="n">user</span><span class="o">=</span><span class="n">dummy_user</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="s1">&#39;password1&#39;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">app_settings</span><span class="o">.</span><span class="n">SIGNUP_PASSWORD_ENTER_TWICE</span> \
+                <span class="ow">and</span> <span class="s2">&quot;password1&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span> \
+                <span class="ow">and</span> <span class="s2">&quot;password2&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s2">&quot;password1&quot;</span><span class="p">]</span> \
+                    <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s2">&quot;password2&quot;</span><span class="p">]:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span>
+                    <span class="s1">&#39;password2&#39;</span><span class="p">,</span>
+                    <span class="n">_</span><span class="p">(</span><span class="s2">&quot;You must type the same password each time.&quot;</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span>
+
+    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="n">adapter</span> <span class="o">=</span> <span class="n">get_adapter</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">adapter</span><span class="o">.</span><span class="n">new_user</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="n">adapter</span><span class="o">.</span><span class="n">save_user</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">custom_signup</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">user</span><span class="p">)</span>
+        <span class="c1"># TODO: Move into adapter `save_user` ?</span>
+        <span class="n">setup_user_email</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="k">return</span> <span class="n">user</span>
+
+
+<span class="k">class</span> <span class="nc">UserForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">Form</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="n">user</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">UserForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">AddEmailForm</span><span class="p">(</span><span class="n">UserForm</span><span class="p">):</span>
+
+    <span class="n">email</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">EmailField</span><span class="p">(</span>
+        <span class="n">label</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;E-mail&quot;</span><span class="p">),</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">TextInput</span><span class="p">(</span>
+            <span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;email&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="s2">&quot;30&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;placeholder&quot;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;E-mail address&#39;</span><span class="p">)}))</span>
+
+    <span class="k">def</span> <span class="nf">clean_email</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s2">&quot;email&quot;</span><span class="p">]</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">get_adapter</span><span class="p">()</span><span class="o">.</span><span class="n">clean_email</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">errors</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;this_account&quot;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;This e-mail address is already associated&quot;</span>
+                              <span class="s2">&quot; with this account.&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;different_account&quot;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;This e-mail address is already associated&quot;</span>
+                                   <span class="s2">&quot; with another account.&quot;</span><span class="p">),</span>
+        <span class="p">}</span>
+        <span class="n">users</span> <span class="o">=</span> <span class="n">filter_users_by_email</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">on_this_account</span> <span class="o">=</span> <span class="p">[</span><span class="n">u</span> <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">users</span> <span class="k">if</span> <span class="n">u</span><span class="o">.</span><span class="n">pk</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">pk</span><span class="p">]</span>
+        <span class="n">on_diff_account</span> <span class="o">=</span> <span class="p">[</span><span class="n">u</span> <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">users</span> <span class="k">if</span> <span class="n">u</span><span class="o">.</span><span class="n">pk</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">pk</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">on_this_account</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="n">errors</span><span class="p">[</span><span class="s2">&quot;this_account&quot;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">on_diff_account</span> <span class="ow">and</span> <span class="n">app_settings</span><span class="o">.</span><span class="n">UNIQUE_EMAIL</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="n">errors</span><span class="p">[</span><span class="s2">&quot;different_account&quot;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">value</span>
+
+    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">EmailAddress</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">add_email</span><span class="p">(</span><span class="n">request</span><span class="p">,</span>
+                                              <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">,</span>
+                                              <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s2">&quot;email&quot;</span><span class="p">],</span>
+                                              <span class="n">confirm</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">ChangePasswordForm</span><span class="p">(</span><span class="n">PasswordVerificationMixin</span><span class="p">,</span> <span class="n">UserForm</span><span class="p">):</span>
+
+    <span class="n">oldpassword</span> <span class="o">=</span> <span class="n">PasswordField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Current Password&quot;</span><span class="p">))</span>
+    <span class="n">password1</span> <span class="o">=</span> <span class="n">SetPasswordField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;New Password&quot;</span><span class="p">))</span>
+    <span class="n">password2</span> <span class="o">=</span> <span class="n">PasswordField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;New Password (again)&quot;</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ChangePasswordForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;password1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">user</span>
+
+    <span class="k">def</span> <span class="nf">clean_oldpassword</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">check_password</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;oldpassword&quot;</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Please type your current&quot;</span>
+                                          <span class="s2">&quot; password.&quot;</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s2">&quot;oldpassword&quot;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">get_adapter</span><span class="p">()</span><span class="o">.</span><span class="n">set_password</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s2">&quot;password1&quot;</span><span class="p">])</span>
+
+
+<span class="k">class</span> <span class="nc">SetPasswordForm</span><span class="p">(</span><span class="n">PasswordVerificationMixin</span><span class="p">,</span> <span class="n">UserForm</span><span class="p">):</span>
+
+    <span class="n">password1</span> <span class="o">=</span> <span class="n">SetPasswordField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Password&quot;</span><span class="p">))</span>
+    <span class="n">password2</span> <span class="o">=</span> <span class="n">PasswordField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Password (again)&quot;</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SetPasswordForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;password1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">user</span>
+
+    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">get_adapter</span><span class="p">()</span><span class="o">.</span><span class="n">set_password</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s2">&quot;password1&quot;</span><span class="p">])</span>
+
+
+<span class="k">class</span> <span class="nc">ResetPasswordForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">Form</span><span class="p">):</span>
+
+    <span class="n">email</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">EmailField</span><span class="p">(</span>
+        <span class="n">label</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;E-mail&quot;</span><span class="p">),</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">TextInput</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;email&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="s2">&quot;30&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;placeholder&quot;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;E-mail address&quot;</span><span class="p">),</span>
+        <span class="p">})</span>
+    <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">clean_email</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">email</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s2">&quot;email&quot;</span><span class="p">]</span>
+        <span class="n">email</span> <span class="o">=</span> <span class="n">get_adapter</span><span class="p">()</span><span class="o">.</span><span class="n">clean_email</span><span class="p">(</span><span class="n">email</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">users</span> <span class="o">=</span> <span class="n">filter_users_by_email</span><span class="p">(</span><span class="n">email</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">users</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;The e-mail address is not assigned&quot;</span>
+                                          <span class="s2">&quot; to any user account&quot;</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s2">&quot;email&quot;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">current_site</span> <span class="o">=</span> <span class="n">get_current_site</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="n">email</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s2">&quot;email&quot;</span><span class="p">]</span>
+        <span class="n">token_generator</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;token_generator&quot;</span><span class="p">,</span>
+                                     <span class="n">default_token_generator</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">users</span><span class="p">:</span>
+
+            <span class="n">temp_key</span> <span class="o">=</span> <span class="n">token_generator</span><span class="o">.</span><span class="n">make_token</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+
+            <span class="c1"># save it to the password reset model</span>
+            <span class="c1"># password_reset = PasswordReset(user=user, temp_key=temp_key)</span>
+            <span class="c1"># password_reset.save()</span>
+
+            <span class="c1"># send the password reset email</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">reverse</span><span class="p">(</span><span class="s2">&quot;account_reset_password_from_key&quot;</span><span class="p">,</span>
+                           <span class="n">kwargs</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">uidb36</span><span class="o">=</span><span class="n">user_pk_to_url_str</span><span class="p">(</span><span class="n">user</span><span class="p">),</span>
+                                       <span class="n">key</span><span class="o">=</span><span class="n">temp_key</span><span class="p">))</span>
+            <span class="n">url</span> <span class="o">=</span> <span class="n">build_absolute_uri</span><span class="p">(</span>
+                <span class="n">request</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+
+            <span class="n">context</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;current_site&quot;</span><span class="p">:</span> <span class="n">current_site</span><span class="p">,</span>
+                       <span class="s2">&quot;user&quot;</span><span class="p">:</span> <span class="n">user</span><span class="p">,</span>
+                       <span class="s2">&quot;password_reset_url&quot;</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span>
+                       <span class="s2">&quot;request&quot;</span><span class="p">:</span> <span class="n">request</span><span class="p">}</span>
+
+            <span class="k">if</span> <span class="n">app_settings</span><span class="o">.</span><span class="n">AUTHENTICATION_METHOD</span> \
+                    <span class="o">!=</span> <span class="n">AuthenticationMethod</span><span class="o">.</span><span class="n">EMAIL</span><span class="p">:</span>
+                <span class="n">context</span><span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">user_username</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+            <span class="n">get_adapter</span><span class="p">(</span><span class="n">request</span><span class="p">)</span><span class="o">.</span><span class="n">send_mail</span><span class="p">(</span>
+                <span class="s1">&#39;account/email/password_reset_key&#39;</span><span class="p">,</span>
+                <span class="n">email</span><span class="p">,</span>
+                <span class="n">context</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s2">&quot;email&quot;</span><span class="p">]</span>
+
+
+<span class="k">class</span> <span class="nc">ResetPasswordKeyForm</span><span class="p">(</span><span class="n">PasswordVerificationMixin</span><span class="p">,</span> <span class="n">forms</span><span class="o">.</span><span class="n">Form</span><span class="p">):</span>
+
+    <span class="n">password1</span> <span class="o">=</span> <span class="n">SetPasswordField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;New Password&quot;</span><span class="p">))</span>
+    <span class="n">password2</span> <span class="o">=</span> <span class="n">PasswordField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;New Password (again)&quot;</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">temp_key</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;temp_key&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ResetPasswordKeyForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;password1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">user</span>
+
+    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">get_adapter</span><span class="p">()</span><span class="o">.</span><span class="n">set_password</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s2">&quot;password1&quot;</span><span class="p">])</span>
+
+
+<span class="k">class</span> <span class="nc">UserTokenForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">Form</span><span class="p">):</span>
+
+    <span class="n">uidb36</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">()</span>
+    <span class="n">key</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">()</span>
+
+    <span class="n">reset_user</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">token_generator</span> <span class="o">=</span> <span class="n">default_token_generator</span>
+
+    <span class="n">error_messages</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;token_invalid&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;The password reset token was invalid.&#39;</span><span class="p">),</span>
+    <span class="p">}</span>
+
+    <span class="k">def</span> <span class="nf">_get_user</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uidb36</span><span class="p">):</span>
+        <span class="n">User</span> <span class="o">=</span> <span class="n">get_user_model</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">pk</span> <span class="o">=</span> <span class="n">url_str_to_user_pk</span><span class="p">(</span><span class="n">uidb36</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="n">pk</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">User</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">cleaned_data</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">UserTokenForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">clean</span><span class="p">()</span>
+
+        <span class="n">uidb36</span> <span class="o">=</span> <span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;uidb36&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;key&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">key</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">error_messages</span><span class="p">[</span><span class="s1">&#39;token_invalid&#39;</span><span class="p">])</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">reset_user</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_user</span><span class="p">(</span><span class="n">uidb36</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">reset_user</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span>
+                <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">token_generator</span><span class="o">.</span><span class="n">check_token</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">reset_user</span><span class="p">,</span> <span class="n">key</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">error_messages</span><span class="p">[</span><span class="s1">&#39;token_invalid&#39;</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="n">cleaned_data</span>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, alomafit.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

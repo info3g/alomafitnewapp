@@ -1,0 +1,293 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>fitalgorithms.algorithms &mdash; alomafit-light 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="alomafit-light 1.0 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> alomafit-light
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">alomafit-light</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>fitalgorithms.algorithms</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for fitalgorithms.algorithms</h1><div class="highlight"><pre>
+<span></span><span class="c1"># from .female import fit ,standard , fullsize , range , bodyshape</span>
+<span class="c1"># from .male import fit , standard , fullsize , bodyshape</span>
+<span class="kn">from</span> <span class="nn">customers.models</span> <span class="k">import</span> <span class="n">Profile</span>
+<span class="kn">from</span> <span class="nn">customers.serializers</span> <span class="k">import</span> <span class="n">ProfileSerializer</span>
+<span class="kn">from</span> <span class="nn">stores.models</span> <span class="k">import</span> <span class="n">Product</span><span class="p">,</span> <span class="n">Variant</span>
+<span class="kn">from</span> <span class="nn">insights.models</span> <span class="k">import</span> <span class="n">Profile_Try_Product</span>
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="k">import</span> <span class="o">*</span>
+
+
+<div class="viewcode-block" id="None2Zero"><a class="viewcode-back" href="../../modules/fitalgorithms.html#fitalgorithms.algorithms.None2Zero">[docs]</a><span class="k">def</span> <span class="nf">None2Zero</span><span class="p">(</span><span class="n">body_part_variant_list</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        We convert body part value hips/waist/shoulder to zero if it&#39;s None</span>
+<span class="sd">        Those required attribures `body parts` do not need to fill all of them</span>
+<span class="sd">        Hence we specify which is required by the product type, for example jeans</span>
+<span class="sd">        doesn&#39;t require to get shoulder value from each variant of the product</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">body_part_variant</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">body_part_variant</span> <span class="ow">is</span> <span class="kc">None</span>
+            <span class="k">else</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">body_part_variant</span> <span class="ow">in</span>
+            <span class="n">body_part_variant_list</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="fit_product"><a class="viewcode-back" href="../../modules/fitalgorithms.html#fitalgorithms.algorithms.fit_product">[docs]</a><span class="k">def</span> <span class="nf">fit_product</span><span class="p">(</span><span class="n">product</span><span class="p">,</span> <span class="n">profile</span><span class="p">):</span>
+    <span class="c1"># convert from queryset form into tuple form</span>
+    <span class="p">(</span><span class="n">sizes</span><span class="p">,</span> <span class="n">busts</span><span class="p">,</span> <span class="n">hips</span><span class="p">,</span> <span class="n">shoulders</span><span class="p">,</span> <span class="n">waists</span><span class="p">)</span> <span class="o">=</span> <span class="n">Variant</span><span class="o">.</span><span class="n">group_variants</span><span class="p">(</span>
+        <span class="n">product</span><span class="o">.</span><span class="n">variants</span><span class="o">.</span><span class="n">all</span><span class="p">())</span>
+    <span class="c1"># zero out all None values</span>
+    <span class="n">busts</span> <span class="o">=</span> <span class="n">None2Zero</span><span class="p">(</span><span class="n">busts</span><span class="p">)</span>
+    <span class="n">hips</span> <span class="o">=</span> <span class="n">None2Zero</span><span class="p">(</span><span class="n">hips</span><span class="p">)</span>
+    <span class="n">shoulders</span> <span class="o">=</span> <span class="n">None2Zero</span><span class="p">(</span><span class="n">shoulders</span><span class="p">)</span>
+    <span class="n">waists</span> <span class="o">=</span> <span class="n">None2Zero</span><span class="p">(</span><span class="n">waists</span><span class="p">)</span>
+    <span class="c1"># call the fit algorithm with data from the product as well as from profile</span>
+    <span class="n">obj</span> <span class="o">=</span> <span class="n">fitsys</span><span class="p">(</span><span class="n">gender</span><span class="o">=</span><span class="n">profile</span><span class="o">.</span><span class="n">gender</span><span class="p">,</span>
+                 <span class="n">fit</span><span class="o">=</span><span class="n">product</span><span class="o">.</span><span class="n">fit_type</span><span class="p">,</span>
+                 <span class="n">stretch_percentage</span><span class="o">=</span><span class="n">product</span><span class="o">.</span><span class="n">fabric</span><span class="p">,</span>
+                 <span class="nb">type</span><span class="o">=</span><span class="n">product</span><span class="o">.</span><span class="n">product_type</span><span class="p">,</span>
+                 <span class="n">sporty</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                 <span class="n">sizes</span><span class="o">=</span><span class="n">sizes</span><span class="p">,</span>
+                 <span class="n">busts</span><span class="o">=</span><span class="n">busts</span><span class="p">,</span>
+                 <span class="n">hips</span><span class="o">=</span><span class="n">hips</span><span class="p">,</span>
+                 <span class="n">waists</span><span class="o">=</span><span class="n">waists</span><span class="p">,</span>
+                 <span class="n">shoulders</span><span class="o">=</span><span class="n">shoulders</span><span class="p">,</span>
+                 <span class="n">bust</span><span class="o">=</span><span class="n">profile</span><span class="o">.</span><span class="n">bust</span><span class="p">,</span>
+                 <span class="n">hip</span><span class="o">=</span><span class="n">profile</span><span class="o">.</span><span class="n">hips</span><span class="p">,</span>
+                 <span class="n">waist</span><span class="o">=</span><span class="n">profile</span><span class="o">.</span><span class="n">waist</span><span class="p">,</span>
+                 <span class="n">shoulder</span><span class="o">=</span><span class="n">profile</span><span class="o">.</span><span class="n">shoulder</span><span class="p">)</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        generate stress map, i.e on each body part, `location of the body`</span>
+<span class="sd">        how fit the variant will be, such as on shoulder= well fitted</span>
+<span class="sd">        see doc of `generate_stress_map` method</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">generate_stress_map</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">sizes</span><span class="p">)</span>
+    <span class="c1"># save the history of the fit process such as try data between product and profile</span>
+    <span class="n">product</span><span class="o">.</span><span class="n">yet_another_try</span><span class="p">(</span><span class="n">profile</span><span class="p">)</span>
+    <span class="c1"># let the store know that this profile has visited it, to get some insight out of it</span>
+    <span class="n">product</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">yet_another_visitor</span><span class="p">(</span><span class="n">profile</span><span class="p">)</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Insert a new record with date.NOW()</span>
+<span class="sd">        to say that the profile `x` tried right now the product `y`</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">Profile_Try_Product</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+        <span class="n">product</span><span class="o">=</span><span class="n">product</span><span class="p">,</span> <span class="n">profile</span><span class="o">=</span><span class="n">profile</span><span class="p">)</span>
+
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        TODO maybe we should return product image that matches</span>
+<span class="sd">        the variant instead of the generic image</span>
+<span class="sd">     &#39;&#39;&#39;</span>
+    <span class="c1"># best_fit =</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;profile&#39;</span><span class="p">:</span> <span class="n">ProfileSerializer</span><span class="p">(</span><span class="n">profile</span><span class="p">)</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
+            <span class="s1">&#39;results&#39;</span><span class="p">:</span> <span class="n">results</span><span class="p">,</span>
+            <span class="s1">&#39;product_image&#39;</span><span class="p">:</span> <span class="n">product</span><span class="o">.</span><span class="n">image</span><span class="p">,</span>
+            <span class="s1">&#39;bodyshape&#39;</span><span class="p">:</span> <span class="n">profile</span><span class="o">.</span><span class="n">body_shape</span><span class="p">,</span>
+            <span class="p">}</span>
+    <span class="k">return</span> <span class="n">data</span></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, alomafit.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

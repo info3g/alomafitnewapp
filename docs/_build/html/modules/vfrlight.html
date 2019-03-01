@@ -1,0 +1,537 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>vfrlight package &mdash; alomafit-light 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="alomafit-light 1.0 documentation" href="../index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> alomafit-light
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">vfrlight package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-vfrlight.billing_util">vfrlight.billing_util module</a></li>
+<li><a class="reference internal" href="#module-vfrlight.celery">vfrlight.celery module</a></li>
+<li><a class="reference internal" href="#module-vfrlight.config">vfrlight.config module</a></li>
+<li><a class="reference internal" href="#module-vfrlight.initialization_util">vfrlight.initialization_util module</a></li>
+<li><a class="reference internal" href="#module-vfrlight.settings">vfrlight.settings module</a></li>
+<li><a class="reference internal" href="#module-vfrlight.syncProducts_util">vfrlight.syncProducts_util module</a></li>
+<li><a class="reference internal" href="#module-vfrlight.tasks">vfrlight.tasks module</a></li>
+<li><a class="reference internal" href="#module-vfrlight.urls">vfrlight.urls module</a></li>
+<li><a class="reference internal" href="#module-vfrlight.util">vfrlight.util module</a></li>
+<li><a class="reference internal" href="#module-vfrlight.views">vfrlight.views module</a></li>
+<li><a class="reference internal" href="#module-vfrlight.webhook_verify_util">vfrlight.webhook_verify_util module</a></li>
+<li><a class="reference internal" href="#module-vfrlight.webhooks_util">vfrlight.webhooks_util module</a></li>
+<li><a class="reference internal" href="#module-vfrlight.wsgi">vfrlight.wsgi module</a></li>
+<li><a class="reference internal" href="#module-vfrlight">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">alomafit-light</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>vfrlight package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/modules/vfrlight.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="vfrlight-package">
+<h1>vfrlight package<a class="headerlink" href="#vfrlight-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-vfrlight.billing_util">
+<span id="vfrlight-billing-util-module"></span><h2>vfrlight.billing_util module<a class="headerlink" href="#module-vfrlight.billing_util" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="vfrlight.billing_util.ActivateChargeById">
+<code class="descclassname">vfrlight.billing_util.</code><code class="descname">ActivateChargeById</code><span class="sig-paren">(</span><em>shop</em>, <em>token</em>, <em>charge_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/vfrlight/billing_util.html#ActivateChargeById"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vfrlight.billing_util.ActivateChargeById" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="vfrlight.billing_util.AddRecurringCharge">
+<code class="descclassname">vfrlight.billing_util.</code><code class="descname">AddRecurringCharge</code><span class="sig-paren">(</span><em>shop</em>, <em>token</em>, <em>price</em>, <em>trial_period=30</em>, <em>test=None</em>, <em>name='AlomaFitCharge'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/vfrlight/billing_util.html#AddRecurringCharge"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vfrlight.billing_util.AddRecurringCharge" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="vfrlight.billing_util.GetChargeById">
+<code class="descclassname">vfrlight.billing_util.</code><code class="descname">GetChargeById</code><span class="sig-paren">(</span><em>shop</em>, <em>token</em>, <em>charge_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/vfrlight/billing_util.html#GetChargeById"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vfrlight.billing_util.GetChargeById" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-vfrlight.celery">
+<span id="vfrlight-celery-module"></span><h2>vfrlight.celery module<a class="headerlink" href="#module-vfrlight.celery" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-vfrlight.config">
+<span id="vfrlight-config-module"></span><h2>vfrlight.config module<a class="headerlink" href="#module-vfrlight.config" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="vfrlight.config.config">
+<em class="property">class </em><code class="descclassname">vfrlight.config.</code><code class="descname">config</code><a class="reference internal" href="../_modules/vfrlight/config.html#config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vfrlight.config.config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="attribute">
+<dt id="vfrlight.config.config.Async">
+<code class="descname">Async</code><em class="property"> = False</em><a class="headerlink" href="#vfrlight.config.config.Async" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="vfrlight.config.config.DEBUG">
+<code class="descname">DEBUG</code><em class="property"> = True</em><a class="headerlink" href="#vfrlight.config.config.DEBUG" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="vfrlight.config.config.EXPERIMENT">
+<code class="descname">EXPERIMENT</code><em class="property"> = {'added_to_closet_propability': 0.6, 'customers_count': 100, 'products_count': 10, 'profiles_count': 3, 'variants_count': 6}</em><a class="headerlink" href="#vfrlight.config.config.EXPERIMENT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="vfrlight.config.config.FREE_TRIAL">
+<code class="descname">FREE_TRIAL</code><em class="property"> = 21</em><a class="headerlink" href="#vfrlight.config.config.FREE_TRIAL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="vfrlight.config.config.FRONT_END_HOST">
+<code class="descname">FRONT_END_HOST</code><em class="property"> = 'https://alomafit.herokuapp.com/'</em><a class="headerlink" href="#vfrlight.config.config.FRONT_END_HOST" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="vfrlight.config.config.HOST">
+<code class="descname">HOST</code><em class="property"> = 'alomafit1.herokuapp.com'</em><a class="headerlink" href="#vfrlight.config.config.HOST" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="vfrlight.config.config.SECRET_KEY">
+<code class="descname">SECRET_KEY</code><em class="property"> = 'CantStopAddictedToTheShinDigChopTopHeSaysImGonnaWinBig'</em><a class="headerlink" href="#vfrlight.config.config.SECRET_KEY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="vfrlight.config.config.SHOPIFY_CONFIG">
+<code class="descname">SHOPIFY_CONFIG</code><em class="property"> = {'API_KEY': '9c8debb5c81878cb37ee244f80619d52', 'API_SECRET': 'a35e62a104dd2a9944a6d4309302e8d1', 'APP_HOME': 'https://alomafit1.herokuapp.com', 'CALLBACK_URL': 'https://alomafit1.herokuapp.com/install', 'CHARGES_RETURN_URL': 'https://alomafit.com/newApp/dash/charge.html?charge_id', 'REDIRECT_URI': 'https://alomafit.com/newApp/dash/auth.html', 'SCOPE': ['read_products', 'write_script_tags', 'read_product_listings', 'write_products', 'write_product_listings']}</em><a class="headerlink" href="#vfrlight.config.config.SHOPIFY_CONFIG" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-vfrlight.initialization_util">
+<span id="vfrlight-initialization-util-module"></span><h2>vfrlight.initialization_util module<a class="headerlink" href="#module-vfrlight.initialization_util" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="vfrlight.initialization_util.initialize_products">
+<code class="descclassname">vfrlight.initialization_util.</code><code class="descname">initialize_products</code><span class="sig-paren">(</span><em>store</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/vfrlight/initialization_util.html#initialize_products"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vfrlight.initialization_util.initialize_products" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="vfrlight.initialization_util.initialize_shop">
+<code class="descclassname">vfrlight.initialization_util.</code><code class="descname">initialize_shop</code><span class="sig-paren">(</span><em>url</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/vfrlight/initialization_util.html#initialize_shop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vfrlight.initialization_util.initialize_shop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="vfrlight.initialization_util.intitalize_scripttag">
+<code class="descclassname">vfrlight.initialization_util.</code><code class="descname">intitalize_scripttag</code><span class="sig-paren">(</span><em>store</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/vfrlight/initialization_util.html#intitalize_scripttag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vfrlight.initialization_util.intitalize_scripttag" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-vfrlight.settings">
+<span id="vfrlight-settings-module"></span><h2>vfrlight.settings module<a class="headerlink" href="#module-vfrlight.settings" title="Permalink to this headline">¶</a></h2>
+<p>Django settings for vfrlight project.</p>
+<p>Generated by ‘django-admin startproject’ using Django 2.0.1.</p>
+<p>For more information on this file, see
+<a class="reference external" href="https://docs.djangoproject.com/en/2.0/topics/settings/">https://docs.djangoproject.com/en/2.0/topics/settings/</a></p>
+<p>For the full list of settings and their values, see
+<a class="reference external" href="https://docs.djangoproject.com/en/2.0/ref/settings/">https://docs.djangoproject.com/en/2.0/ref/settings/</a></p>
+</div>
+<div class="section" id="module-vfrlight.syncProducts_util">
+<span id="vfrlight-syncproducts-util-module"></span><h2>vfrlight.syncProducts_util module<a class="headerlink" href="#module-vfrlight.syncProducts_util" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="vfrlight.syncProducts_util.get_or_none">
+<code class="descclassname">vfrlight.syncProducts_util.</code><code class="descname">get_or_none</code><span class="sig-paren">(</span><em>model</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/vfrlight/syncProducts_util.html#get_or_none"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vfrlight.syncProducts_util.get_or_none" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="vfrlight.syncProducts_util.get_request">
+<code class="descclassname">vfrlight.syncProducts_util.</code><code class="descname">get_request</code><span class="sig-paren">(</span><em>token</em>, <em>endpoint</em>, <em>shop</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/vfrlight/syncProducts_util.html#get_request"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vfrlight.syncProducts_util.get_request" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="vfrlight.syncProducts_util.update_or_create_product">
+<code class="descclassname">vfrlight.syncProducts_util.</code><code class="descname">update_or_create_product</code><span class="sig-paren">(</span><em>p</em>, <em>store</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/vfrlight/syncProducts_util.html#update_or_create_product"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vfrlight.syncProducts_util.update_or_create_product" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="vfrlight.syncProducts_util.update_or_create_product_variant">
+<code class="descclassname">vfrlight.syncProducts_util.</code><code class="descname">update_or_create_product_variant</code><span class="sig-paren">(</span><em>p</em>, <em>store</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/vfrlight/syncProducts_util.html#update_or_create_product_variant"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vfrlight.syncProducts_util.update_or_create_product_variant" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="vfrlight.syncProducts_util.update_or_create_variants">
+<code class="descclassname">vfrlight.syncProducts_util.</code><code class="descname">update_or_create_variants</code><span class="sig-paren">(</span><em>product</em>, <em>variants</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/vfrlight/syncProducts_util.html#update_or_create_variants"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vfrlight.syncProducts_util.update_or_create_variants" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-vfrlight.tasks">
+<span id="vfrlight-tasks-module"></span><h2>vfrlight.tasks module<a class="headerlink" href="#module-vfrlight.tasks" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-vfrlight.urls">
+<span id="vfrlight-urls-module"></span><h2>vfrlight.urls module<a class="headerlink" href="#module-vfrlight.urls" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-vfrlight.util">
+<span id="vfrlight-util-module"></span><h2>vfrlight.util module<a class="headerlink" href="#module-vfrlight.util" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="vfrlight.util.asynchronousInitialization">
+<code class="descclassname">vfrlight.util.</code><code class="descname">asynchronousInitialization</code><span class="sig-paren">(</span><em>store</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/vfrlight/util.html#asynchronousInitialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vfrlight.util.asynchronousInitialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="vfrlight.util.fake_initialize">
+<code class="descclassname">vfrlight.util.</code><code class="descname">fake_initialize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/vfrlight/util.html#fake_initialize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vfrlight.util.fake_initialize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="vfrlight.util.get_or_raise">
+<code class="descclassname">vfrlight.util.</code><code class="descname">get_or_raise</code><span class="sig-paren">(</span><em>classmodel</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/vfrlight/util.html#get_or_raise"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vfrlight.util.get_or_raise" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="vfrlight.util.initialize">
+<code class="descclassname">vfrlight.util.</code><code class="descname">initialize</code><span class="sig-paren">(</span><em>token</em>, <em>shop</em>, <em>ignore_webhooks=False</em>, <em>ignore_scripttag=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/vfrlight/util.html#initialize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vfrlight.util.initialize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="vfrlight.util.nonAsynchronousInitialization">
+<code class="descclassname">vfrlight.util.</code><code class="descname">nonAsynchronousInitialization</code><span class="sig-paren">(</span><em>store</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/vfrlight/util.html#nonAsynchronousInitialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vfrlight.util.nonAsynchronousInitialization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="vfrlight.util.verify_store_access_token">
+<code class="descclassname">vfrlight.util.</code><code class="descname">verify_store_access_token</code><span class="sig-paren">(</span><em>request</em>, <em>store</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/vfrlight/util.html#verify_store_access_token"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vfrlight.util.verify_store_access_token" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-vfrlight.views">
+<span id="vfrlight-views-module"></span><h2>vfrlight.views module<a class="headerlink" href="#module-vfrlight.views" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="vfrlight.views.checkbill">
+<code class="descclassname">vfrlight.views.</code><code class="descname">checkbill</code><span class="sig-paren">(</span><em>self</em>, <em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/vfrlight/views.html#checkbill"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vfrlight.views.checkbill" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="vfrlight.views.connect">
+<code class="descclassname">vfrlight.views.</code><code class="descname">connect</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/vfrlight/views.html#connect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vfrlight.views.connect" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="vfrlight.views.deleteproduct">
+<code class="descclassname">vfrlight.views.</code><code class="descname">deleteproduct</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/vfrlight/views.html#deleteproduct"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vfrlight.views.deleteproduct" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="vfrlight.views.install">
+<code class="descclassname">vfrlight.views.</code><code class="descname">install</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/vfrlight/views.html#install"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vfrlight.views.install" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="vfrlight.views.uninstalledapp">
+<code class="descclassname">vfrlight.views.</code><code class="descname">uninstalledapp</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/vfrlight/views.html#uninstalledapp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vfrlight.views.uninstalledapp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="vfrlight.views.updatecollection">
+<code class="descclassname">vfrlight.views.</code><code class="descname">updatecollection</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/vfrlight/views.html#updatecollection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vfrlight.views.updatecollection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make it a background process to re sync collections
+Or refactor webhooks into seperated app, and make an optimized sync</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="vfrlight.views.updateproduct">
+<code class="descclassname">vfrlight.views.</code><code class="descname">updateproduct</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/vfrlight/views.html#updateproduct"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vfrlight.views.updateproduct" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-vfrlight.webhook_verify_util">
+<span id="vfrlight-webhook-verify-util-module"></span><h2>vfrlight.webhook_verify_util module<a class="headerlink" href="#module-vfrlight.webhook_verify_util" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="vfrlight.webhook_verify_util.domain_is_valid">
+<code class="descclassname">vfrlight.webhook_verify_util.</code><code class="descname">domain_is_valid</code><span class="sig-paren">(</span><em>domain</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/vfrlight/webhook_verify_util.html#domain_is_valid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vfrlight.webhook_verify_util.domain_is_valid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check whether the given domain is a valid source for webhook request.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="vfrlight.webhook_verify_util.get_hmac">
+<code class="descclassname">vfrlight.webhook_verify_util.</code><code class="descname">get_hmac</code><span class="sig-paren">(</span><em>body</em>, <em>secret</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/vfrlight/webhook_verify_util.html#get_hmac"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vfrlight.webhook_verify_util.get_hmac" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the HMAC value of the given request body and secret as per Shopify’s documentation for Webhook requests.
+See: <a class="reference external" href="http://docs.shopify.com/api/tutorials/using-webhooks#verify-webhook">http://docs.shopify.com/api/tutorials/using-webhooks#verify-webhook</a></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="vfrlight.webhook_verify_util.get_proxy_signature">
+<code class="descclassname">vfrlight.webhook_verify_util.</code><code class="descname">get_proxy_signature</code><span class="sig-paren">(</span><em>query_dict</em>, <em>secret</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/vfrlight/webhook_verify_util.html#get_proxy_signature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vfrlight.webhook_verify_util.get_proxy_signature" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the signature of the given query dict as per Shopify’s documentation for proxy requests.
+See: <a class="reference external" href="http://docs.shopify.com/api/tutorials/application-proxies#security">http://docs.shopify.com/api/tutorials/application-proxies#security</a></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="vfrlight.webhook_verify_util.get_signal_name_for_topic">
+<code class="descclassname">vfrlight.webhook_verify_util.</code><code class="descname">get_signal_name_for_topic</code><span class="sig-paren">(</span><em>webhook_topic</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/vfrlight/webhook_verify_util.html#get_signal_name_for_topic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vfrlight.webhook_verify_util.get_signal_name_for_topic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a Shopify Webhook topic (eg “orders/create”) to the equivalent Pythonic method name (eg “orders_create”).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="vfrlight.webhook_verify_util.hmac_is_valid">
+<code class="descclassname">vfrlight.webhook_verify_util.</code><code class="descname">hmac_is_valid</code><span class="sig-paren">(</span><em>body</em>, <em>secret</em>, <em>hmac_to_verify</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/vfrlight/webhook_verify_util.html#hmac_is_valid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vfrlight.webhook_verify_util.hmac_is_valid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True if the given hmac_to_verify matches that calculated from the given body and secret.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="vfrlight.webhook_verify_util.proxy_signature_is_valid">
+<code class="descclassname">vfrlight.webhook_verify_util.</code><code class="descname">proxy_signature_is_valid</code><span class="sig-paren">(</span><em>request</em>, <em>secret</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/vfrlight/webhook_verify_util.html#proxy_signature_is_valid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vfrlight.webhook_verify_util.proxy_signature_is_valid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return true if the calculated signature matches that present in the query string of the given request.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="vfrlight.webhook_verify_util.webhook_callback">
+<code class="descclassname">vfrlight.webhook_verify_util.</code><code class="descname">webhook_callback</code><span class="sig-paren">(</span><em>request</em>, <em>value='update'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/vfrlight/webhook_verify_util.html#webhook_callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vfrlight.webhook_verify_util.webhook_callback" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-vfrlight.webhooks_util">
+<span id="vfrlight-webhooks-util-module"></span><h2>vfrlight.webhooks_util module<a class="headerlink" href="#module-vfrlight.webhooks_util" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="vfrlight.webhooks_util.alreadyRegistered">
+<code class="descclassname">vfrlight.webhooks_util.</code><code class="descname">alreadyRegistered</code><span class="sig-paren">(</span><em>token</em>, <em>shop</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/vfrlight/webhooks_util.html#alreadyRegistered"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vfrlight.webhooks_util.alreadyRegistered" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="vfrlight.webhooks_util.get_webhooks">
+<code class="descclassname">vfrlight.webhooks_util.</code><code class="descname">get_webhooks</code><span class="sig-paren">(</span><em>token</em>, <em>shop</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/vfrlight/webhooks_util.html#get_webhooks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vfrlight.webhooks_util.get_webhooks" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="vfrlight.webhooks_util.register_webhooks">
+<code class="descclassname">vfrlight.webhooks_util.</code><code class="descname">register_webhooks</code><span class="sig-paren">(</span><em>token</em>, <em>shop</em>, <em>topic</em>, <em>Action</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/vfrlight/webhooks_util.html#register_webhooks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vfrlight.webhooks_util.register_webhooks" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="vfrlight.webhooks_util.reset_webhook">
+<code class="descclassname">vfrlight.webhooks_util.</code><code class="descname">reset_webhook</code><span class="sig-paren">(</span><em>token</em>, <em>shop</em>, <em>id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/vfrlight/webhooks_util.html#reset_webhook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vfrlight.webhooks_util.reset_webhook" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="vfrlight.webhooks_util.reset_webhooks">
+<code class="descclassname">vfrlight.webhooks_util.</code><code class="descname">reset_webhooks</code><span class="sig-paren">(</span><em>token</em>, <em>shop</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/vfrlight/webhooks_util.html#reset_webhooks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vfrlight.webhooks_util.reset_webhooks" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="vfrlight.webhooks_util.webhooks_registration_problem">
+<code class="descclassname">vfrlight.webhooks_util.</code><code class="descname">webhooks_registration_problem</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/vfrlight/webhooks_util.html#webhooks_registration_problem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vfrlight.webhooks_util.webhooks_registration_problem" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-vfrlight.wsgi">
+<span id="vfrlight-wsgi-module"></span><h2>vfrlight.wsgi module<a class="headerlink" href="#module-vfrlight.wsgi" title="Permalink to this headline">¶</a></h2>
+<p>WSGI config for vfrlight project.</p>
+<p>It exposes the WSGI callable as a module-level variable named <code class="docutils literal notranslate"><span class="pre">application</span></code>.</p>
+<p>For more information on this file, see
+<a class="reference external" href="https://docs.djangoproject.com/en/2.0/howto/deployment/wsgi/">https://docs.djangoproject.com/en/2.0/howto/deployment/wsgi/</a></p>
+</div>
+<div class="section" id="module-vfrlight">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-vfrlight" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, alomafit.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

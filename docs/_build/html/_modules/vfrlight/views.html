@@ -1,0 +1,342 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>vfrlight.views &mdash; alomafit-light 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="alomafit-light 1.0 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> alomafit-light
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">alomafit-light</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>vfrlight.views</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for vfrlight.views</h1><div class="highlight"><pre>
+<span></span>
+<span class="c1">#</span>
+<span class="c1"># from fitalgorithms.fit import garmentmeasure</span>
+<span class="c1"># from stores.model_util import PLANS, get_or_none</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">traceback</span>
+<span class="kn">from</span> <span class="nn">uuid</span> <span class="k">import</span> <span class="n">uuid4</span>
+
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">shopify</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="k">import</span> <span class="n">User</span>
+<span class="kn">from</span> <span class="nn">django.core.exceptions</span> <span class="k">import</span> <span class="n">ValidationError</span>
+<span class="kn">from</span> <span class="nn">django.http</span> <span class="k">import</span> <span class="n">Http404</span><span class="p">,</span> <span class="n">HttpResponse</span><span class="p">,</span> <span class="n">HttpResponseRedirect</span>
+<span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="k">import</span> <span class="n">redirect</span><span class="p">,</span> <span class="n">render</span>
+<span class="kn">from</span> <span class="nn">django.views.decorators.csrf</span> <span class="k">import</span> <span class="n">csrf_exempt</span>
+<span class="kn">from</span> <span class="nn">django.views.decorators.http</span> <span class="k">import</span> <span class="n">require_http_methods</span>
+<span class="kn">from</span> <span class="nn">rest_framework</span> <span class="k">import</span> <span class="n">serializers</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">viewsets</span>
+<span class="kn">from</span> <span class="nn">rest_framework.decorators</span> <span class="k">import</span> <span class="n">api_view</span>
+<span class="kn">from</span> <span class="nn">rest_framework.response</span> <span class="k">import</span> <span class="n">Response</span>
+<span class="kn">from</span> <span class="nn">rest_framework_jwt.settings</span> <span class="k">import</span> <span class="n">api_settings</span>
+
+<span class="kn">from</span> <span class="nn">stores.model_webhook_util</span> <span class="k">import</span> <span class="n">update_or_create_product_variant</span>
+<span class="kn">from</span> <span class="nn">stores.models</span> <span class="k">import</span> <span class="n">Product</span><span class="p">,</span> <span class="n">RecurringCharge</span><span class="p">,</span> <span class="n">Store</span>
+<span class="kn">from</span> <span class="nn">vfrlight.util</span> <span class="k">import</span> <span class="n">initialize</span>
+
+<span class="kn">from</span> <span class="nn">.billing_util</span> <span class="k">import</span> <span class="n">ActivateChargeById</span><span class="p">,</span> <span class="n">AddRecurringCharge</span><span class="p">,</span> <span class="n">GetChargeById</span>
+<span class="kn">from</span> <span class="nn">.config</span> <span class="k">import</span> <span class="n">config</span> <span class="k">as</span> <span class="n">cfg</span>
+<span class="kn">from</span> <span class="nn">.initialization_util</span> <span class="k">import</span> <span class="p">(</span><span class="n">initialize_products</span><span class="p">,</span> <span class="n">initialize_shop</span><span class="p">,</span>
+                                  <span class="n">intitalize_scripttag</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">.util</span> <span class="k">import</span> <span class="n">initialize</span>
+<span class="kn">from</span> <span class="nn">.webhook_verify_util</span> <span class="k">import</span> <span class="n">webhook_callback</span>
+
+
+<div class="viewcode-block" id="install"><a class="viewcode-back" href="../../modules/vfrlight.html#vfrlight.views.install">[docs]</a><span class="nd">@require_http_methods</span><span class="p">([</span><span class="s2">&quot;GET&quot;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">install</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="k">if</span> <span class="s2">&quot;shop&quot;</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="p">:</span>
+        <span class="n">shop</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="p">[</span><span class="s2">&quot;shop&quot;</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="s2">&quot;Error:parameter shop not found&quot;</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+    <span class="c1"># generate random sense to authenticate origin after redirect</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid4</span><span class="p">())</span>
+    <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">[</span><span class="s1">&#39;state&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span>
+    <span class="n">shopify</span><span class="o">.</span><span class="n">Session</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span>
+        <span class="n">api_key</span><span class="o">=</span><span class="n">cfg</span><span class="o">.</span><span class="n">SHOPIFY_CONFIG</span><span class="p">[</span><span class="s2">&quot;API_KEY&quot;</span><span class="p">],</span> <span class="n">secret</span><span class="o">=</span><span class="n">cfg</span><span class="o">.</span><span class="n">SHOPIFY_CONFIG</span><span class="p">[</span><span class="s2">&quot;API_SECRET&quot;</span><span class="p">])</span>
+    <span class="n">permission_url</span> <span class="o">=</span> <span class="n">shopify</span><span class="o">.</span><span class="n">Session</span><span class="p">(</span><span class="n">shop</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span><span class="o">.</span><span class="n">create_permission_url</span><span class="p">(</span>
+        <span class="n">cfg</span><span class="o">.</span><span class="n">SHOPIFY_CONFIG</span><span class="p">[</span><span class="s2">&quot;SCOPE&quot;</span><span class="p">],</span> <span class="n">cfg</span><span class="o">.</span><span class="n">SHOPIFY_CONFIG</span><span class="p">[</span><span class="s2">&quot;REDIRECT_URI&quot;</span><span class="p">])</span>
+    <span class="n">permission_url</span> <span class="o">=</span> <span class="n">permission_url</span> <span class="o">+</span> <span class="s2">&quot;&amp;state=</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span><span class="n">permission_url</span><span class="p">)</span></div>
+
+
+<span class="c1"># @require_http_methods([&quot;GET&quot;])</span>
+<span class="c1"># def connect(request):</span>
+<span class="c1">#     logging.debug(&quot;Connect Function&quot;)</span>
+<span class="c1">#     # HEROKU bug</span>
+<span class="c1">#     # if(not(request.session.get(&#39;state&#39;) == request.GET.get(&#39;state&#39;))):</span>
+<span class="c1">#     #     return HttpResponse(&quot;Request origin cannot be verified&quot;)</span>
+<span class="c1">#     try:</span>
+<span class="c1">#         # authentication &amp; integrity is done via the request_token</span>
+<span class="c1">#         token = shopify.Session(</span>
+<span class="c1">#             request.GET[&#39;shop&#39;]).request_token(params=request.GET)</span>
+<span class="c1">#     except Exception as e:</span>
+<span class="c1">#         return HttpResponse(e)</span>
+<span class="c1">#</span>
+<span class="c1">#     store = initialize(token, request.GET[&#39;shop&#39;])</span>
+<span class="c1">#     return HttpResponse(&#39;Hi There&#39;)</span>
+<span class="c1">#</span>
+
+
+<div class="viewcode-block" id="connect"><a class="viewcode-back" href="../../modules/vfrlight.html#vfrlight.views.connect">[docs]</a><span class="nd">@require_http_methods</span><span class="p">([</span><span class="s2">&quot;POST&quot;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">connect</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="c1"># import pdb; pdb.set_trace()</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">))[</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="mi">8</span><span class="p">])</span>
+    <span class="n">data</span><span class="p">[</span><span class="s1">&#39;token&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">shopify</span><span class="o">.</span><span class="n">Session</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">.myshopify.com&quot;</span> <span class="o">%</span> <span class="p">(</span>
+        <span class="n">data</span><span class="p">[</span><span class="s1">&#39;shop&#39;</span><span class="p">]))</span><span class="o">.</span><span class="n">request_token</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">store</span><span class="p">,</span><span class="n">token</span> <span class="o">=</span> <span class="n">initialize</span><span class="p">(</span>
+        <span class="n">token</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;token&#39;</span><span class="p">],</span> <span class="n">shop</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;shop&#39;</span><span class="p">])</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;token&#39;</span><span class="p">:</span> <span class="n">token</span><span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="updateproduct"><a class="viewcode-back" href="../../modules/vfrlight.html#vfrlight.views.updateproduct">[docs]</a><span class="nd">@require_http_methods</span><span class="p">([</span><span class="s2">&quot;POST&quot;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">updateproduct</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">webhook_callback</span><span class="p">(</span><span class="n">request</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="uninstalledapp"><a class="viewcode-back" href="../../modules/vfrlight.html#vfrlight.views.uninstalledapp">[docs]</a><span class="nd">@require_http_methods</span><span class="p">([</span><span class="s2">&quot;POST&quot;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">uninstalledapp</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">webhook_callback</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s2">&quot;uninstallapp&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="deleteproduct"><a class="viewcode-back" href="../../modules/vfrlight.html#vfrlight.views.deleteproduct">[docs]</a><span class="nd">@require_http_methods</span><span class="p">([</span><span class="s2">&quot;POST&quot;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">deleteproduct</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">webhook_callback</span><span class="p">(</span><span class="n">request</span><span class="o">=</span><span class="n">request</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s2">&quot;delete&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="updatecollection"><a class="viewcode-back" href="../../modules/vfrlight.html#vfrlight.views.updatecollection">[docs]</a><span class="nd">@require_http_methods</span><span class="p">([</span><span class="s2">&quot;POST&quot;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">updatecollection</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Make it a background process to re sync collections</span>
+<span class="sd">        Or refactor webhooks into seperated app, and make an optimized sync</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="c1"># return _sync_collections</span>
+    <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="checkbill"><a class="viewcode-back" href="../../modules/vfrlight.html#vfrlight.views.checkbill">[docs]</a><span class="nd">@api_view</span><span class="p">([</span><span class="s1">&#39;GET&#39;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">checkbill</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">charge_id</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="p">[</span><span class="s1">&#39;charge_id&#39;</span><span class="p">]</span>
+    <span class="n">charge_db</span> <span class="o">=</span> <span class="n">RecurringCharge</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">shopify_id</span><span class="o">=</span><span class="n">charge_id</span><span class="p">)</span>
+    <span class="n">store</span> <span class="o">=</span> <span class="n">charge_db</span><span class="o">.</span><span class="n">store</span>
+    <span class="k">with</span> <span class="n">shopify</span><span class="o">.</span><span class="n">Session</span><span class="o">.</span><span class="n">temp</span><span class="p">(</span><span class="n">store</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">store</span><span class="o">.</span><span class="n">token</span><span class="p">):</span>
+        <span class="n">charge</span> <span class="o">=</span> <span class="n">shopify</span><span class="o">.</span><span class="n">RecurringApplicationCharge</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">charge_id</span><span class="p">)</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">charge</span><span class="o">.</span><span class="n">attributes</span><span class="p">[</span><span class="s1">&#39;status&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;accepted&#39;</span><span class="p">):</span>
+            <span class="n">charge</span><span class="o">.</span><span class="n">activate</span><span class="p">()</span>
+            <span class="n">store</span><span class="o">.</span><span class="n">activate_plan</span><span class="p">(</span><span class="n">charge</span><span class="o">.</span><span class="n">attributes</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">])</span>
+        <span class="n">charge_db</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">charge</span><span class="o">.</span><span class="n">attributes</span><span class="p">[</span><span class="s1">&#39;status&#39;</span><span class="p">]</span>
+        <span class="n">charge_db</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">Response</span><span class="p">({</span><span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="s2">&quot;plan:</span><span class="si">{}</span><span class="s2"> with status:</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">charge_db</span><span class="o">.</span><span class="n">plan</span><span class="p">,</span> <span class="n">charge_db</span><span class="o">.</span><span class="n">status</span><span class="p">)},</span> <span class="n">status</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, alomafit.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,422 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>customers.tests &mdash; alomafit-light 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="alomafit-light 1.0 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> alomafit-light
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">alomafit-light</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>customers.tests</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for customers.tests</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">random</span>
+
+<span class="kn">from</span> <span class="nn">django.db</span> <span class="k">import</span> <span class="n">transaction</span>
+<span class="kn">from</span> <span class="nn">django.template.defaultfilters</span> <span class="k">import</span> <span class="n">slugify</span>
+<span class="kn">from</span> <span class="nn">django.test</span> <span class="k">import</span> <span class="n">TestCase</span>
+<span class="kn">from</span> <span class="nn">django.urls</span> <span class="k">import</span> <span class="n">reverse</span>
+<span class="kn">from</span> <span class="nn">rest_framework</span> <span class="k">import</span> <span class="n">status</span>
+<span class="kn">from</span> <span class="nn">rest_framework.test</span> <span class="k">import</span> <span class="n">APIClient</span>
+
+<span class="kn">from</span> <span class="nn">fitalgorithms.algorithms</span> <span class="k">import</span> <span class="n">fit_product</span>
+<span class="kn">from</span> <span class="nn">insights.models</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">stores.models</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">vfrlight.util</span> <span class="k">import</span> <span class="n">fake_initialize</span>
+
+<span class="kn">from</span> <span class="nn">.generator</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.models</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.serializers</span> <span class="k">import</span> <span class="o">*</span>
+
+
+<div class="viewcode-block" id="RegisteringNewCustomerTestCase"><a class="viewcode-back" href="../../modules/customers.html#customers.tests.RegisteringNewCustomerTestCase">[docs]</a><span class="k">class</span> <span class="nc">RegisteringNewCustomerTestCase</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test suite for the api views.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="RegisteringNewCustomerTestCase.register_customer"><a class="viewcode-back" href="../../modules/customers.html#customers.tests.RegisteringNewCustomerTestCase.register_customer">[docs]</a>    <span class="k">def</span> <span class="nf">register_customer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">customer</span> <span class="o">=</span> <span class="n">CustomerFactory</span><span class="o">.</span><span class="n">build</span><span class="p">()</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+            <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;rest_register&#39;</span><span class="p">),</span>
+            <span class="p">{</span><span class="s2">&quot;username&quot;</span><span class="p">:</span> <span class="n">customer</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">username</span><span class="p">,</span>
+             <span class="s2">&quot;password1&quot;</span><span class="p">:</span> <span class="n">customer</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">password</span><span class="p">,</span>
+             <span class="s2">&quot;password2&quot;</span><span class="p">:</span> <span class="n">customer</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">password</span><span class="p">,</span>
+             <span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="n">customer</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">email</span><span class="p">},</span>
+            <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;json&quot;</span><span class="p">)</span>
+        <span class="n">customer</span> <span class="o">=</span> <span class="n">Customer</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="n">slug</span><span class="o">=</span><span class="n">slugify</span><span class="p">(</span><span class="n">customer</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">email</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">response</span><span class="p">,</span> <span class="n">customer</span></div>
+
+<div class="viewcode-block" id="RegisteringNewCustomerTestCase.register_customer_profile"><a class="viewcode-back" href="../../modules/customers.html#customers.tests.RegisteringNewCustomerTestCase.register_customer_profile">[docs]</a>    <span class="k">def</span> <span class="nf">register_customer_profile</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">profile</span> <span class="o">=</span> <span class="n">ProfileSerializer</span><span class="p">(</span><span class="n">ProfileFactory</span><span class="o">.</span><span class="n">build</span><span class="p">())</span><span class="o">.</span><span class="n">data</span>
+        <span class="n">response</span><span class="p">,</span> <span class="n">customer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">register_customer</span><span class="p">()</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+            <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;customers:customer-profiles-list&#39;</span><span class="p">,</span>
+                    <span class="n">kwargs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;slug_slug&#39;</span><span class="p">:</span> <span class="n">slugify</span><span class="p">(</span><span class="n">customer</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">email</span><span class="p">)}),</span>
+            <span class="n">profile</span><span class="p">,</span>
+            <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;json&quot;</span><span class="p">)</span>
+        <span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">customer</span><span class="o">=</span><span class="n">customer</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">response</span><span class="p">,</span> <span class="n">customer</span><span class="p">,</span> <span class="n">profile</span></div>
+
+<div class="viewcode-block" id="RegisteringNewCustomerTestCase.add_to_closet"><a class="viewcode-back" href="../../modules/customers.html#customers.tests.RegisteringNewCustomerTestCase.add_to_closet">[docs]</a>    <span class="k">def</span> <span class="nf">add_to_closet</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">profile</span><span class="p">,</span> <span class="n">product</span><span class="p">):</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+            <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;customers:add_to_closet-list&#39;</span><span class="p">,</span>
+                    <span class="n">kwargs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;slug_slug&#39;</span><span class="p">:</span> <span class="n">slugify</span><span class="p">(</span><span class="n">profile</span><span class="o">.</span><span class="n">customer</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">email</span><span class="p">),</span>
+                            <span class="s1">&#39;id_pk&#39;</span><span class="p">:</span> <span class="n">profile</span><span class="o">.</span><span class="n">id</span><span class="p">}),</span>
+            <span class="p">{</span><span class="s2">&quot;product&quot;</span><span class="p">:</span> <span class="n">product</span><span class="o">.</span><span class="n">shopify_id</span><span class="p">},</span>
+            <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;json&quot;</span><span class="p">)</span>
+        <span class="n">added_to_closet</span> <span class="o">=</span> <span class="n">Product_Profile_Add_To_Closet</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="n">customer_profile</span><span class="o">=</span><span class="n">profile</span><span class="p">,</span> <span class="n">product</span><span class="o">=</span><span class="n">product</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">response</span><span class="p">,</span> <span class="n">added_to_closet</span></div>
+
+<div class="viewcode-block" id="RegisteringNewCustomerTestCase.setUp"><a class="viewcode-back" href="../../modules/customers.html#customers.tests.RegisteringNewCustomerTestCase.setUp">[docs]</a>    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="o">=</span> <span class="n">APIClient</span><span class="p">()</span>
+        <span class="n">fake_initialize</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertGreater</span><span class="p">(</span><span class="n">Merchant</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">count</span><span class="p">(),</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertGreater</span><span class="p">(</span><span class="n">Store</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">count</span><span class="p">(),</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertGreater</span><span class="p">(</span><span class="n">Product</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">count</span><span class="p">(),</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertGreater</span><span class="p">(</span><span class="n">Variant</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">count</span><span class="p">(),</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertGreater</span><span class="p">(</span><span class="n">Collection</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">count</span><span class="p">(),</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertGreater</span><span class="p">(</span><span class="n">Collect</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">count</span><span class="p">(),</span> <span class="mi">0</span><span class="p">)</span></div>
+
+    <span class="c1"># def test_api_register__customer(self):</span>
+    <span class="c1">#     self.register_customer()</span>
+    <span class="c1">#     self.assertEqual(len(Customer.objects.all()), 1)</span>
+    <span class="c1">#</span>
+    <span class="c1"># def test_api_retrieve_customer(self):</span>
+    <span class="c1">#     self.assertEqual(len(Customer.objects.all()), 0)</span>
+    <span class="c1">#     response, customer = self.register_customer()</span>
+    <span class="c1">#     response = self.client.get(</span>
+    <span class="c1">#         reverse(&#39;customers:customer-detail&#39;,</span>
+    <span class="c1">#                 kwargs={&#39;slug&#39;: slugify(customer.user.email)}),</span>
+    <span class="c1">#         format=&quot;json&quot;)</span>
+    <span class="c1">#     self.assertEqual(</span>
+    <span class="c1">#         response.data[&#39;slug&#39;], slugify(customer.user.email))</span>
+    <span class="c1">#</span>
+    <span class="c1"># def test_api_create_profile(self):</span>
+    <span class="c1">#     self.assertEqual(len(Customer.objects.all()), 0)</span>
+    <span class="c1">#</span>
+    <span class="c1">#     response, customer, profile = self.register_customer_profile()</span>
+    <span class="c1">#     data = response.data</span>
+    <span class="c1">#     self.assertAlmostEqual(data[&#39;height&#39;], profile.height)</span>
+    <span class="c1">#     self.assertAlmostEqual(data[&#39;weight&#39;], profile.weight)</span>
+    <span class="c1">#     self.assertAlmostEqual(data[&#39;bust&#39;], profile.bust)</span>
+    <span class="c1">#     self.assertAlmostEqual(data[&#39;waist&#39;], profile.waist)</span>
+    <span class="c1">#     self.assertAlmostEqual(data[&#39;shoulder&#39;], profile.shoulder)</span>
+    <span class="c1">#     self.assertEqual(data[&#39;gender&#39;], profile.gender)</span>
+    <span class="c1">#     self.assertEqual(data[&#39;metric_length&#39;], profile.metric_length)</span>
+    <span class="c1">#</span>
+    <span class="c1"># def test_api_add_to_closet(self):</span>
+    <span class="c1">#     response, customer, profile = self.register_customer_profile()</span>
+    <span class="c1">#     product = Product.objects.all()[random.randint(</span>
+    <span class="c1">#         0, Product.objects.count() - 1)]</span>
+    <span class="c1">#     response, added_to_closet = self.add_to_closet(</span>
+    <span class="c1">#         profile, product)</span>
+    <span class="c1">#     self.assertEqual(added_to_closet.product, product)</span>
+    <span class="c1">#     self.assertEqual(added_to_closet.customer_profile, profile)</span>
+    <span class="c1">#</span>
+    <span class="c1"># def test_populate_products(self):</span>
+    <span class="c1">#     existed_products_count = Product.objects.count()</span>
+    <span class="c1">#     populator = ProductPopulator()</span>
+    <span class="c1">#     populator.populate(products_count=10, variants_count=2)</span>
+    <span class="c1">#</span>
+    <span class="c1">#     self.assertEqual(Product.objects.count(), 10 +</span>
+    <span class="c1">#                      existed_products_count)</span>
+    <span class="c1">#     self.assertGreaterEqual(Variant.objects.count(), 10)</span>
+    <span class="c1">#</span>
+    <span class="c1"># def test_populate_customers(self):</span>
+    <span class="c1">#     populator = CustomerPopulator()</span>
+    <span class="c1">#     populator.populate(customers_count=10, profiles_count=2)</span>
+    <span class="c1">#</span>
+    <span class="c1">#     self.assertEqual(Customer.objects.count(), 10)</span>
+    <span class="c1">#     self.assertGreaterEqual(Profile.objects.count(), 10)</span>
+    <span class="c1">#</span>
+    <span class="c1"># def test_add_to_closet(self):</span>
+    <span class="c1">#     ProductPopulator().populate(products_count=10, variants_count=2)</span>
+    <span class="c1">#     CustomerPopulator().populate(customers_count=10, profiles_count=2)</span>
+    <span class="c1">#     added_to_closet = 0</span>
+    <span class="c1">#     for customer in Customer.objects.all():</span>
+    <span class="c1">#         for profile in customer.customer_profile.all():</span>
+    <span class="c1">#             product = Product.objects.all()[</span>
+    <span class="c1">#                 random.randint(0, Product.objects.count() - 1)]</span>
+    <span class="c1">#             Product_Profile_Add_To_Closet.objects.create(</span>
+    <span class="c1">#                 customer_profile=profile, product=product)</span>
+    <span class="c1">#             added_to_closet += 1</span>
+    <span class="c1">#     self.assertEqual(added_to_closet,</span>
+    <span class="c1">#                      Product_Profile_Add_To_Closet.objects.count())</span>
+    <span class="c1">#</span>
+    <span class="c1"># def test_most_added_to_closet(self):</span>
+    <span class="c1">#     ProductPopulator().populate(products_count=30, variants_count=2)</span>
+    <span class="c1">#     CustomerPopulator().populate(customers_count=10, profiles_count=2)</span>
+    <span class="c1">#     most_added_to_closet_count = 0</span>
+    <span class="c1">#     most_added_to_closet_product = Product.objects.all()[</span>
+    <span class="c1">#         random.randint(0, Product.objects.count() - 1)]</span>
+    <span class="c1">#     for customer in Customer.objects.all():</span>
+    <span class="c1">#         for profile in customer.customer_profile.all():</span>
+    <span class="c1">#             product = Product.objects.all()[</span>
+    <span class="c1">#                 random.randint(0, Product.objects.count() - 1)]</span>
+    <span class="c1">#             if(product == most_added_to_closet_product):</span>
+    <span class="c1">#                 most_added_to_closet_count += 1</span>
+    <span class="c1">#             Product_Profile_Add_To_Closet.objects.create(</span>
+    <span class="c1">#                 customer_profile=profile, product=product)</span>
+    <span class="c1">#             try:</span>
+    <span class="c1">#                 with transaction.atomic():</span>
+    <span class="c1">#                     Product_Profile_Add_To_Closet.objects.create(</span>
+    <span class="c1">#                         customer_profile=profile,</span>
+    <span class="c1">#                         product=most_added_to_closet_product)</span>
+    <span class="c1">#                 most_added_to_closet_count += 1</span>
+    <span class="c1">#             except:</span>
+    <span class="c1">#                 # we don&#39;t allow the same profile to add the product twice to his closet</span>
+    <span class="c1">#                 pass</span>
+    <span class="c1">#     result = most_added_to_closet_product.store.most_added_to_closet[0]</span>
+    <span class="c1">#     self.assertEqual(most_added_to_closet_product.shopify_id,</span>
+    <span class="c1">#                      result[&#39;product_id&#39;])</span>
+    <span class="c1">#     self.assertEqual(most_added_to_closet_count,</span>
+    <span class="c1">#                      result[&#39;count&#39;])</span>
+
+<div class="viewcode-block" id="RegisteringNewCustomerTestCase.test_try_product"><a class="viewcode-back" href="../../modules/customers.html#customers.tests.RegisteringNewCustomerTestCase.test_try_product">[docs]</a>    <span class="k">def</span> <span class="nf">test_try_product</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">ProductPopulator</span><span class="p">()</span><span class="o">.</span><span class="n">populate</span><span class="p">(</span><span class="n">products_count</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">variants_count</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+        <span class="n">CustomerPopulator</span><span class="p">()</span><span class="o">.</span><span class="n">populate</span><span class="p">(</span><span class="n">customers_count</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">profiles_count</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+        <span class="n">most_added_to_closet_count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">most_added_to_closet_product</span> <span class="o">=</span> <span class="n">Product</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()[</span>
+            <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">Product</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)]</span>
+
+        <span class="n">options</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;best_fit&#39;</span><span class="p">,</span>
+                   <span class="s1">&#39;upper_size_best_fit_data&#39;</span><span class="p">,</span>
+                   <span class="s1">&#39;lower_size_best_fit_data&#39;</span><span class="p">]</span>
+
+        <span class="n">outputs</span> <span class="o">=</span> <span class="p">{</span><span class="n">option</span><span class="p">:</span> <span class="p">{}</span> <span class="k">for</span> <span class="n">option</span> <span class="ow">in</span> <span class="n">options</span><span class="p">}</span>
+        <span class="k">for</span> <span class="n">customer</span> <span class="ow">in</span> <span class="n">Customer</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">profile</span> <span class="ow">in</span> <span class="n">customer</span><span class="o">.</span><span class="n">customer_profile</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+                <span class="n">product</span> <span class="o">=</span> <span class="n">Product</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()[</span>
+                    <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">Product</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)]</span>
+                <span class="n">fit_product_output</span> <span class="o">=</span> <span class="n">fit_product</span><span class="p">(</span><span class="n">profile</span><span class="o">=</span><span class="n">profile</span><span class="p">,</span>
+                                                 <span class="n">product</span><span class="o">=</span><span class="n">product</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">variant</span> <span class="ow">in</span> <span class="n">fit_product_output</span><span class="p">[</span><span class="s1">&#39;results&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="k">for</span> <span class="n">location</span> <span class="ow">in</span> <span class="n">fit_product_output</span><span class="p">[</span><span class="s1">&#39;results&#39;</span><span class="p">][</span>
+                        <span class="n">variant</span><span class="p">][</span><span class="s1">&#39;stress_map&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="k">if</span><span class="p">(</span><span class="ow">not</span> <span class="n">location</span> <span class="ow">in</span> <span class="n">outputs</span><span class="p">[</span><span class="n">variant</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+                        <span class="n">outputs</span><span class="p">[</span><span class="n">variant</span><span class="p">][</span><span class="n">location</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+                    <span class="k">if</span><span class="p">(</span><span class="ow">not</span> <span class="n">fit_product_output</span><span class="p">[</span><span class="s1">&#39;results&#39;</span><span class="p">][</span><span class="n">variant</span><span class="p">][</span>
+                            <span class="s1">&#39;stress_map&#39;</span><span class="p">][</span><span class="n">location</span><span class="p">]</span> <span class="ow">in</span> <span class="n">outputs</span><span class="p">[</span><span class="n">variant</span><span class="p">][</span><span class="n">location</span><span class="p">]):</span>
+                        <span class="n">outputs</span><span class="p">[</span><span class="n">variant</span><span class="p">][</span><span class="n">location</span><span class="p">][</span>
+                            <span class="n">fit_product_output</span><span class="p">[</span><span class="s1">&#39;results&#39;</span><span class="p">][</span><span class="n">variant</span><span class="p">][</span><span class="s1">&#39;stress_map&#39;</span><span class="p">]</span>
+                            <span class="p">[</span><span class="n">location</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="n">outputs</span><span class="p">[</span><span class="n">variant</span><span class="p">][</span><span class="n">location</span><span class="p">][</span>
+                        <span class="n">fit_product_output</span><span class="p">[</span><span class="s1">&#39;results&#39;</span><span class="p">][</span><span class="n">variant</span><span class="p">][</span><span class="s1">&#39;stress_map&#39;</span><span class="p">]</span>
+                        <span class="p">[</span><span class="n">location</span><span class="p">]]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">store_data</span> <span class="o">=</span> <span class="n">StoreSerializer</span><span class="p">(</span><span class="n">product</span><span class="o">.</span><span class="n">store</span><span class="p">)</span><span class="o">.</span><span class="n">data</span>
+        <span class="c1"># print (store_data)</span>
+        <span class="nb">print</span> <span class="p">(</span><span class="n">outputs</span><span class="p">)</span></div></div>
+        <span class="c1"># print ()</span>
+
+    <span class="c1"># fit_product annonymous profile</span>
+    <span class="c1"># fit_product registered profile</span>
+    <span class="c1"># bodyshape insight in store</span>
+    <span class="c1"># body size, bottom and top for male/ female insight on store</span>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, alomafit.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

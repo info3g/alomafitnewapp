@@ -1,0 +1,394 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>fitalgorithms.female.standard &mdash; alomafit-light 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="alomafit-light 1.0 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> alomafit-light
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">alomafit-light</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>fitalgorithms.female.standard</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for fitalgorithms.female.standard</h1><div class="highlight"><pre>
+<span></span><span class="c1"># TODO there is no consistency between inch,cm for male and female</span>
+<span class="c1"># WHY you define the same size variable twice for each method _cm _in</span>
+
+
+<div class="viewcode-block" id="measure"><a class="viewcode-back" href="../../../modules/fitalgorithms.female.html#fitalgorithms.female.standard.measure">[docs]</a><span class="k">class</span> <span class="nc">measure</span><span class="p">():</span>
+
+<div class="viewcode-block" id="measure.size_topsize"><a class="viewcode-back" href="../../../modules/fitalgorithms.female.html#fitalgorithms.female.standard.measure.size_topsize">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">size_topsize</span><span class="p">():</span>
+        <span class="k">return</span> <span class="p">[</span><span class="s1">&#39;XXS - 00 US&#39;</span><span class="p">,</span> <span class="s1">&#39;XS - 0 US - 4 UK&#39;</span><span class="p">,</span> <span class="s1">&#39;S - 2 US - 6 UK&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;S - 4 US - 8 UK&#39;</span><span class="p">,</span> <span class="s1">&#39;M - 6 US - 10 UK&#39;</span><span class="p">,</span> <span class="s1">&#39;M - 8 US - 12 UK&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;L - 10 US - 14 UK&#39;</span><span class="p">,</span> <span class="s1">&#39;L - 12 US - 16 UK &#39;</span><span class="p">,</span>    <span class="s1">&#39;XL - 14 US - 18 UK&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;2X - 16 US - 20 UK&#39;</span><span class="p">,</span> <span class="s1">&#39;3X - 18 US - 22 UK&#39;</span><span class="p">,</span> <span class="s1">&#39;4X - 20 US - 24 UK&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;5X - 22 US - 26 UK&#39;</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="measure.size_bottomsize"><a class="viewcode-back" href="../../../modules/fitalgorithms.female.html#fitalgorithms.female.standard.measure.size_bottomsize">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">size_bottomsize</span><span class="p">():</span>
+        <span class="k">return</span> <span class="p">[</span><span class="s1">&#39;XXS - 00 US&#39;</span><span class="p">,</span> <span class="s1">&#39;XS - 0 US - 4 UK&#39;</span><span class="p">,</span> <span class="s1">&#39;S - 2 US - 6 UK&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;S - 4 US - 8 UK&#39;</span><span class="p">,</span> <span class="s1">&#39;M - 6 US - 10 UK&#39;</span><span class="p">,</span> <span class="s1">&#39;M - 8 US - 12 UK&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;L - 10 US - 14 UK&#39;</span><span class="p">,</span> <span class="s1">&#39;L - 12 US - 16 UK &#39;</span><span class="p">,</span> <span class="s1">&#39;XL - 14 US - 18 UK&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;2X - 16 US - 20 UK&#39;</span><span class="p">,</span> <span class="s1">&#39;3X - 18 US - 22 UK&#39;</span><span class="p">,</span> <span class="s1">&#39;4X - 20 US - 24 UK&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;5X - 22 US - 26 UK&#39;</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="measure.__init__"><a class="viewcode-back" href="../../../modules/fitalgorithms.female.html#fitalgorithms.female.standard.measure.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bust</span><span class="p">,</span> <span class="n">hip</span><span class="p">,</span> <span class="n">waist</span><span class="p">,</span> <span class="n">shoulder</span><span class="p">,</span> <span class="n">unit</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hip</span> <span class="o">=</span> <span class="n">hip</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">waist</span> <span class="o">=</span> <span class="n">waist</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bust</span> <span class="o">=</span> <span class="n">bust</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shoulder</span> <span class="o">=</span> <span class="n">shoulder</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">unit</span> <span class="o">=</span> <span class="n">unit</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">topsize</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bottomsize</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="measure.rule_topsize_cm"><a class="viewcode-back" href="../../../modules/fitalgorithms.female.html#fitalgorithms.female.standard.measure.rule_topsize_cm">[docs]</a>    <span class="k">def</span> <span class="nf">rule_topsize_cm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">bustsizes</span> <span class="o">=</span> <span class="p">[</span><span class="mf">81.3</span><span class="p">,</span> <span class="mf">83.8</span><span class="p">,</span> <span class="mf">86.4</span><span class="p">,</span> <span class="mf">89.0</span><span class="p">,</span> <span class="mf">91.4</span><span class="p">,</span> <span class="mf">95.2</span><span class="p">,</span>
+                     <span class="mf">99.1</span><span class="p">,</span> <span class="mf">102.9</span><span class="p">,</span> <span class="mf">107.9</span><span class="p">,</span> <span class="mf">113.1</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="mf">132.5</span><span class="p">,</span> <span class="mi">143</span><span class="p">]</span>
+        <span class="n">shouldersizes</span> <span class="o">=</span> <span class="p">[</span><span class="mi">35</span><span class="p">,</span> <span class="mf">37.1</span><span class="p">,</span> <span class="mf">37.8</span><span class="p">,</span> <span class="mf">38.4</span><span class="p">,</span> <span class="mf">39.1</span><span class="p">,</span>
+                         <span class="mf">40.0</span><span class="p">,</span> <span class="mf">41.0</span><span class="p">,</span> <span class="mf">42.0</span><span class="p">,</span> <span class="mf">43.2</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mf">49.3</span><span class="p">,</span> <span class="mi">51</span><span class="p">]</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;XXS - 00 US&#39;</span><span class="p">,</span> <span class="s1">&#39;XS - 0 US - 4 UK&#39;</span><span class="p">,</span> <span class="s1">&#39;S - 2 US - 6 UK&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;S - 4 US - 8 UK&#39;</span><span class="p">,</span> <span class="s1">&#39;M - 6 US - 10 UK&#39;</span><span class="p">,</span> <span class="s1">&#39;M - 8 US - 12 UK&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;L - 10 US - 14 UK&#39;</span><span class="p">,</span> <span class="s1">&#39;L - 12 US - 16 UK &#39;</span><span class="p">,</span>    <span class="s1">&#39;XL - 14 US - 18 UK&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;2X - 16 US - 20 UK&#39;</span><span class="p">,</span> <span class="s1">&#39;3X - 18 US - 22 UK&#39;</span><span class="p">,</span> <span class="s1">&#39;4X - 20 US - 24 UK&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;5X - 22 US - 26 UK&#39;</span><span class="p">]</span>
+
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">size</span><span class="p">):</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">size</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span><span class="p">):</span>
+                <span class="k">if</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">bust</span> <span class="o">&gt;=</span> <span class="n">bustsizes</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="ow">and</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bust</span> <span class="o">&lt;</span> <span class="n">bustsizes</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])):</span>
+                    <span class="k">return</span> <span class="n">size</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">bust</span> <span class="o">&gt;=</span> <span class="n">bustsizes</span><span class="p">[</span><span class="n">i</span><span class="p">])):</span>
+                <span class="k">return</span> <span class="n">size</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">size</span><span class="p">):</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">size</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span><span class="p">):</span>
+                <span class="k">if</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">shoulder</span> <span class="o">&gt;=</span> <span class="n">shouldersizes</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="ow">and</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shoulder</span> <span class="o">&lt;</span> <span class="n">shouldersizes</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])):</span>
+                    <span class="k">return</span> <span class="n">size</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shoulder</span> <span class="o">&gt;=</span> <span class="n">shouldersizes</span><span class="p">[</span><span class="n">i</span><span class="p">]):</span>
+                <span class="k">return</span> <span class="n">size</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="measure.rule_bottomsize_cm"><a class="viewcode-back" href="../../../modules/fitalgorithms.female.html#fitalgorithms.female.standard.measure.rule_bottomsize_cm">[docs]</a>    <span class="k">def</span> <span class="nf">rule_bottomsize_cm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="n">waistsizes</span> <span class="o">=</span> <span class="p">[</span><span class="mf">61.0</span><span class="p">,</span> <span class="mf">63.5</span><span class="p">,</span> <span class="mf">66.0</span><span class="p">,</span> <span class="mf">68.5</span><span class="p">,</span> <span class="mf">71.1</span><span class="p">,</span>
+                      <span class="mf">74.9</span><span class="p">,</span> <span class="mf">78.7</span><span class="p">,</span> <span class="mf">82.6</span><span class="p">,</span> <span class="mf">87.6</span><span class="p">,</span> <span class="mf">92.7</span><span class="p">,</span> <span class="mf">97.5</span><span class="p">,</span> <span class="mi">105</span><span class="p">,</span> <span class="mi">110</span><span class="p">]</span>
+        <span class="n">hipsizes</span> <span class="o">=</span> <span class="p">[</span><span class="mi">85</span><span class="p">,</span> <span class="mf">90.2</span><span class="p">,</span> <span class="mf">92.7</span><span class="p">,</span> <span class="mf">95.2</span><span class="p">,</span> <span class="mf">97.8</span><span class="p">,</span> <span class="mf">101.6</span><span class="p">,</span>
+                    <span class="mf">105.4</span><span class="p">,</span> <span class="mf">109.2</span><span class="p">,</span> <span class="mf">114.3</span><span class="p">,</span> <span class="mf">119.4</span><span class="p">,</span> <span class="mi">124</span><span class="p">,</span> <span class="mf">128.5</span><span class="p">,</span> <span class="mi">132</span><span class="p">]</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;XXS - 00 US&#39;</span><span class="p">,</span> <span class="s1">&#39;XS - 0 US - 4 UK&#39;</span><span class="p">,</span> <span class="s1">&#39;S - 2 US - 6 UK&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;S - 4 US - 8 UK&#39;</span><span class="p">,</span> <span class="s1">&#39;M - 6 US - 10 UK&#39;</span><span class="p">,</span> <span class="s1">&#39;M - 8 US - 12 UK&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;L - 10 US - 14 UK&#39;</span><span class="p">,</span> <span class="s1">&#39;L - 12 US - 16 UK &#39;</span><span class="p">,</span> <span class="s1">&#39;XL - 14 US - 18 UK&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;2X - 16 US - 20 UK&#39;</span><span class="p">,</span> <span class="s1">&#39;3X - 18 US - 22 UK&#39;</span><span class="p">,</span> <span class="s1">&#39;4X - 20 US - 24 UK&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;5X - 22 US - 26 UK&#39;</span><span class="p">]</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="s2">&quot;none&quot;</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">size</span><span class="p">):</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">size</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span><span class="p">):</span>
+                <span class="k">if</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">hip</span> <span class="o">&gt;=</span> <span class="n">hipsizes</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="ow">and</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hip</span> <span class="o">&lt;</span> <span class="n">hipsizes</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])):</span>
+                    <span class="k">return</span> <span class="n">size</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+
+            <span class="k">elif</span> <span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">hip</span> <span class="o">&gt;=</span> <span class="n">hipsizes</span><span class="p">[</span><span class="n">i</span><span class="p">])):</span>
+                <span class="k">return</span> <span class="n">size</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">size</span><span class="p">):</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">size</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span><span class="p">):</span>
+                <span class="k">if</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">waist</span> <span class="o">&gt;=</span> <span class="n">waistsizes</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="ow">and</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">waist</span> <span class="o">&lt;</span> <span class="n">waistsizes</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])):</span>
+                    <span class="k">return</span> <span class="n">size</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+
+            <span class="k">elif</span> <span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">waist</span> <span class="o">&gt;=</span> <span class="n">waistsizes</span><span class="p">[</span><span class="n">i</span><span class="p">])):</span>
+                <span class="k">return</span> <span class="n">size</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="measure.rule_topsize_in"><a class="viewcode-back" href="../../../modules/fitalgorithms.female.html#fitalgorithms.female.standard.measure.rule_topsize_in">[docs]</a>    <span class="k">def</span> <span class="nf">rule_topsize_in</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">bustsizes</span> <span class="o">=</span> <span class="p">[</span><span class="mi">32</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="mf">37.5</span><span class="p">,</span> <span class="mi">39</span><span class="p">,</span>
+                     <span class="mf">40.5</span><span class="p">,</span> <span class="mf">42.5</span><span class="p">,</span> <span class="mf">44.5</span><span class="p">,</span> <span class="mf">46.5</span><span class="p">,</span> <span class="mf">48.5</span><span class="p">,</span> <span class="mf">50.5</span><span class="p">]</span>
+        <span class="n">shouldersizes</span> <span class="o">=</span> <span class="p">[</span><span class="mf">14.375</span><span class="p">,</span> <span class="mf">14.625</span><span class="p">,</span> <span class="mf">14.875</span><span class="p">,</span> <span class="mf">15.125</span><span class="p">,</span>
+                         <span class="mf">15.375</span><span class="p">,</span> <span class="mf">15.75</span><span class="p">,</span> <span class="mf">16.125</span><span class="p">,</span> <span class="mf">16.5</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mf">17.5</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mf">18.5</span><span class="p">,</span> <span class="mi">19</span><span class="p">]</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;XXS - 00 US&#39;</span><span class="p">,</span> <span class="s1">&#39;XS - 0 US - 4 UK&#39;</span><span class="p">,</span> <span class="s1">&#39;S - 2 US - 6 UK&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;S - 4 US - 8 UK&#39;</span><span class="p">,</span> <span class="s1">&#39;M - 6 US - 10 UK&#39;</span><span class="p">,</span> <span class="s1">&#39;M - 8 US - 12 UK&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;L - 10 US - 14 UK&#39;</span><span class="p">,</span> <span class="s1">&#39;L - 12 US - 16 UK &#39;</span><span class="p">,</span>
+                <span class="s1">&#39;XL - 14 US - 18 UK&#39;</span><span class="p">,</span> <span class="s1">&#39;2X - 16 US - 20 UK&#39;</span><span class="p">,</span> <span class="s1">&#39;3X - 18 US - 22 UK&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;4X - 20 US - 24 UK&#39;</span><span class="p">,</span> <span class="s1">&#39;5X - 22 US - 26 UK&#39;</span><span class="p">]</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="s2">&quot;none&quot;</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">size</span><span class="p">):</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">size</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span><span class="p">):</span>
+                <span class="k">if</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">bust</span> <span class="o">&gt;=</span> <span class="n">bustsizes</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="ow">and</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bust</span> <span class="o">&lt;</span> <span class="n">bustsizes</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])):</span>
+                    <span class="k">return</span> <span class="n">size</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">bust</span> <span class="o">&gt;=</span> <span class="n">bustsizes</span><span class="p">[</span><span class="n">i</span><span class="p">])):</span>
+                <span class="k">return</span> <span class="n">size</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">size</span><span class="p">):</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">size</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span><span class="p">):</span>
+                <span class="k">if</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">shoulder</span> <span class="o">&gt;=</span> <span class="n">shouldersizes</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="ow">and</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shoulder</span> <span class="o">&lt;</span> <span class="n">shouldersizes</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])):</span>
+                    <span class="k">return</span> <span class="n">size</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shoulder</span> <span class="o">&gt;=</span> <span class="n">shouldersizes</span><span class="p">[</span><span class="n">i</span><span class="p">]):</span>
+                <span class="k">return</span> <span class="n">size</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="measure.rule_bottomsize_in"><a class="viewcode-back" href="../../../modules/fitalgorithms.female.html#fitalgorithms.female.standard.measure.rule_bottomsize_in">[docs]</a>    <span class="k">def</span> <span class="nf">rule_bottomsize_in</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">waistsizes</span> <span class="o">=</span> <span class="p">[</span><span class="mi">24</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">26</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mf">29.5</span><span class="p">,</span>
+                      <span class="mi">31</span><span class="p">,</span> <span class="mf">32.5</span><span class="p">,</span> <span class="mf">34.5</span><span class="p">,</span> <span class="mf">36.5</span><span class="p">,</span> <span class="mf">38.5</span><span class="p">,</span> <span class="mf">40.5</span><span class="p">,</span> <span class="mf">42.5</span><span class="p">]</span>
+        <span class="n">hipsizes</span> <span class="o">=</span> <span class="p">[</span><span class="mf">34.5</span><span class="p">,</span> <span class="mf">35.5</span><span class="p">,</span> <span class="mf">36.5</span><span class="p">,</span> <span class="mf">37.5</span><span class="p">,</span> <span class="mf">38.5</span><span class="p">,</span>
+                    <span class="mi">40</span><span class="p">,</span> <span class="mf">41.5</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">49</span><span class="p">,</span> <span class="mi">51</span><span class="p">,</span> <span class="mi">53</span><span class="p">]</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;XXS - 00 US&#39;</span><span class="p">,</span> <span class="s1">&#39;XS - 0 US - 4 UK&#39;</span><span class="p">,</span> <span class="s1">&#39;S - 2 US - 6 UK&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;S - 4 US - 8 UK&#39;</span><span class="p">,</span> <span class="s1">&#39;M - 6 US - 10 UK&#39;</span><span class="p">,</span> <span class="s1">&#39;M - 8 US - 12 UK&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;L - 10 US - 14 UK&#39;</span><span class="p">,</span> <span class="s1">&#39;L - 12 US - 16 UK &#39;</span><span class="p">,</span> <span class="s1">&#39;XL - 14 US - 18 UK&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;2X - 16 US - 20 UK&#39;</span><span class="p">,</span> <span class="s1">&#39;3X - 18 US - 22 UK&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;4X - 20 US - 24 UK&#39;</span><span class="p">,</span> <span class="s1">&#39;5X - 22 US - 26 UK&#39;</span><span class="p">]</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="s2">&quot;none&quot;</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">size</span><span class="p">):</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">size</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span><span class="p">):</span>
+                <span class="k">if</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">hip</span> <span class="o">&gt;=</span> <span class="n">hipsizes</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="ow">and</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hip</span> <span class="o">&lt;</span> <span class="n">hipsizes</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])):</span>
+                    <span class="k">return</span> <span class="n">size</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+
+            <span class="k">elif</span> <span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">hip</span> <span class="o">&gt;=</span> <span class="n">hipsizes</span><span class="p">[</span><span class="n">i</span><span class="p">])):</span>
+                <span class="k">return</span> <span class="n">size</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">size</span><span class="p">):</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">size</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span><span class="p">):</span>
+                <span class="k">if</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">waist</span> <span class="o">&gt;=</span> <span class="n">waistsizes</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="ow">and</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hip</span> <span class="o">&lt;</span> <span class="n">waistsizes</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])):</span>
+                    <span class="k">return</span> <span class="n">size</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+
+            <span class="k">elif</span> <span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">waist</span> <span class="o">&gt;=</span> <span class="n">waistsizes</span><span class="p">[</span><span class="n">i</span><span class="p">])):</span>
+                <span class="k">return</span> <span class="n">size</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div></div>
+
+
+<span class="c1"># 88 91 67 40</span>
+
+<span class="c1">#</span>
+<span class="c1"># ob = measure(120, 126, 107, 43, &#39;cm&#39;)</span>
+<span class="c1"># t = ob.rule_topsize_cm()</span>
+<span class="c1"># print (t)</span>
+<span class="c1"># t = ob.rule_bottomsize_cm()</span>
+<span class="c1"># print (t)</span>
+
+<span class="c1"># ob=measure(33,43,33,14.7,&#39;in&#39;)</span>
+<span class="c1"># t=ob.rule_topsize_in()</span>
+<span class="c1"># print t</span>
+<span class="c1"># t=ob.rule_bottomsize_in()</span>
+<span class="c1"># print t</span>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, alomafit.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

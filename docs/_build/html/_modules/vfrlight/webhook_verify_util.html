@@ -1,0 +1,344 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>vfrlight.webhook_verify_util &mdash; alomafit-light 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="alomafit-light 1.0 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> alomafit-light
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">alomafit-light</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>vfrlight.webhook_verify_util</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for vfrlight.webhook_verify_util</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">base64</span>
+<span class="kn">import</span> <span class="nn">hashlib</span>
+<span class="kn">import</span> <span class="nn">hmac</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="kn">from</span> <span class="nn">django.conf</span> <span class="k">import</span> <span class="n">settings</span>
+<span class="kn">from</span> <span class="nn">django.http</span> <span class="k">import</span> <span class="p">(</span><span class="n">HttpResponse</span><span class="p">,</span> <span class="n">HttpResponseBadRequest</span><span class="p">,</span>
+                         <span class="n">HttpResponseForbidden</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">stores.model_webhook_util</span> <span class="k">import</span> <span class="p">(</span><span class="n">delete_product</span><span class="p">,</span> <span class="n">uninstalled_store</span><span class="p">,</span>
+                                       <span class="n">update_or_create_product_variant</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">vfrlight.config</span> <span class="k">import</span> <span class="n">config</span> <span class="k">as</span> <span class="n">cfg</span>
+
+
+<div class="viewcode-block" id="webhook_callback"><a class="viewcode-back" href="../../modules/vfrlight.html#vfrlight.webhook_verify_util.webhook_callback">[docs]</a><span class="k">def</span> <span class="nf">webhook_callback</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s2">&quot;update&quot;</span><span class="p">):</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">topic</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">META</span><span class="p">[</span><span class="s1">&#39;HTTP_X_SHOPIFY_TOPIC&#39;</span><span class="p">]</span>
+        <span class="n">domain</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">META</span><span class="p">[</span><span class="s1">&#39;HTTP_X_SHOPIFY_SHOP_DOMAIN&#39;</span><span class="p">]</span>
+        <span class="n">hmac</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">META</span><span class="p">[</span><span class="s1">&#39;HTTP_X_SHOPIFY_HMAC_SHA256&#39;</span><span class="p">]</span> \
+            <span class="k">if</span> <span class="s1">&#39;HTTP_X_SHOPIFY_HMAC_SHA256&#39;</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">META</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">KeyError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">HttpResponseBadRequest</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">domain_is_valid</span><span class="p">(</span><span class="n">domain</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">HttpResponseBadRequest</span><span class="p">()</span>
+
+    <span class="c1"># Verify the HMAC.</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">hmac_is_valid</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">body</span><span class="p">,</span> <span class="n">cfg</span><span class="o">.</span><span class="n">SHOPIFY_CONFIG</span><span class="p">[</span><span class="s1">&#39;API_SECRET&#39;</span><span class="p">],</span> <span class="n">hmac</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">HttpResponseForbidden</span><span class="p">()</span>
+
+    <span class="c1"># Otherwise, set properties on the request object and return.</span>
+    <span class="n">request</span><span class="o">.</span><span class="n">webhook_topic</span> <span class="o">=</span> <span class="n">topic</span>
+    <span class="n">request</span><span class="o">.</span><span class="n">webhook_data</span> <span class="o">=</span> <span class="n">data</span>
+    <span class="n">request</span><span class="o">.</span><span class="n">webhook_domain</span> <span class="o">=</span> <span class="n">domain</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="n">value</span> <span class="o">==</span> <span class="s2">&quot;update&quot;</span> <span class="ow">or</span> <span class="n">value</span> <span class="o">==</span> <span class="s2">&quot;create&quot;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">update_or_create_product_variant</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+    <span class="k">elif</span><span class="p">(</span><span class="n">value</span> <span class="o">==</span> <span class="s2">&quot;delete&quot;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">delete_product</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+    <span class="k">elif</span><span class="p">(</span><span class="n">value</span> <span class="o">==</span> <span class="s2">&quot;uninstallapp&quot;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">uninstalled_store</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="s2">&quot;NOT DEFINED&quot;</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_signal_name_for_topic"><a class="viewcode-back" href="../../modules/vfrlight.html#vfrlight.webhook_verify_util.get_signal_name_for_topic">[docs]</a><span class="k">def</span> <span class="nf">get_signal_name_for_topic</span><span class="p">(</span><span class="n">webhook_topic</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert a Shopify Webhook topic (eg &quot;orders/create&quot;) to the equivalent Pythonic method name (eg &quot;orders_create&quot;).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">webhook_topic</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="domain_is_valid"><a class="viewcode-back" href="../../modules/vfrlight.html#vfrlight.webhook_verify_util.domain_is_valid">[docs]</a><span class="k">def</span> <span class="nf">domain_is_valid</span><span class="p">(</span><span class="n">domain</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check whether the given domain is a valid source for webhook request.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">domain</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">domain</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span></div>
+
+
+<div class="viewcode-block" id="get_hmac"><a class="viewcode-back" href="../../modules/vfrlight.html#vfrlight.webhook_verify_util.get_hmac">[docs]</a><span class="k">def</span> <span class="nf">get_hmac</span><span class="p">(</span><span class="n">body</span><span class="p">,</span> <span class="n">secret</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate the HMAC value of the given request body and secret as per Shopify&#39;s documentation for Webhook requests.</span>
+<span class="sd">    See: http://docs.shopify.com/api/tutorials/using-webhooks#verify-webhook</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">hash</span> <span class="o">=</span> <span class="n">hmac</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">secret</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">),</span> <span class="n">body</span><span class="p">,</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="nb">hash</span><span class="o">.</span><span class="n">digest</span><span class="p">())</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="hmac_is_valid"><a class="viewcode-back" href="../../modules/vfrlight.html#vfrlight.webhook_verify_util.hmac_is_valid">[docs]</a><span class="k">def</span> <span class="nf">hmac_is_valid</span><span class="p">(</span><span class="n">body</span><span class="p">,</span> <span class="n">secret</span><span class="p">,</span> <span class="n">hmac_to_verify</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return True if the given hmac_to_verify matches that calculated from the given body and secret.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">get_hmac</span><span class="p">(</span><span class="n">body</span><span class="p">,</span> <span class="n">secret</span><span class="p">)</span> <span class="o">==</span> <span class="n">hmac_to_verify</span></div>
+
+
+<div class="viewcode-block" id="get_proxy_signature"><a class="viewcode-back" href="../../modules/vfrlight.html#vfrlight.webhook_verify_util.get_proxy_signature">[docs]</a><span class="k">def</span> <span class="nf">get_proxy_signature</span><span class="p">(</span><span class="n">query_dict</span><span class="p">,</span> <span class="n">secret</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate the signature of the given query dict as per Shopify&#39;s documentation for proxy requests.</span>
+<span class="sd">    See: http://docs.shopify.com/api/tutorials/application-proxies#security</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Sort and combine query parameters into a single string.</span>
+    <span class="n">sorted_params</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">query_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+        <span class="n">sorted_params</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">=</span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span>
+                                          <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">query_dict</span><span class="o">.</span><span class="n">getlist</span><span class="p">(</span><span class="n">key</span><span class="p">)))</span>
+
+    <span class="n">signature</span> <span class="o">=</span> <span class="n">hmac</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">secret</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+        <span class="s1">&#39;utf-8&#39;</span><span class="p">),</span> <span class="n">sorted_params</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">),</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">signature</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="proxy_signature_is_valid"><a class="viewcode-back" href="../../modules/vfrlight.html#vfrlight.webhook_verify_util.proxy_signature_is_valid">[docs]</a><span class="k">def</span> <span class="nf">proxy_signature_is_valid</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">secret</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return true if the calculated signature matches that present in the query string of the given request.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Allow skipping of validation with an explicit setting.</span>
+    <span class="c1"># If setting not present, skip if in debug mode by default.</span>
+    <span class="n">skip_validation</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span>
+        <span class="n">settings</span><span class="p">,</span> <span class="s1">&#39;SKIP_APP_PROXY_VALIDATION&#39;</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">skip_validation</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="c1"># Create a mutable version of the GET parameters.</span>
+    <span class="n">query_dict</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="c1"># Extract the signature we&#39;re going to verify. If no signature&#39;s present, the request is invalid.</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">signature_to_verify</span> <span class="o">=</span> <span class="n">query_dict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;signature&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="n">calculated_signature</span> <span class="o">=</span> <span class="n">get_proxy_signature</span><span class="p">(</span><span class="n">query_dict</span><span class="p">,</span> <span class="n">secret</span><span class="p">)</span>
+
+    <span class="c1"># Try to use compare_digest() to reduce vulnerability to timing attacks.</span>
+    <span class="c1"># If it&#39;s not available, just fall back to regular string comparison.</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">hmac</span><span class="o">.</span><span class="n">compare_digest</span><span class="p">(</span><span class="n">calculated_signature</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">),</span> <span class="n">signature_to_verify</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+    <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">calculated_signature</span> <span class="o">==</span> <span class="n">signature_to_verify</span></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, alomafit.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

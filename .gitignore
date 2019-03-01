@@ -1,0 +1,10 @@
+venv
+*.pyc
+.env
+.vs
+.idea
+*.pyc
+*/migrations/*
+!*/migrations/__init__.py
+staticfiles/*
+.vscode/

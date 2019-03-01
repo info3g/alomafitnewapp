@@ -1,0 +1,376 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>customers.views &mdash; alomafit-light 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="alomafit-light 1.0 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> alomafit-light
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">alomafit-light</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>customers.views</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for customers.views</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">json</span>
+
+<span class="kn">from</span> <span class="nn">django.contrib.auth</span> <span class="k">import</span> <span class="n">authenticate</span><span class="p">,</span> <span class="n">login</span><span class="p">,</span> <span class="n">logout</span>
+<span class="kn">from</span> <span class="nn">django.core.exceptions</span> <span class="k">import</span> <span class="n">PermissionDenied</span>
+<span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="k">import</span> <span class="n">render</span>
+<span class="kn">from</span> <span class="nn">rest_framework</span> <span class="k">import</span> <span class="n">mixins</span><span class="p">,</span> <span class="n">permissions</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">views</span><span class="p">,</span> <span class="n">viewsets</span>
+<span class="kn">from</span> <span class="nn">rest_framework.authentication</span> <span class="k">import</span> <span class="p">(</span><span class="n">BasicAuthentication</span><span class="p">,</span>
+                                           <span class="n">SessionAuthentication</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">rest_framework.decorators</span> <span class="k">import</span> <span class="n">api_view</span>
+<span class="kn">from</span> <span class="nn">rest_framework.permissions</span> <span class="k">import</span> <span class="n">IsAuthenticated</span>
+<span class="kn">from</span> <span class="nn">rest_framework.response</span> <span class="k">import</span> <span class="n">Response</span>
+<span class="kn">from</span> <span class="nn">rest_framework_jwt.authentication</span> <span class="k">import</span> <span class="n">JSONWebTokenAuthentication</span>
+
+<span class="kn">from</span> <span class="nn">insights.models</span> <span class="k">import</span> <span class="n">Product_Profile_Add_To_Closet</span><span class="p">,</span> <span class="n">Profile_Try_Product</span>
+<span class="kn">from</span> <span class="nn">stores.serializers</span> <span class="k">import</span> <span class="n">ProductSerializer</span>
+<span class="kn">from</span> <span class="nn">vfrlight.util</span> <span class="k">import</span> <span class="n">get_or_raise</span>
+
+<span class="kn">from</span> <span class="nn">.models</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.permissions</span> <span class="k">import</span> <span class="n">IsCustomerProfiles</span>
+<span class="kn">from</span> <span class="nn">.serializers</span> <span class="k">import</span> <span class="o">*</span>
+
+
+<div class="viewcode-block" id="TriedProductsProfilePerspectiveViewSet"><a class="viewcode-back" href="../../modules/customers.html#customers.views.TriedProductsProfilePerspectiveViewSet">[docs]</a><span class="k">class</span> <span class="nc">TriedProductsProfilePerspectiveViewSet</span><span class="p">(</span><span class="n">viewsets</span><span class="o">.</span><span class="n">ModelViewSet</span><span class="p">):</span>
+
+    <span class="c1"># authentication_classes = (</span>
+    <span class="c1">#     JSONWebTokenAuthentication, SessionAuthentication, BasicAuthentication)</span>
+    <span class="c1"># permission_classes = (IsCustomerProfiles, IsAuthenticated)</span>
+    <span class="n">http_method_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;get&#39;</span><span class="p">]</span>
+    <span class="n">serializer_class</span> <span class="o">=</span> <span class="n">TriedProductsProfilePerspectiveSerializer</span>
+
+<div class="viewcode-block" id="TriedProductsProfilePerspectiveViewSet.get_queryset"><a class="viewcode-back" href="../../modules/customers.html#customers.views.TriedProductsProfilePerspectiveViewSet.get_queryset">[docs]</a>    <span class="k">def</span> <span class="nf">get_queryset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="n">profile_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;id_pk&#39;</span><span class="p">]</span>
+        <span class="n">profile</span> <span class="o">=</span> <span class="n">get_or_raise</span><span class="p">(</span><span class="n">Profile</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="n">profile_id</span><span class="p">)</span>
+        <span class="c1"># waking up the user</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">_wrapped</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="p">,</span> <span class="s1">&#39;_wrapped&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">user</span>
+        <span class="n">customer</span> <span class="o">=</span> <span class="n">get_or_raise</span><span class="p">(</span><span class="n">Customer</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">)</span>
+        <span class="c1"># if(not profile.customer == customer):</span>
+        <span class="c1">#     raise PermissionDenied</span>
+        <span class="c1"># TODO make distinct values</span>
+        <span class="n">queryset</span> <span class="o">=</span> <span class="n">Profile_Try_Product</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+            <span class="n">profile</span><span class="o">=</span><span class="n">profile</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">queryset</span></div>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Profile_Try_Product</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;product&#39;</span><span class="p">,</span> <span class="s1">&#39;try_date&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="AddToClosetViewSet"><a class="viewcode-back" href="../../modules/customers.html#customers.views.AddToClosetViewSet">[docs]</a><span class="k">class</span> <span class="nc">AddToClosetViewSet</span><span class="p">(</span><span class="n">viewsets</span><span class="o">.</span><span class="n">ModelViewSet</span><span class="p">):</span>
+    <span class="c1"># authentication_classes = (</span>
+    <span class="c1">#     JSONWebTokenAuthentication, SessionAuthentication, BasicAuthentication)</span>
+    <span class="c1"># permission_classes = (IsCustomerProfiles, IsAuthenticated)</span>
+    <span class="n">http_method_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="s1">&#39;post&#39;</span><span class="p">]</span>
+    <span class="n">serializer_class</span> <span class="o">=</span> <span class="n">Product_Profile_Add_To_Closet_ProfilePerspectiveSerializer</span>
+
+<div class="viewcode-block" id="AddToClosetViewSet.create"><a class="viewcode-back" href="../../modules/customers.html#customers.views.AddToClosetViewSet.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">profile_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;id_pk&#39;</span><span class="p">]</span>
+        <span class="n">serializer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">serializer_class</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="p">{</span>
+                                           <span class="s1">&#39;profile_id&#39;</span><span class="p">:</span> <span class="n">profile_id</span><span class="p">})</span>
+        <span class="k">if</span> <span class="n">serializer</span><span class="o">.</span><span class="n">is_valid</span><span class="p">(</span><span class="n">raise_exception</span><span class="o">=</span><span class="ne">ValueError</span><span class="p">):</span>
+            <span class="n">serializer</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+                <span class="n">validated_data</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">serializer</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="o">.</span><span class="n">HTTP_201_CREATED</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">serializer</span><span class="o">.</span><span class="n">error_messages</span><span class="p">,</span>
+                        <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="o">.</span><span class="n">HTTP_400_BAD_REQUEST</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AddToClosetViewSet.get_queryset"><a class="viewcode-back" href="../../modules/customers.html#customers.views.AddToClosetViewSet.get_queryset">[docs]</a>    <span class="k">def</span> <span class="nf">get_queryset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">profile_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;id_pk&#39;</span><span class="p">]</span>
+        <span class="n">profile</span> <span class="o">=</span> <span class="n">get_or_raise</span><span class="p">(</span><span class="n">Profile</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="n">profile_id</span><span class="p">)</span>
+
+        <span class="c1"># if(not profile.customer == customer):</span>
+        <span class="c1">#     raise PermissionDenied(&quot;no relation between profile {} and customer {}&quot;.</span>
+        <span class="c1">#                            format(profile, customer))</span>
+        <span class="c1"># TODO TURN ON AUTHENTICATION</span>
+        <span class="c1"># waking up the user</span>
+        <span class="c1"># user = self.request.user._wrapped \</span>
+        <span class="c1">#     if hasattr(self.request.user, &#39;_wrapped&#39;) else self.request.user</span>
+        <span class="c1"># if(user.is_authenticated):</span>
+        <span class="c1">#     customer = get_or_raise(Customer,user=user)</span>
+        <span class="c1">#     if(not profile.customer == customer):</span>
+        <span class="c1">#         raise PermissionDenied</span>
+        <span class="n">queryset</span> <span class="o">=</span> <span class="n">Product_Profile_Add_To_Closet</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span>\
+            <span class="nb">filter</span><span class="p">(</span><span class="n">customer_profile</span><span class="o">=</span><span class="n">profile</span><span class="p">)</span>
+        <span class="n">queryset_data</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">queryset</span><span class="p">:</span>
+            <span class="n">product_id</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="s1">&#39;product_id&#39;</span><span class="p">]</span>
+            <span class="n">queryset_data</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;product&#39;</span><span class="p">:</span> <span class="n">product_id</span><span class="p">,</span>
+                                  <span class="s1">&#39;product_data&#39;</span><span class="p">:</span> <span class="n">Product</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span>
+                                  <span class="n">get</span><span class="p">(</span><span class="n">shopify_id</span><span class="o">=</span><span class="n">product_id</span><span class="p">)})</span>
+        <span class="k">return</span> <span class="n">queryset_data</span></div>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Product_Profile_Add_To_Closet</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;product&#39;</span><span class="p">,)</span></div>
+
+
+<div class="viewcode-block" id="ProfileViewSet"><a class="viewcode-back" href="../../modules/customers.html#customers.views.ProfileViewSet">[docs]</a><span class="k">class</span> <span class="nc">ProfileViewSet</span><span class="p">(</span><span class="n">mixins</span><span class="o">.</span><span class="n">CreateModelMixin</span><span class="p">,</span>
+                     <span class="n">mixins</span><span class="o">.</span><span class="n">ListModelMixin</span><span class="p">,</span>
+                     <span class="n">mixins</span><span class="o">.</span><span class="n">RetrieveModelMixin</span><span class="p">,</span>
+                     <span class="n">mixins</span><span class="o">.</span><span class="n">DestroyModelMixin</span><span class="p">,</span>
+                     <span class="n">mixins</span><span class="o">.</span><span class="n">UpdateModelMixin</span><span class="p">,</span>
+                     <span class="n">viewsets</span><span class="o">.</span><span class="n">GenericViewSet</span><span class="p">):</span>
+    <span class="n">queryset</span> <span class="o">=</span> <span class="n">Profile</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+    <span class="n">serializer_class</span> <span class="o">=</span> <span class="n">ProfileSerializer</span>
+    <span class="c1"># authentication_classes = (</span>
+    <span class="c1">#     JSONWebTokenAuthentication, SessionAuthentication, BasicAuthentication)</span>
+    <span class="c1"># permission_classes = (IsCustomerProfiles, IsAuthenticated)</span>
+
+<div class="viewcode-block" id="ProfileViewSet.update"><a class="viewcode-back" href="../../modules/customers.html#customers.views.ProfileViewSet.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">customer</span> <span class="o">=</span> <span class="n">get_or_raise</span><span class="p">(</span>
+            <span class="n">Customer</span><span class="p">,</span> <span class="n">slug</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;slug_slug&#39;</span><span class="p">])</span>
+        <span class="n">serializer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">serializer_class</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">            we are pretty sure to get only one profile,</span>
+<span class="sd">            but we pass Queryset for `update` only works like that</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">profileQuerySet</span> <span class="o">=</span> <span class="n">Profile</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;pk&#39;</span><span class="p">])</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">profileQuerySet</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">customer</span> <span class="o">==</span> <span class="n">customer</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">serializer</span><span class="o">.</span><span class="n">is_valid</span><span class="p">(</span><span class="n">raise_exception</span><span class="o">=</span><span class="ne">ValueError</span><span class="p">):</span>
+                <span class="n">serializer</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+                    <span class="n">validated_data</span><span class="o">=</span><span class="n">serializer</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">profile</span><span class="o">=</span><span class="n">profileQuerySet</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">serializer</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="o">.</span><span class="n">HTTP_201_CREATED</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">serializer</span><span class="o">.</span><span class="n">error_messages</span><span class="p">,</span>
+                        <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="o">.</span><span class="n">HTTP_400_BAD_REQUEST</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ProfileViewSet.create"><a class="viewcode-back" href="../../modules/customers.html#customers.views.ProfileViewSet.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">customer</span> <span class="o">=</span> <span class="n">get_or_raise</span><span class="p">(</span>
+            <span class="n">Customer</span><span class="p">,</span> <span class="n">slug</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;slug_slug&#39;</span><span class="p">])</span>
+        <span class="n">serializer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">serializer_class</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">serializer</span><span class="o">.</span><span class="n">is_valid</span><span class="p">(</span><span class="n">raise_exception</span><span class="o">=</span><span class="ne">ValueError</span><span class="p">):</span>
+            <span class="n">serializer</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+                <span class="n">validated_data</span><span class="o">=</span><span class="n">serializer</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">customer</span><span class="o">=</span><span class="n">customer</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">serializer</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="o">.</span><span class="n">HTTP_201_CREATED</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">serializer</span><span class="o">.</span><span class="n">error_messages</span><span class="p">,</span>
+                        <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="o">.</span><span class="n">HTTP_400_BAD_REQUEST</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ProfileViewSet.get_queryset"><a class="viewcode-back" href="../../modules/customers.html#customers.views.ProfileViewSet.get_queryset">[docs]</a>    <span class="k">def</span> <span class="nf">get_queryset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">customer</span> <span class="o">=</span> <span class="n">get_or_raise</span><span class="p">(</span>
+            <span class="n">Customer</span><span class="p">,</span> <span class="n">slug</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;slug_slug&#39;</span><span class="p">])</span>
+        <span class="n">queryset</span> <span class="o">=</span> <span class="n">customer</span><span class="o">.</span><span class="n">customer_profile</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">queryset</span></div></div>
+
+
+<div class="viewcode-block" id="CustomerViewSet"><a class="viewcode-back" href="../../modules/customers.html#customers.views.CustomerViewSet">[docs]</a><span class="k">class</span> <span class="nc">CustomerViewSet</span><span class="p">(</span><span class="n">mixins</span><span class="o">.</span><span class="n">ListModelMixin</span><span class="p">,</span>
+                      <span class="n">mixins</span><span class="o">.</span><span class="n">RetrieveModelMixin</span><span class="p">,</span>
+                      <span class="n">mixins</span><span class="o">.</span><span class="n">DestroyModelMixin</span><span class="p">,</span>
+                      <span class="n">viewsets</span><span class="o">.</span><span class="n">GenericViewSet</span><span class="p">):</span>
+    <span class="n">lookup_field</span> <span class="o">=</span> <span class="s1">&#39;slug&#39;</span>
+    <span class="n">queryset</span> <span class="o">=</span> <span class="n">Customer</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+    <span class="c1"># authentication_classes = (</span>
+    <span class="c1">#     JSONWebTokenAuthentication, SessionAuthentication, BasicAuthentication)</span>
+    <span class="c1"># permission_classes = (IsAuthenticated,)</span>
+    <span class="n">serializer_class</span> <span class="o">=</span> <span class="n">CustomerSerializer</span></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, alomafit.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

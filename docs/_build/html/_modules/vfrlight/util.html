@@ -1,0 +1,308 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>vfrlight.util &mdash; alomafit-light 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="alomafit-light 1.0 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> alomafit-light
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">alomafit-light</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>vfrlight.util</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for vfrlight.util</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="k">import</span> <span class="n">User</span>
+<span class="kn">from</span> <span class="nn">django.core.exceptions</span> <span class="k">import</span> <span class="p">(</span><span class="n">MultipleObjectsReturned</span><span class="p">,</span>
+                                    <span class="n">ObjectDoesNotExist</span><span class="p">,</span> <span class="n">PermissionDenied</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">django.http</span> <span class="k">import</span> <span class="n">Http404</span>
+<span class="kn">from</span> <span class="nn">rest_framework</span> <span class="k">import</span> <span class="n">serializers</span>
+<span class="kn">from</span> <span class="nn">rest_framework_jwt.settings</span> <span class="k">import</span> <span class="n">api_settings</span>
+
+<span class="kn">from</span> <span class="nn">stores.models</span> <span class="k">import</span> <span class="n">Merchant</span><span class="p">,</span> <span class="n">Store</span>
+<span class="kn">from</span> <span class="nn">vfrlight.initialization_util</span> <span class="k">import</span> <span class="n">intitalize_scripttag</span>
+<span class="kn">from</span> <span class="nn">vfrlight.tasks</span> <span class="k">import</span> <span class="n">initilize_webhooks</span><span class="p">,</span> <span class="n">sync_collections</span><span class="p">,</span> <span class="n">sync_products</span>
+
+<span class="kn">from</span> <span class="nn">.config</span> <span class="k">import</span> <span class="n">config</span> <span class="k">as</span> <span class="n">cfg</span>
+<span class="kn">from</span> <span class="nn">.webhooks_util</span> <span class="k">import</span> <span class="n">reset_webhooks</span>
+
+
+<div class="viewcode-block" id="verify_store_access_token"><a class="viewcode-back" href="../../modules/vfrlight.html#vfrlight.util.verify_store_access_token">[docs]</a><span class="k">def</span> <span class="nf">verify_store_access_token</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">store</span><span class="p">):</span>
+    <span class="n">jwt_token</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">META</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;HTTP_AUTHORIZATION&#39;</span><span class="p">)</span>
+    <span class="n">jwt_decode_handler</span> <span class="o">=</span> <span class="n">api_settings</span><span class="o">.</span><span class="n">JWT_DECODE_HANDLER</span>
+    <span class="n">username</span> <span class="o">=</span> <span class="n">jwt_decode_handler</span><span class="p">(</span><span class="n">jwt_token</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">])[</span><span class="s1">&#39;username&#39;</span><span class="p">]</span>
+    <span class="k">if</span><span class="p">(</span><span class="ow">not</span> <span class="n">store</span><span class="o">.</span><span class="n">owner</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">username</span> <span class="o">==</span> <span class="n">username</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">PermissionDenied</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="get_or_raise"><a class="viewcode-back" href="../../modules/vfrlight.html#vfrlight.util.get_or_raise">[docs]</a><span class="k">def</span> <span class="nf">get_or_raise</span><span class="p">(</span><span class="n">classmodel</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">classmodel</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">serializers</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="n">e</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="initialize"><a class="viewcode-back" href="../../modules/vfrlight.html#vfrlight.util.initialize">[docs]</a><span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">shop</span><span class="p">,</span> <span class="n">ignore_webhooks</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ignore_scripttag</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="n">username</span><span class="o">=</span><span class="p">(</span><span class="n">shop</span> <span class="o">+</span> <span class="s2">&quot;_User&quot;</span><span class="p">))</span>
+        <span class="n">merchant</span> <span class="o">=</span> <span class="n">Merchant</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">)</span>
+        <span class="n">store</span> <span class="o">=</span> <span class="n">Store</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">owner</span><span class="o">=</span><span class="n">merchant</span><span class="p">)</span>
+        <span class="n">store</span><span class="o">.</span><span class="n">token</span> <span class="o">=</span> <span class="n">token</span>
+        <span class="n">store</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span>
+            <span class="n">username</span><span class="o">=</span><span class="n">shop</span> <span class="o">+</span> <span class="s2">&quot;_User&quot;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s1">&#39;user12345&#39;</span><span class="p">)</span>
+        <span class="n">merchant</span> <span class="o">=</span> <span class="n">Merchant</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">)</span>
+        <span class="n">store</span> <span class="o">=</span> <span class="n">Store</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+            <span class="n">url</span><span class="o">=</span><span class="n">shop</span><span class="p">,</span> <span class="n">token</span><span class="o">=</span><span class="n">token</span><span class="p">,</span> <span class="n">owner</span><span class="o">=</span><span class="n">merchant</span><span class="p">)</span>
+        
+    <span class="k">if</span><span class="p">(</span><span class="n">ignore_webhooks</span><span class="p">):</span>
+        <span class="n">store</span><span class="o">.</span><span class="n">webhooks_added</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">store</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">ignore_scripttag</span><span class="p">):</span>
+        <span class="n">store</span><span class="o">.</span><span class="n">scripttag_added</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">store</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="n">cfg</span><span class="o">.</span><span class="n">Async</span><span class="p">):</span>
+        <span class="n">asynchronousInitialization</span><span class="p">(</span><span class="n">store</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">nonAsynchronousInitialization</span><span class="p">(</span><span class="n">store</span><span class="p">)</span>
+
+    <span class="n">jwt_payload_handler</span> <span class="o">=</span> <span class="n">api_settings</span><span class="o">.</span><span class="n">JWT_PAYLOAD_HANDLER</span>
+    <span class="n">jwt_encode_handler</span> <span class="o">=</span> <span class="n">api_settings</span><span class="o">.</span><span class="n">JWT_ENCODE_HANDLER</span>
+
+    <span class="n">payload</span> <span class="o">=</span> <span class="n">jwt_payload_handler</span><span class="p">(</span><span class="n">store</span><span class="o">.</span><span class="n">owner</span><span class="o">.</span><span class="n">user</span><span class="p">)</span>
+    <span class="n">token</span> <span class="o">=</span> <span class="n">jwt_encode_handler</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">store</span><span class="p">,</span> <span class="n">token</span></div>
+
+
+<div class="viewcode-block" id="asynchronousInitialization"><a class="viewcode-back" href="../../modules/vfrlight.html#vfrlight.util.asynchronousInitialization">[docs]</a><span class="k">def</span> <span class="nf">asynchronousInitialization</span><span class="p">(</span><span class="n">store</span><span class="p">):</span>
+    <span class="k">if</span><span class="p">(</span><span class="ow">not</span> <span class="n">cfg</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">):</span>
+        <span class="n">initilize_webhooks</span><span class="o">.</span><span class="n">delay</span><span class="p">(</span><span class="n">store</span><span class="p">)</span>
+        <span class="n">intitalize_scripttag</span><span class="p">(</span><span class="n">store</span><span class="p">)</span>
+    <span class="n">sync_products</span><span class="o">.</span><span class="n">delay</span><span class="p">(</span><span class="n">store</span><span class="p">)</span>
+    <span class="n">sync_collections</span><span class="o">.</span><span class="n">delay</span><span class="p">(</span><span class="n">store</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="nonAsynchronousInitialization"><a class="viewcode-back" href="../../modules/vfrlight.html#vfrlight.util.nonAsynchronousInitialization">[docs]</a><span class="k">def</span> <span class="nf">nonAsynchronousInitialization</span><span class="p">(</span><span class="n">store</span><span class="p">):</span>
+    <span class="c1"># if(not cfg.DEBUG):</span>
+    <span class="c1">#     initilize_webhooks(store)</span>
+    <span class="c1">#     intitalize_scripttag(store)</span>
+    <span class="n">initilize_webhooks</span><span class="p">(</span><span class="n">store</span><span class="p">)</span>
+    <span class="n">intitalize_scripttag</span><span class="p">(</span><span class="n">store</span><span class="p">)</span>
+    <span class="n">sync_products</span><span class="p">(</span><span class="n">store</span><span class="p">)</span>
+    <span class="n">sync_collections</span><span class="p">(</span><span class="n">store</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="fake_initialize"><a class="viewcode-back" href="../../modules/vfrlight.html#vfrlight.util.fake_initialize">[docs]</a><span class="k">def</span> <span class="nf">fake_initialize</span><span class="p">():</span>
+    <span class="n">initialize</span><span class="p">(</span><span class="s1">&#39;b08a9a3d44d6d76c387fca09b8d2bd53&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;meet10.myshopify.com&#39;</span><span class="p">,</span> <span class="n">ignore_webhooks</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+               <span class="n">ignore_scripttag</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, alomafit.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
