@@ -1,8 +1,9 @@
 class config(object):
     SECRET_KEY = "CantStopAddictedToTheShinDigChopTopHeSaysImGonnaWinBig"
     # HOST = "obscure-caverns-78108.herokuapp.com"
-    HOST = "alomafit1.herokuapp.com"
+    # HOST = "alomafit1.herokuapp.com"
     # HOST = "c2597ed0.ngrok.io"
+    HOST = "alomafitnewapp1.herokuapp.com"
 
     DEBUG = False
     TESTING = False
@@ -71,9 +72,21 @@ class config(object):
         }
     }
     FRONT_END_HOST = "https://alomafit.herokuapp.com/"
+    # SHOPIFY_CONFIG = {
+    #     'API_KEY': '30e5f7a76d8bbe744ad2a73944ac48f7',
+    #     'API_SECRET': '4266e4dfba32df7931e0ad76494f9b3e',
+    #     'APP_HOME': 'https://' + HOST,
+    #     'CALLBACK_URL': 'https://' + HOST + '/install',
+    #     'CHARGES_RETURN_URL': 'https://' + 'alomafit.com/newApp/dash/charge.html?charge_id',
+    #     # 'REDIRECT_URI': 'https://' + HOST + '/connect',
+    #     'REDIRECT_URI': 'https://' + 'alomafit.com/newApp/dash/auth.html',
+    #     'SCOPE': ['read_products', 'write_script_tags', 'read_product_listings']
+    # }
+
+
     SHOPIFY_CONFIG = {
-        'API_KEY': '30e5f7a76d8bbe744ad2a73944ac48f7',
-        'API_SECRET': '4266e4dfba32df7931e0ad76494f9b3e',
+        'API_KEY': 'fc1a139ab2a927b4e549dbeec8cd2c6b',
+        'API_SECRET': 'f8fd67d11edd10e6734f15ff6712e719',
         'APP_HOME': 'https://' + HOST,
         'CALLBACK_URL': 'https://' + HOST + '/install',
         'CHARGES_RETURN_URL': 'https://' + 'alomafit.com/newApp/dash/charge.html?charge_id',
@@ -99,7 +112,8 @@ class config(object):
                           'osamahstore.myshopify.com',
                           'faditest123.myshopify.com',
                           'jaber-testing.myshopify.com',
-                          'your-fashion-store-name.myshopify.com']
+                          'your-fashion-store-name.myshopify.com',
+                          'profitapptesting.myshopify.com']
     # just in case, we want to test some code without paying attention to those constraints
     DONT_CARE_ABOUT_PLAN = False
     DONT_CARE_ABOUT_READY_TO_TRY = False
