@@ -1,9 +1,9 @@
 class config(object):
     SECRET_KEY = "CantStopAddictedToTheShinDigChopTopHeSaysImGonnaWinBig"
     # HOST = "obscure-caverns-78108.herokuapp.com"
-    # HOST = "alomafit1.herokuapp.com"
+    HOST = "alomafit1.herokuapp.com"
     # HOST = "c2597ed0.ngrok.io"
-    HOST = "alomafitnewapp1.herokuapp.com"
+    # HOST = "alomafitnewapp1.herokuapp.com"
 
     DEBUG = False
     TESTING = False
@@ -72,21 +72,9 @@ class config(object):
         }
     }
     FRONT_END_HOST = "https://alomafit.herokuapp.com/"
-    # SHOPIFY_CONFIG = {
-    #     'API_KEY': '30e5f7a76d8bbe744ad2a73944ac48f7',
-    #     'API_SECRET': '4266e4dfba32df7931e0ad76494f9b3e',
-    #     'APP_HOME': 'https://' + HOST,
-    #     'CALLBACK_URL': 'https://' + HOST + '/install',
-    #     'CHARGES_RETURN_URL': 'https://' + 'alomafit.com/newApp/dash/charge.html?charge_id',
-    #     # 'REDIRECT_URI': 'https://' + HOST + '/connect',
-    #     'REDIRECT_URI': 'https://' + 'alomafit.com/newApp/dash/auth.html',
-    #     'SCOPE': ['read_products', 'write_script_tags', 'read_product_listings']
-    # }
-
-
     SHOPIFY_CONFIG = {
-        'API_KEY': 'fc1a139ab2a927b4e549dbeec8cd2c6b',
-        'API_SECRET': 'f8fd67d11edd10e6734f15ff6712e719',
+        'API_KEY': '30e5f7a76d8bbe744ad2a73944ac48f7',
+        'API_SECRET': '4266e4dfba32df7931e0ad76494f9b3e',
         'APP_HOME': 'https://' + HOST,
         'CALLBACK_URL': 'https://' + HOST + '/install',
         'CHARGES_RETURN_URL': 'https://' + 'alomafit.com/newApp/dash/charge.html?charge_id',
@@ -94,6 +82,18 @@ class config(object):
         'REDIRECT_URI': 'https://' + 'alomafit.com/newApp/dash/auth.html',
         'SCOPE': ['read_products', 'write_script_tags', 'read_product_listings']
     }
+
+
+    # SHOPIFY_CONFIG = {
+    #     'API_KEY': 'fc1a139ab2a927b4e549dbeec8cd2c6b',
+    #     'API_SECRET': 'f8fd67d11edd10e6734f15ff6712e719',
+    #     'APP_HOME': 'https://' + HOST,
+    #     'CALLBACK_URL': 'https://' + HOST + '/install',
+    #     'CHARGES_RETURN_URL': 'https://' + 'alomafit.com/newApp/dash/charge.html?charge_id',
+    #     # 'REDIRECT_URI': 'https://' + HOST + '/connect',
+    #     'REDIRECT_URI': 'https://' + 'alomafit.com/newApp/dash/auth.html',
+    #     'SCOPE': ['read_products', 'write_script_tags', 'read_product_listings']
+    # }
 
     EXPERIMENT = {
         'customers_count': 100, 'profiles_count': 3,
