@@ -29,7 +29,7 @@ gunicorn==19.7.1
 idna==2.6
 imagesize==1.1.0
 itypes==1.1.0
-Jinja2==2.10
+Jinja2==2.11.3
 kombu==4.1.0
 MarkupSafe==1.1.0
 mock==2.0.0
