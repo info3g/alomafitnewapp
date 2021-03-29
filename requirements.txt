@@ -39,7 +39,7 @@ packaging==18.0
 pbr==5.1.1
 psycopg2==2.7.3.2
 pyactiveresource==2.1.2
-Pygments==2.2.0
+Pygments==2.7.4
 PyJWT==1.6.4
 pyparsing==2.3.0
 python-dateutil==2.7.5
